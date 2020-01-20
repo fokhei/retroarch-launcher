@@ -11,6 +11,7 @@ import { ContextMenu, MenuItem } from "react-contextmenu";
 import { ContextMenuId } from "./ContextMenuId";
 import { ContextMenuAction } from "./ContextMenuAction";
 import child_process from "child_process";
+import { toGoogleKeyword } from '../libs/toGoogleKeyword';
 
 enum WaitingFor {
   NONE,
@@ -118,8 +119,9 @@ const _MainView = (props: MainViewProps) => {
     } else if (action == ContextMenuAction.SHOW_GAME_ITEM_DIRECTORY) {
       remote.shell.showItemInFolder(item.path);
     } else if (action == ContextMenuAction.GOOGLE_SEARCH_GAME_ITEM) {
+      const q = toGoogleKeyword(item.label);
       shell.openExternal(
-        `https://www.google.com/search?tbm=isch&q=${item.label}`
+        `https://www.google.com/search?tbm=isch&q=${q}`
       );
     } else if (action == ContextMenuAction.COPY_GAME_LABEL_TO_CLIPBOARD) {
       clipboard.writeText(item.label, "selection");

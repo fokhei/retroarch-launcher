@@ -1,0 +1,14 @@
+{
+  "retroArch": {
+    "exe": "D:\\emu\\RetroArch\\retroarch.exe",
+    "dir": {
+      "cores": "D:\\emu\\RetroArch\\cores",
+      "playlists": "D:\\emu\\RetroArch\\playlists",
+      "thumbnails": "D:\\roms\\RetroArch - thumbnails"
+    }
+  },
+  "windowOption": {
+    "width": 1060,
+    "height": 560
+  }
+}

@@ -74,7 +74,11 @@ const _RightBar = (props: RightBarProps) => {
           </ContextMenuTrigger>
         );
       } else {
-        child = <ThumbnailDropzone thumbnailType={thumbnailType} item={item} />;
+        child = (
+          <ContextMenuTrigger id={thumbnailType}>
+            <ThumbnailDropzone thumbnailType={thumbnailType} item={item} />
+          </ContextMenuTrigger>
+        );
       }
     }
     return <div className="item">{child}</div>;

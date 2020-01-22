@@ -13,6 +13,7 @@ import rimraf from "rimraf";
 import Jimp from "Jimp";
 import lazy from "lazy.js";
 import { RetroArchPlayListItem } from "../libs/RetroArchPlayListItem";
+import request from "request";
 
 let _id = 0;
 let mainWindow: BrowserWindow | null;
@@ -82,7 +83,6 @@ ipcMain.on(AppEvent.REFRESH_PLAYLIST, (event: any, category: string) => {
   event.reply(AppEvent.PLAYLISTS, lpls.sort(), items, itemsMap);
 });
 
-
 const createComputedPlayListItem = (
   item: RetroArchPlayListItem,
   category: string
@@ -110,22 +110,17 @@ ipcMain.on(
     thumbnailType: ThumbnailType
   ) => {
     const ext = path.extname(filePath).toLowerCase();
-
     const thumbnailDir = config.retroArch.dir.thumbnails.replace(/\\/gi, "/");
-    
     const dbDir = path.resolve(thumbnailDir, item.db_name);
     if (!fs.existsSync(dbDir)) {
       fs.mkdirSync(dbDir);
     }
-
     const typeDir = path.resolve(dbDir, thumbnailType);
     if (!fs.existsSync(typeDir)) {
       fs.mkdirSync(typeDir);
     }
     let img = toRetroArchThumbnail(item.label);
-    // img = img.replace(/\'/, "\\'");
     let outPath = path.resolve(typeDir, img);
-
     if (ext == ".png") {
       const inStr = fs.createReadStream(filePath);
       const outStr = fs.createWriteStream(outPath);
@@ -156,7 +151,45 @@ ipcMain.on(
   }
 );
 
+ipcMain.on(
+  AppEvent.DOWNLOAD_THUMBNAIL,
+  (event: any, item: ComputedPlayListItem, thumbnailType: ThumbnailType) => {
+    const thumbnailDir = config.retroArch.dir.thumbnails.replace(/\\/gi, "/");
+    const dbDir = path.resolve(thumbnailDir, item.db_name);
+    if (!fs.existsSync(dbDir)) {
+      fs.mkdirSync(dbDir);
+    }
+    const typeDir = path.resolve(dbDir, thumbnailType);
+    if (!fs.existsSync(typeDir)) {
+      fs.mkdirSync(typeDir);
+    }
+    let img = toRetroArchThumbnail(item.label);
+    let outPath = path.resolve(typeDir, img);
+    if (!fs.existsSync(outPath)) {
+      const category = encodeURIComponent(item.category);
+      const uri = `http://thumbnails.libretro.com/${category}/${thumbnailType}/${img}`;
+      download(uri, outPath, (_err: any) => {
+        event.reply(AppEvent.ITEM_UPDATE, item.id);
+      });
+    }
+  }
+);
 
+const download = (
+  uri: string,
+  filename: string,
+  callback: (err: any) => void
+) => {
+  request.head(uri, (_err: any, res: any, _body: any) => {
+    if (!res.headers["content-length"]) {
+      callback(new Error("zero content length"));
+    } else {
+      request(uri)
+        .pipe(fs.createWriteStream(filename))
+        .on("close", callback);
+    }
+  });
+};
 
 const removeItemsByCategory = (category: string) => {
   items = lazy(items)

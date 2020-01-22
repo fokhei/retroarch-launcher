@@ -13,6 +13,7 @@ import ThumbnailContextMenu from "./ThumbnailContextMenu";
 import PaylistContextMenu from "./PaylistContextMenu";
 import GameNameContextMenu from './GameNameContextMenu';
 import RomNameContextMenu from './RomNameContextMenu';
+import DropZoneContextMenu from './DropZoneContextMenu';
 
 enum WaitingFor {
   NONE,
@@ -166,6 +167,7 @@ const _MainView = (props: MainViewProps) => {
       <RomNameContextMenu item={item} />
       <PaylistContextMenu config={config} category={category} />
       <ItemContextMenu item={item} playOnRetroArch={playOnRetroArch} />
+      <DropZoneContextMenu  item={item} />
       <ThumbnailContextMenu
         config={config}
         item={item}

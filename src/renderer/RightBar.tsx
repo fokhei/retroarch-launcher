@@ -8,7 +8,7 @@ import { AppEvent } from "../libs/AppEvent";
 import ThumbnailDropzone from "./ThumbnailDropzone";
 import { ContextMenuId } from "./ContextMenuId";
 import { ContextMenuTrigger } from "react-contextmenu";
-import { toBackgroundUrl } from './toBackgroundUrl';
+import { toBackgroundUrl } from "./toBackgroundUrl";
 
 const _RightBar = (props: RightBarProps) => {
   const {
@@ -38,7 +38,9 @@ const _RightBar = (props: RightBarProps) => {
     if (item) {
       return (
         <div className="info">
-          <div className="basename">{item.basename}</div>
+          <ContextMenuTrigger id={ContextMenuId.ROM_PATH}>
+            <div className="basename">{item.basename}</div>
+          </ContextMenuTrigger>
         </div>
       );
     }
@@ -102,12 +104,14 @@ const RightBar = styled(_RightBar)`
     align-items: center;
     padding-left: 10px;
     color: #555;
-
-    .basename {
-      font-size: 11px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+    user-select: none;
+    .react-contextmenu-wrapper {
+      .basename {
+        font-size: 11px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
   }
   > .item {

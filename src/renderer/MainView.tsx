@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { AppEvent } from "../libs/AppEvent";
 import styled from "styled-components";
-import { ipcRenderer, remote, shell, clipboard } from "electron";
+import { ipcRenderer, remote } from "electron";
 import PlayListMenu from "./PlayListMenu";
 import ResultView from "./ResultView";
 import { ComputedPlayListItem } from "../libs/ComputedPlaylistItem";
 import { ComputedPlayListMap } from "../libs/ComputedPlayListMap";
 import RightBar from "./RightBar";
-import { ContextMenu, MenuItem } from "react-contextmenu";
-import { ContextMenuId } from "./ContextMenuId";
-import { ContextMenuAction } from "./ContextMenuAction";
 import child_process from "child_process";
-import { toGoogleKeyword } from '../libs/toGoogleKeyword';
+import ItemContextMenu from "./ItemContextMenu";
+import ThumbnailContextMenu from "./ThumbnailContextMenu";
+import PaylistContextMenu from "./PaylistContextMenu";
+import GameNameContextMenu from './GameNameContextMenu';
+import RomNameContextMenu from './RomNameContextMenu';
 
 enum WaitingFor {
   NONE,
@@ -65,7 +66,6 @@ const _MainView = (props: MainViewProps) => {
     reRender();
   };
 
-
   const onExecuteItem = () => {
     playOnRetroArch();
   };
@@ -81,7 +81,6 @@ const _MainView = (props: MainViewProps) => {
     setItemId(itemId);
   };
 
-
   const playOnRetroArch = () => {
     if (config) {
       const { path, core_path } = item;
@@ -90,58 +89,10 @@ const _MainView = (props: MainViewProps) => {
           shell: true
         });
       } else {
-        alert("core_path is not yet set on this item.")
+        alert("core_path is not yet set on this item.");
       }
     }
   };
-
-
-  const onMenuItemClick = (_evt: any, data: any) => {
-    //console.log("onMenuItemClick", data.action);
-    const { action } = data;
-    if (action == ContextMenuAction.SHOW_PAYLIST_DIRECTORY) {
-      const path = config.retroArch.dir.playlists;
-      if (category == CategoryAll) {
-        remote.shell.openItem(path);
-      } else {
-        remote.shell.showItemInFolder(`${path}\\${category}.lpl`);
-      }
-    } else if (action == ContextMenuAction.REFRESH_PLAYLIST) {
-      if (category == CategoryAll) {
-        ipcRenderer.send(AppEvent.REFRESH_PLAYLISTS);
-      } else {
-        ipcRenderer.send(AppEvent.REFRESH_PLAYLIST, category);
-      }
-    } else if (action == ContextMenuAction.PLAY_ON_RETROARCH) {
-      playOnRetroArch();
-    } else if (action == ContextMenuAction.OPEN_GAME_ITEM) {
-      remote.shell.openItem(item.path);
-    } else if (action == ContextMenuAction.SHOW_GAME_ITEM_DIRECTORY) {
-      remote.shell.showItemInFolder(item.path);
-    } else if (action == ContextMenuAction.GOOGLE_SEARCH_GAME_ITEM) {
-      const q = toGoogleKeyword(item.label);
-      shell.openExternal(
-        `https://www.google.com/search?tbm=isch&q=${q}`
-      );
-    } else if (action == ContextMenuAction.COPY_GAME_LABEL_TO_CLIPBOARD) {
-      clipboard.writeText(item.label, "selection");
-    } else if (action == ContextMenuAction.COPY_GAME_PATH_TO_CLIPBOARD) {
-      clipboard.writeText(item.path, "selection");
-    } else if (action == ContextMenuAction.SHOW_THUMBNAIL_DIRECTORY) {
-      if (thumbnailFilePath) {
-        remote.shell.showItemInFolder(thumbnailFilePath);
-      } else {
-        remote.shell.openItem(config.retroArch.dir.thumbnails);
-      }
-    } else if (action == ContextMenuAction.REMOVE_THUMBNAIL) {
-      if (item && thumbnailFilePath) {
-        ipcRenderer.send(AppEvent.REMOVE_THUMBNAIL, item, thumbnailFilePath);
-      }
-    } else {
-      console.warn(`unknown ContextMenuAction: ${action}`);
-    }
-  };
-
  
 
   const renderPlayLists = () => {
@@ -191,90 +142,6 @@ const _MainView = (props: MainViewProps) => {
     return undefined;
   };
 
-  const renderPaylistContextMenu = () => {
-    return (
-      <ContextMenu id={ContextMenuId.PLAYLIST}>
-        <MenuItem
-          onClick={onMenuItemClick}
-          data={{ action: ContextMenuAction.SHOW_PAYLIST_DIRECTORY }}
-        >
-          Show playlist directory
-        </MenuItem>
-
-        <MenuItem
-          onClick={onMenuItemClick}
-          data={{ action: ContextMenuAction.REFRESH_PLAYLIST }}
-        >
-          Refresh playlist
-        </MenuItem>
-      </ContextMenu>
-    );
-  };
-
-  const renderItemContextMenu = () => {
-    return (
-      <ContextMenu id={ContextMenuId.GAME_ITEM}>
-        <MenuItem
-          onClick={onMenuItemClick}
-          data={{ action: ContextMenuAction.PLAY_ON_RETROARCH }}
-        >
-          Play on Retroarch
-        </MenuItem>
-        <MenuItem
-          onClick={onMenuItemClick}
-          data={{ action: ContextMenuAction.OPEN_GAME_ITEM }}
-        >
-          Open rom
-        </MenuItem>
-        <MenuItem
-          onClick={onMenuItemClick}
-          data={{ action: ContextMenuAction.SHOW_GAME_ITEM_DIRECTORY }}
-        >
-          Show rom directory
-        </MenuItem>
-        <MenuItem
-          onClick={onMenuItemClick}
-          data={{ action: ContextMenuAction.GOOGLE_SEARCH_GAME_ITEM }}
-        >
-          Google search image
-        </MenuItem>
-
-        <MenuItem
-          onClick={onMenuItemClick}
-          data={{ action: ContextMenuAction.COPY_GAME_LABEL_TO_CLIPBOARD }}
-        >
-          Copy game name
-        </MenuItem>
-
-        <MenuItem
-          onClick={onMenuItemClick}
-          data={{ action: ContextMenuAction.COPY_GAME_PATH_TO_CLIPBOARD }}
-        >
-          Copy rom path
-        </MenuItem>
-      </ContextMenu>
-    );
-  };
-
-  const renderThumbnailContextMenu = () => {
-    return (
-      <ContextMenu id={ContextMenuId.THUMBNAIL}>
-        <MenuItem
-          onClick={onMenuItemClick}
-          data={{ action: ContextMenuAction.SHOW_THUMBNAIL_DIRECTORY }}
-        >
-          Show thumbnail directory
-        </MenuItem>
-        <MenuItem
-          onClick={onMenuItemClick}
-          data={{ action: ContextMenuAction.REMOVE_THUMBNAIL }}
-        >
-          Remove thumbnail
-        </MenuItem>
-      </ContextMenu>
-    );
-  };
-
   const mountEffect = () => {
     ipcRenderer.on(AppEvent.CRITICAL_ERROR, onCriticalError);
     ipcRenderer.on(AppEvent.CONFIG, onAppConfig);
@@ -295,9 +162,15 @@ const _MainView = (props: MainViewProps) => {
       {renderPlayLists()}
       {renderResultView()}
       {renderRightBar()}
-      {renderPaylistContextMenu()}
-      {renderItemContextMenu()}
-      {renderThumbnailContextMenu()}
+      <GameNameContextMenu item={item} />
+      <RomNameContextMenu item={item} />
+      <PaylistContextMenu config={config} category={category} />
+      <ItemContextMenu item={item} playOnRetroArch={playOnRetroArch} />
+      <ThumbnailContextMenu
+        config={config}
+        item={item}
+        thumbnailFilePath={thumbnailFilePath}
+      />
     </div>
   );
 };

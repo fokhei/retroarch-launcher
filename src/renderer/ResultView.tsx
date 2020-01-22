@@ -7,6 +7,8 @@ import ResultList from "./ResultList";
 import ResultGrid from "./ResultGrid";
 import { ThumbnailType } from "../libs/ThumbnailType";
 import { CategoryAll } from "./MainView";
+import { ContextMenuTrigger } from "react-contextmenu";
+import { ContextMenuId } from "./ContextMenuId";
 
 let _updateResults: any;
 let _category: string = "";
@@ -51,7 +53,7 @@ const _ResultView = (props: ResultViewProps) => {
       );
     }
 
-    seq = seq.sortBy((item: ComputedPlayListItem) => item.label)
+    seq = seq.sortBy((item: ComputedPlayListItem) => item.label);
 
     const results: Array<ComputedPlayListItem> = seq.toArray();
     setResults(results);
@@ -75,9 +77,11 @@ const _ResultView = (props: ResultViewProps) => {
   const renderInfo = () => {
     if (item) {
       return (
-        <div className="info">
-          <div className="label">{item.label}</div>
-        </div>
+        <ContextMenuTrigger id={ContextMenuId.GAME_NAME}>
+          <div className="info">
+            <div className="label">{item.label}</div>
+          </div>
+        </ContextMenuTrigger>
       );
     }
     return undefined;
@@ -169,7 +173,7 @@ const _ResultView = (props: ResultViewProps) => {
   };
 
   useEffect(mountEffect, []);
-  useEffect(changeEffect, [category, keyword, lpls, items, ]);
+  useEffect(changeEffect, [category, keyword, lpls, items]);
 
   return (
     <div className={className}>
@@ -196,11 +200,12 @@ const ResultView = styled(_ResultView)`
     background-color: rgba(0, 0, 0, 0.3);
     box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
     overflow: hidden;
+    user-select: none;
 
     .label {
       display: inline-block;
       line-height: 32px;
-      padding:0 10px;
+      padding: 0 10px;
       width: 100%;
       font-size: 15px;
       color: #17bbaf;
@@ -252,7 +257,6 @@ interface ResultViewProps {
   setItemId: (itemId: number) => void;
   item?: ComputedPlayListItem;
   executeHandler: (itemId: number) => void;
- 
 }
 
 export default ResultView;

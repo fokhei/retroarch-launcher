@@ -24,7 +24,7 @@ let lpls: Array<string> = [];
 let items: Array<ComputedPlayListItem> = [];
 let itemsMap: ComputedPlayListMap = {};
 let missingThumbnailInfos: Array<ThumbnailInfo> = [];
-let downloadEvent: any
+let downloadEvent: any;
 
 const configPath = "./config.json";
 if (fs.existsSync(configPath)) {
@@ -144,8 +144,7 @@ ipcMain.on(
     if (fs.existsSync(filePath)) {
       rimraf.sync(filePath);
     }
-    downloadEvent =
-    event.reply(AppEvent.ITEM_UPDATE, item.id);
+    downloadEvent = event.reply(AppEvent.ITEM_UPDATE, item.id);
   }
 );
 
@@ -158,11 +157,11 @@ ipcMain.on(
     if (!info.exist) {
       missingThumbnailInfos = [...missingThumbnailInfos, info];
       downloadEvent = event;
-      downloadEvent.reply(AppEvent.MISSING_THUMBNAIL_INFOS, missingThumbnailInfos);
+      downloadEvent.reply(
+        AppEvent.MISSING_THUMBNAIL_INFOS,
+        missingThumbnailInfos
+      );
       downloadNext();
-      // download(info.remote, info.local, (_err: any) => {
-      //   event.reply(AppEvent.ITEM_UPDATE, item.id);
-      // });
     }
   }
 );
@@ -174,8 +173,38 @@ ipcMain.on(
     const infos = getMissingThumbnailInfos(item);
     missingThumbnailInfos = [].concat(missingThumbnailInfos, infos);
     downloadEvent = event;
-    downloadEvent.reply(AppEvent.MISSING_THUMBNAIL_INFOS, missingThumbnailInfos);
+    downloadEvent.reply(
+      AppEvent.MISSING_THUMBNAIL_INFOS,
+      missingThumbnailInfos
+    );
     downloadNext();
+  }
+);
+
+ipcMain.on(
+  AppEvent.DOWNLOAD_PLAYLIST_THUMBNAILS,
+  (event: any, category: String) => {
+    const targetItems = lazy(items)
+      .filter(item => item.category == category)
+      .toArray();
+    if (targetItems.length) {
+      const firstItem = targetItems[0];
+      prepareThumbnailDir(firstItem);
+
+      targetItems.map(item => {
+        const infos = getMissingThumbnailInfos(item);
+        missingThumbnailInfos = [].concat(missingThumbnailInfos, infos);
+      });
+
+      if (missingThumbnailInfos.length) {
+        downloadEvent = event;
+        downloadEvent.reply(
+          AppEvent.MISSING_THUMBNAIL_INFOS,
+          missingThumbnailInfos
+        );
+        downloadNext();
+      }
+    }
   }
 );
 
@@ -242,7 +271,10 @@ const downloadNext = () => {
   if (missingThumbnailInfos.length) {
     const info = missingThumbnailInfos.shift();
     download(info.remote, info.local, () => {
-      downloadEvent.reply(AppEvent.MISSING_THUMBNAIL_INFOS, missingThumbnailInfos);
+      downloadEvent.reply(
+        AppEvent.MISSING_THUMBNAIL_INFOS,
+        missingThumbnailInfos
+      );
       downloadNext();
     });
   }
@@ -254,7 +286,7 @@ const download = (
   callback: (err: any) => void
 ) => {
   request.head(uri, (_err: any, res: any, _body: any) => {
-    if (!res.headers["content-length"]) {
+    if (!res || !res.headers || !res.headers["content-length"]) {
       callback(new Error("zero content length"));
     } else {
       request(uri)

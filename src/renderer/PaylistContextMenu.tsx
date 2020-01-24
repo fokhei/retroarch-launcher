@@ -11,8 +11,9 @@ const PaylistContextMenu = (props: PaylistContextMenuProps) => {
   const onMenuItemClick = (_evt: any, data: any) => {
     //console.log("onMenuItemClick", data.action);
     const { action } = data;
-
-    if (action == ContextMenuAction.SHOW_PAYLIST_DIRECTORY) {
+    if (action == ContextMenuAction.DOWNLOAD_PLAYLIST_THUMBNAILS) {
+      ipcRenderer.send(AppEvent.DOWNLOAD_PLAYLIST_THUMBNAILS, category);
+    } else if (action == ContextMenuAction.SHOW_PAYLIST_DIRECTORY) {
       const path = config.retroArch.dir.playlists;
       if (category == CategoryAll) {
         remote.shell.openItem(path);
@@ -30,6 +31,13 @@ const PaylistContextMenu = (props: PaylistContextMenuProps) => {
 
   return (
     <ContextMenu id={ContextMenuId.PLAYLIST}>
+      <MenuItem
+        onClick={onMenuItemClick}
+        data={{ action: ContextMenuAction.DOWNLOAD_PLAYLIST_THUMBNAILS }}
+      >
+        Download thumbnails
+      </MenuItem>
+
       <MenuItem
         onClick={onMenuItemClick}
         data={{ action: ContextMenuAction.SHOW_PAYLIST_DIRECTORY }}

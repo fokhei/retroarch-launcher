@@ -27,7 +27,6 @@ const _DropZone = (props: DropZoneProps) => {
     const { length } = evt.dataTransfer.files;
     if (length) {
       const file = evt.dataTransfer.files[0];
-      
       ipcRenderer.send(AppEvent.SET_THUMBNAIL, file.path, item, thumbnailType);
     }
 

@@ -102,16 +102,16 @@ const RightBar = styled(_RightBar)`
   display: flex;
   flex-direction: column;
   > .info {
+    width: 100%;
     height: 32px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     padding-left: 10px;
     color: #555;
     user-select: none;
+    text-align:left;
+    font-size: 11px;
+    line-height: 32px;
     .react-contextmenu-wrapper {
       .basename {
-        font-size: 11px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;

@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from "electron";
+import { app, BrowserWindow, ipcRenderer } from "electron";
 import createMainWindow from "./createWindow";
 import { AppEvent } from "../libs/AppEvent";
 import { ipcMain } from "electron";
@@ -14,6 +14,7 @@ import Jimp from "Jimp";
 import lazy from "lazy.js";
 import { RetroArchPlayListItem } from "../libs/RetroArchPlayListItem";
 import request from "request";
+import { ThumbnailInfo } from "../libs/ThumbnailInfos";
 
 let _id = 0;
 let mainWindow: BrowserWindow | null;
@@ -22,6 +23,8 @@ let critialError: string | null = null;
 let lpls: Array<string> = [];
 let items: Array<ComputedPlayListItem> = [];
 let itemsMap: ComputedPlayListMap = {};
+let missingThumbnailInfos: Array<ThumbnailInfo> = [];
+let downloadEvent: any
 
 const configPath = "./config.json";
 if (fs.existsSync(configPath)) {
@@ -112,13 +115,7 @@ ipcMain.on(
     const ext = path.extname(filePath).toLowerCase();
     const thumbnailDir = config.retroArch.dir.thumbnails.replace(/\\/gi, "/");
     const dbDir = path.resolve(thumbnailDir, item.db_name);
-    if (!fs.existsSync(dbDir)) {
-      fs.mkdirSync(dbDir);
-    }
     const typeDir = path.resolve(dbDir, thumbnailType);
-    if (!fs.existsSync(typeDir)) {
-      fs.mkdirSync(typeDir);
-    }
     let img = toRetroArchThumbnail(item.label);
     let outPath = path.resolve(typeDir, img);
     if (ext == ".png") {
@@ -147,6 +144,7 @@ ipcMain.on(
     if (fs.existsSync(filePath)) {
       rimraf.sync(filePath);
     }
+    downloadEvent =
     event.reply(AppEvent.ITEM_UPDATE, item.id);
   }
 );
@@ -154,26 +152,101 @@ ipcMain.on(
 ipcMain.on(
   AppEvent.DOWNLOAD_THUMBNAIL,
   (event: any, item: ComputedPlayListItem, thumbnailType: ThumbnailType) => {
-    const thumbnailDir = config.retroArch.dir.thumbnails.replace(/\\/gi, "/");
-    const dbDir = path.resolve(thumbnailDir, item.db_name);
-    if (!fs.existsSync(dbDir)) {
-      fs.mkdirSync(dbDir);
-    }
-    const typeDir = path.resolve(dbDir, thumbnailType);
-    if (!fs.existsSync(typeDir)) {
-      fs.mkdirSync(typeDir);
-    }
-    let img = toRetroArchThumbnail(item.label);
-    let outPath = path.resolve(typeDir, img);
-    if (!fs.existsSync(outPath)) {
-      const category = encodeURIComponent(item.category);
-      const uri = `http://thumbnails.libretro.com/${category}/${thumbnailType}/${img}`;
-      download(uri, outPath, (_err: any) => {
-        event.reply(AppEvent.ITEM_UPDATE, item.id);
-      });
+    prepareThumbnailDir(item);
+    const info = getThumbnailInfo(item, thumbnailType);
+
+    if (!info.exist) {
+      missingThumbnailInfos = [...missingThumbnailInfos, info];
+      downloadEvent = event;
+      downloadEvent.reply(AppEvent.MISSING_THUMBNAIL_INFOS, missingThumbnailInfos);
+      downloadNext();
+      // download(info.remote, info.local, (_err: any) => {
+      //   event.reply(AppEvent.ITEM_UPDATE, item.id);
+      // });
     }
   }
 );
+
+ipcMain.on(
+  AppEvent.DOWNLOAD_THUMBNAILS,
+  (event: any, item: ComputedPlayListItem) => {
+    prepareThumbnailDir(item);
+    const infos = getMissingThumbnailInfos(item);
+    missingThumbnailInfos = [].concat(missingThumbnailInfos, infos);
+    downloadEvent = event;
+    downloadEvent.reply(AppEvent.MISSING_THUMBNAIL_INFOS, missingThumbnailInfos);
+    downloadNext();
+  }
+);
+
+const getThumbnailInfo = (
+  item: ComputedPlayListItem,
+  thumbnailType: ThumbnailType
+): ThumbnailInfo => {
+  const thumbnailDir = config.retroArch.dir.thumbnails.replace(/\\/gi, "/");
+  const dbDir = path.resolve(thumbnailDir, item.db_name);
+  const typeDir = path.resolve(dbDir, thumbnailType);
+  const category = encodeURIComponent(item.category);
+  let img = toRetroArchThumbnail(item.label);
+  let local = path.resolve(typeDir, img);
+  let remote = `http://thumbnails.libretro.com/${category}/${thumbnailType}/${img}`;
+  let exist = fs.existsSync(local);
+  return {
+    local,
+    remote,
+    exist
+  };
+};
+
+const getMissingThumbnailInfos = (
+  item: ComputedPlayListItem
+): Array<ThumbnailInfo> => {
+  let infos: Array<ThumbnailInfo> = [];
+  let box = getThumbnailInfo(item, ThumbnailType.BOX);
+  let title = getThumbnailInfo(item, ThumbnailType.TITLE);
+  let snap = getThumbnailInfo(item, ThumbnailType.SNAP);
+  if (!box.exist) {
+    infos.push(box);
+  }
+  if (!title.exist) {
+    infos.push(title);
+  }
+  if (!snap.exist) {
+    infos.push(snap);
+  }
+
+  return infos;
+};
+
+const prepareThumbnailDir = (item: ComputedPlayListItem) => {
+  const thumbnailDir = config.retroArch.dir.thumbnails.replace(/\\/gi, "/");
+  const dbDir = path.resolve(thumbnailDir, item.db_name);
+  if (!fs.existsSync(dbDir)) {
+    fs.mkdirSync(dbDir);
+  }
+  const boxDir = path.resolve(dbDir, ThumbnailType.BOX);
+  if (!fs.existsSync(boxDir)) {
+    fs.mkdirSync(boxDir);
+  }
+  const titleDir = path.resolve(dbDir, ThumbnailType.TITLE);
+  if (!fs.existsSync(titleDir)) {
+    fs.mkdirSync(titleDir);
+  }
+  const snapDir = path.resolve(dbDir, ThumbnailType.SNAP);
+  if (!fs.existsSync(snapDir)) {
+    fs.mkdirSync(snapDir);
+  }
+};
+
+const downloadNext = () => {
+  if (missingThumbnailInfos.length) {
+    const info = missingThumbnailInfos.shift();
+    download(info.remote, info.local, () => {
+      downloadEvent.reply(AppEvent.MISSING_THUMBNAIL_INFOS, missingThumbnailInfos);
+      downloadNext();
+    });
+  }
+};
 
 const download = (
   uri: string,

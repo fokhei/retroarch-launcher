@@ -1,5 +1,5 @@
 {
-  "name": "retroarch-launchbox",
+  "name": "retroarch-launcher",
   "version": "0.0.1",
   "scripts": {
     "tsc": "tsc",

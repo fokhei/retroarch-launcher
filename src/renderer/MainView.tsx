@@ -11,9 +11,10 @@ import child_process from "child_process";
 import ItemContextMenu from "./ItemContextMenu";
 import ThumbnailContextMenu from "./ThumbnailContextMenu";
 import PaylistContextMenu from "./PaylistContextMenu";
-import GameNameContextMenu from './GameNameContextMenu';
-import RomNameContextMenu from './RomNameContextMenu';
-import DropZoneContextMenu from './DropZoneContextMenu';
+import GameNameContextMenu from "./GameNameContextMenu";
+import RomNameContextMenu from "./RomNameContextMenu";
+import DropZoneContextMenu from "./DropZoneContextMenu";
+import { ThumbnailInfo } from "../libs/ThumbnailInfos";
 
 enum WaitingFor {
   NONE,
@@ -33,6 +34,9 @@ const _MainView = (props: MainViewProps) => {
   const [keyword, setKeyword] = useState("");
   const [itemId, setItemId] = useState(0);
   const [thumbnailFilePath, setThumbnailFilePath] = useState("");
+  const [missingThumbnailInfos, setMissingThumbnailInfos] = useState<
+    Array<ThumbnailInfo>
+  >([]);
   const [, setRenderTime] = useState(new Date().getTime());
 
   const reRender = () => {
@@ -82,6 +86,10 @@ const _MainView = (props: MainViewProps) => {
     setItemId(itemId);
   };
 
+  const onMissingThumbnailInfos = (_evt: any, infos: Array<ThumbnailInfo>) => {
+    setMissingThumbnailInfos(infos);
+  };
+
   const playOnRetroArch = () => {
     if (config) {
       const { path, core_path } = item;
@@ -94,7 +102,6 @@ const _MainView = (props: MainViewProps) => {
       }
     }
   };
- 
 
   const renderPlayLists = () => {
     if (waiting == WaitingFor.NONE) {
@@ -123,6 +130,7 @@ const _MainView = (props: MainViewProps) => {
           setItemId={onSetItem}
           item={item}
           executeHandler={onExecuteItem}
+          missingThumbnailInfos={missingThumbnailInfos}
         />
       );
     }
@@ -148,6 +156,7 @@ const _MainView = (props: MainViewProps) => {
     ipcRenderer.on(AppEvent.CONFIG, onAppConfig);
     ipcRenderer.on(AppEvent.PLAYLISTS, onPlayLists);
     ipcRenderer.on(AppEvent.ITEM_UPDATE, reRender);
+    ipcRenderer.on(AppEvent.MISSING_THUMBNAIL_INFOS, onMissingThumbnailInfos);
     ipcRenderer.send(AppEvent.MAIN_VIEW_MOUNT);
     return () => {
       ipcRenderer.removeListener(AppEvent.CRITICAL_ERROR, onCriticalError);
@@ -167,7 +176,7 @@ const _MainView = (props: MainViewProps) => {
       <RomNameContextMenu item={item} />
       <PaylistContextMenu config={config} category={category} />
       <ItemContextMenu item={item} playOnRetroArch={playOnRetroArch} />
-      <DropZoneContextMenu  item={item} />
+      <DropZoneContextMenu item={item} />
       <ThumbnailContextMenu
         config={config}
         item={item}

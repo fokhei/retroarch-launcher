@@ -1,10 +1,11 @@
 import React from "react";
 import { ContextMenu, MenuItem } from "react-contextmenu";
 import { ContextMenuId } from "./ContextMenuId";
-import { remote, shell, clipboard } from "electron";
+import { remote, shell, ipcRenderer } from "electron";
 import { ContextMenuAction } from "./ContextMenuAction";
 import { toGoogleKeyword } from "../libs/toGoogleKeyword";
 import { ComputedPlayListItem } from "../libs/ComputedPlaylistItem";
+import { AppEvent } from '../libs/AppEvent';
 
 const ItemContextMenu = (props: ItemContextMenuProps) => {
   const { item, playOnRetroArch } = props;
@@ -19,6 +20,10 @@ const ItemContextMenu = (props: ItemContextMenuProps) => {
       remote.shell.openItem(item.path);
     } else if (action == ContextMenuAction.SHOW_GAME_ITEM_DIRECTORY) {
       remote.shell.showItemInFolder(item.path);
+
+    } else if (action == ContextMenuAction.DOWNLOAD_THUMBNAILS) {
+      ipcRenderer.send(AppEvent.DOWNLOAD_THUMBNAILS, item);
+
     } else if (action == ContextMenuAction.GOOGLE_SEARCH_GAME_ITEM) {
       const q = toGoogleKeyword(item.label);
       shell.openExternal(`https://www.google.com/search?tbm=isch&q=${q}`);
@@ -44,6 +49,12 @@ const ItemContextMenu = (props: ItemContextMenuProps) => {
         data={{ action: ContextMenuAction.SHOW_GAME_ITEM_DIRECTORY }}
       >
         Show rom directory
+      </MenuItem>
+      <MenuItem
+        onClick={onMenuItemClick}
+        data={{ action: ContextMenuAction.DOWNLOAD_THUMBNAILS }}
+      >
+        Download thumbnails
       </MenuItem>
       <MenuItem
         onClick={onMenuItemClick}

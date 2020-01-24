@@ -9,6 +9,7 @@ import { ThumbnailType } from "../libs/ThumbnailType";
 import { CategoryAll } from "./MainView";
 import { ContextMenuTrigger } from "react-contextmenu";
 import { ContextMenuId } from "./ContextMenuId";
+import { ThumbnailInfo } from "../libs/ThumbnailInfos";
 
 let _updateResults: any;
 let _category: string = "";
@@ -31,7 +32,8 @@ const _ResultView = (props: ResultViewProps) => {
     itemId,
     setItemId,
     item,
-    executeHandler
+    executeHandler,
+    missingThumbnailInfos
   } = props;
   const [searching, setSearching] = useState(false);
   const [results, setResults] = useState<Array<ComputedPlayListItem>>([]);
@@ -154,6 +156,14 @@ const _ResultView = (props: ResultViewProps) => {
     return undefined;
   };
 
+  const renderStatus = () => {
+    const { length } = missingThumbnailInfos;
+    if (length) {
+      return <div className="status">Downloading...({length})</div>;
+    }
+    return undefined;
+  };
+
   const mountEffect = () => {
     _updateResults = debounce(updateResults, 300, false);
     return () => {
@@ -181,6 +191,7 @@ const _ResultView = (props: ResultViewProps) => {
       <div className="body">{renderContent()}</div>
       <div className="foot">
         {renderResultLength()}
+        {renderStatus()}
         <div className="right">
           {renderThumbnailSwitcher()}
           {renderLayoutSwitcher()}
@@ -257,6 +268,7 @@ interface ResultViewProps {
   setItemId: (itemId: number) => void;
   item?: ComputedPlayListItem;
   executeHandler: (itemId: number) => void;
+  missingThumbnailInfos: Array<ThumbnailInfo>;
 }
 
 export default ResultView;

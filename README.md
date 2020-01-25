@@ -1,4 +1,4 @@
-# RetroArch Launcher
+# RetroArch Launch
 
 a alternative launcher for RetroArch, using same playlist architecture for download thumnail and includes more custom features by context menu. Build by Electron + Typescript + React 
 
@@ -26,12 +26,12 @@ yarn compile
 
 # `yarn compile` & create build with electron-builder
 yarn dist
-edit and place "config.json" from src to dist directory
 
 # `yarn compile` & create unpacked build with electron-builder
 yarn dist:dir
-edit and place "config.json" from src to your dist directory
-
 
 
 ````
+
+# config file
+edit and place "config.json" to "dist/win-unpacked" directory

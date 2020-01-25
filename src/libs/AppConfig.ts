@@ -8,4 +8,7 @@ interface AppConfig {
     };
   };
   windowOption: Electron.BrowserWindowConstructorOptions;
+  shortNames: {
+    [key: string]: string
+  }
 }

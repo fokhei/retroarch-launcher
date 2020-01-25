@@ -10,5 +10,8 @@
   "windowOption": {
     "width": 1060,
     "height": 560
+  },
+  "shortNames" : {
+    "Sony - Playstation Vita": "psv"
   }
 }

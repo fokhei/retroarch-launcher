@@ -37,6 +37,7 @@ const _MainView = (props: MainViewProps) => {
   const [missingThumbnailInfos, setMissingThumbnailInfos] = useState<
     Array<ThumbnailInfo>
   >([]);
+  const [gridSize, setGridSize] = useState(160);
   const [, setRenderTime] = useState(new Date().getTime());
 
   const reRender = () => {
@@ -121,6 +122,8 @@ const _MainView = (props: MainViewProps) => {
     if (waiting == WaitingFor.NONE) {
       return (
         <ResultView
+          gridSize={gridSize}
+          setGridSize={setGridSize}
           config={config}
           items={items}
           lpls={lpls}
@@ -175,7 +178,11 @@ const _MainView = (props: MainViewProps) => {
       <GameNameContextMenu item={item} />
       <RomNameContextMenu item={item} />
       <PaylistContextMenu config={config} category={category} />
-      <ItemContextMenu item={item} playOnRetroArch={playOnRetroArch} />
+      <ItemContextMenu
+        config={config}
+        item={item}
+        playOnRetroArch={playOnRetroArch}
+      />
       <DropZoneContextMenu item={item} />
       <ThumbnailContextMenu
         config={config}

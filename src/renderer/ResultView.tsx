@@ -24,6 +24,8 @@ enum ResultLayout {
 const _ResultView = (props: ResultViewProps) => {
   const {
     className,
+    gridSize,
+    setGridSize,
     config,
     items,
     lpls,
@@ -74,6 +76,10 @@ const _ResultView = (props: ResultViewProps) => {
   const onChangeThumbnail = (evt: any) => {
     const thumbnailType = evt.target.value as ThumbnailType;
     setThumbnailType(thumbnailType);
+  };
+
+  const onSliderChange = (evt: any) => {
+    setGridSize(Number(evt.target.value));
   };
 
   const renderInfo = () => {
@@ -128,6 +134,24 @@ const _ResultView = (props: ResultViewProps) => {
     return undefined;
   };
 
+  const renderSlider = () => {
+    if (layout == ResultLayout.GRID) {
+      return (
+        <div>
+          <input
+            className="slider"
+            type="range"
+            min="80"
+            max="400"
+            value={gridSize}
+            onChange={onSliderChange}
+          />
+        </div>
+      );
+    }
+    return undefined;
+  };
+
   const renderContent = () => {
     if (!searching) {
       if (layout == ResultLayout.LIST) {
@@ -142,6 +166,7 @@ const _ResultView = (props: ResultViewProps) => {
       } else if (layout == ResultLayout.GRID) {
         return (
           <ResultGrid
+            gridSize={gridSize}
             config={config}
             results={results}
             itemId={itemId}
@@ -193,6 +218,7 @@ const _ResultView = (props: ResultViewProps) => {
         {renderResultLength()}
         {renderStatus()}
         <div className="right">
+          {renderSlider()}
           {renderThumbnailSwitcher()}
           {renderLayoutSwitcher()}
         </div>
@@ -246,6 +272,26 @@ const ResultView = styled(_ResultView)`
     .options {
       padding-left: 10px;
     }
+
+    .slider {
+      appearance: none;
+      outline: none;
+      width: 80px;
+      height: 8px;
+      background: rgba(150, 150, 150, 0.2);
+      margin-top: 8px;
+      &::-webkit-slider-thumb {
+        appearance: none;
+        appearance: none;
+        width: 25px;
+        height: 8px;
+        background:  rgba(150, 150, 150, 0.3);
+        cursor: pointer;
+        &:hover {
+          background-color: #17bbaf;
+        }
+      }
+    }
   }
 
   select {
@@ -259,6 +305,8 @@ const ResultView = styled(_ResultView)`
 
 interface ResultViewProps {
   className?: string;
+  gridSize: number;
+  setGridSize: (gridSize: number) => void;
   config: AppConfig;
   items: Array<ComputedPlayListItem>;
   lpls: Array<string>;

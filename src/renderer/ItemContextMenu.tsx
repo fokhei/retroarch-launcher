@@ -5,10 +5,10 @@ import { remote, shell, ipcRenderer } from "electron";
 import { ContextMenuAction } from "./ContextMenuAction";
 import { toGoogleKeyword } from "../libs/toGoogleKeyword";
 import { ComputedPlayListItem } from "../libs/ComputedPlaylistItem";
-import { AppEvent } from '../libs/AppEvent';
+import { AppEvent } from "../libs/AppEvent";
 
 const ItemContextMenu = (props: ItemContextMenuProps) => {
-  const { item, playOnRetroArch } = props;
+  const { config, item, playOnRetroArch } = props;
 
   const onMenuItemClick = (_evt: any, data: any) => {
     //console.log("onMenuItemClick", data.action);
@@ -20,12 +20,16 @@ const ItemContextMenu = (props: ItemContextMenuProps) => {
       remote.shell.openItem(item.path);
     } else if (action == ContextMenuAction.SHOW_GAME_ITEM_DIRECTORY) {
       remote.shell.showItemInFolder(item.path);
-
     } else if (action == ContextMenuAction.DOWNLOAD_THUMBNAILS) {
       ipcRenderer.send(AppEvent.DOWNLOAD_THUMBNAILS, item);
-
     } else if (action == ContextMenuAction.GOOGLE_SEARCH_GAME_ITEM) {
-      const q = toGoogleKeyword(item.label);
+      let keyword = "";
+      if (config.shortNames.hasOwnProperty(item.category)) {
+          keyword += config.shortNames[item.category] + "+";
+      }
+      keyword += item.label;
+      const q = toGoogleKeyword(keyword);
+
       shell.openExternal(`https://www.google.com/search?tbm=isch&q=${q}`);
     }
   };
@@ -62,13 +66,12 @@ const ItemContextMenu = (props: ItemContextMenuProps) => {
       >
         Google search image
       </MenuItem>
-
-     
     </ContextMenu>
   );
 };
 
 interface ItemContextMenuProps {
+  config: AppConfig;
   item: ComputedPlayListItem;
   playOnRetroArch: () => void;
 }

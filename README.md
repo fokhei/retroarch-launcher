@@ -15,7 +15,12 @@ yarn compile
 
 # `yarn compile` & create build with electron-builder
 yarn dist
+edit and place "config.json" from src to dist directory
 
 # `yarn compile` & create unpacked build with electron-builder
 yarn dist:dir
+edit and place "config.json" from src to your dist directory
+
+
+
 ```

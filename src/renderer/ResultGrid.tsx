@@ -13,6 +13,7 @@ import { toBackgroundUrl } from "./toBackgroundUrl";
 const _ResultGrid = (props: ResultGridProps) => {
   const {
     className,
+    gridSize,
     config,
     results,
     thumbnailType,
@@ -88,16 +89,11 @@ const _ResultGrid = (props: ResultGridProps) => {
     );
   };
 
-  const columnWidth = 160;
-  const rowHeight = 160;
   return (
     <div className={className}>
       <AutoSizer>
         {({ width, height }: any) => {
-          const _columnCount = Math.max(
-            1,
-            Math.floor((width - 20) / columnWidth)
-          );
+          const _columnCount = Math.max(1, Math.floor((width - 20) / gridSize));
           const rowCount = Math.ceil(results.length / _columnCount);
           setColumnCount(_columnCount);
           return (
@@ -109,8 +105,8 @@ const _ResultGrid = (props: ResultGridProps) => {
               cellRenderer={renderCell}
               columnCount={columnCount}
               rowCount={rowCount}
-              columnWidth={columnWidth}
-              rowHeight={rowHeight}
+              columnWidth={gridSize}
+              rowHeight={gridSize}
               overscanRowCount={1}
             />
           );
@@ -173,6 +169,7 @@ const ResultGrid = styled(_ResultGrid)`
 
 interface ResultGridProps {
   className?: string;
+  gridSize: number;
   config: AppConfig;
   results: Array<ComputedPlayListItem>;
   thumbnailType: ThumbnailType;

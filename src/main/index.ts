@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcRenderer } from "electron";
+import { app, BrowserWindow } from "electron";
 import createMainWindow from "./createWindow";
 import { AppEvent } from "../libs/AppEvent";
 import { ipcMain } from "electron";

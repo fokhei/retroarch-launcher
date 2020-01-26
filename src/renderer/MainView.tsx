@@ -38,7 +38,7 @@ const _MainView = (props: MainViewProps) => {
     Array<ThumbnailInfo>
   >([]);
   const [gridSize, setGridSize] = useState(160);
-  const [, setRenderTime] = useState(new Date().getTime());
+  const [renderTime, setRenderTime] = useState(new Date().getTime());
 
   const reRender = () => {
     setRenderTime(new Date().getTime());
@@ -134,6 +134,7 @@ const _MainView = (props: MainViewProps) => {
           item={item}
           executeHandler={onExecuteItem}
           missingThumbnailInfos={missingThumbnailInfos}
+          renderTime={renderTime}
         />
       );
     }
@@ -148,6 +149,7 @@ const _MainView = (props: MainViewProps) => {
           item={item}
           thumbnailFilePath={thumbnailFilePath}
           setThumbnailFilePath={setThumbnailFilePath}
+          renderTime={renderTime}
         />
       );
     }

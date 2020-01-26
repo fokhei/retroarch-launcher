@@ -16,7 +16,8 @@ const _RightBar = (props: RightBarProps) => {
     config,
     item,
     thumbnailFilePath,
-    setThumbnailFilePath
+    setThumbnailFilePath,
+    renderTime
   } = props;
   const thumbnailDir = config.retroArch.dir.thumbnails.replace(/\\/gi, "/");
 
@@ -28,7 +29,6 @@ const _RightBar = (props: RightBarProps) => {
     remote.shell.openItem(filePath);
   };
 
-
   const onThumbnailRightClick = (evt: any) => {
     const thumbnailType = evt.currentTarget.getAttribute(
       "data-thumbnail-type"
@@ -36,7 +36,6 @@ const _RightBar = (props: RightBarProps) => {
     const filePath = getThumbnailFilePath(item, thumbnailType);
     setThumbnailFilePath(filePath);
   };
-  
 
   const getThumbnailFilePath = (item: ComputedPlayListItem, thumbnailType) => {
     const { label, db_name } = item;
@@ -60,12 +59,13 @@ const _RightBar = (props: RightBarProps) => {
   const renderThumbnail = (thumbnailType: ThumbnailType) => {
     let child: any;
     if (item) {
-      const filePath = getThumbnailFilePath(item, thumbnailType);
+      let filePath = getThumbnailFilePath(item, thumbnailType);
       const fileExists = ipcRenderer.sendSync(
         AppEvent.IS_FILE_EXISTS,
         filePath
       );
       if (fileExists) {
+        filePath += "?" + renderTime;
         const style = {
           backgroundImage: toBackgroundUrl(filePath)
         };
@@ -118,7 +118,7 @@ const RightBar = styled(_RightBar)`
     padding-left: 10px;
     color: #555;
     user-select: none;
-    text-align:left;
+    text-align: left;
     font-size: 11px;
     line-height: 32px;
     .react-contextmenu-wrapper {
@@ -154,6 +154,7 @@ interface RightBarProps {
   item?: ComputedPlayListItem;
   thumbnailFilePath: string;
   setThumbnailFilePath: (thumbnailFilePath: string) => void;
+  renderTime: number;
 }
 
 export default RightBar;

@@ -35,7 +35,8 @@ const _ResultView = (props: ResultViewProps) => {
     setItemId,
     item,
     executeHandler,
-    missingThumbnailInfos
+    missingThumbnailInfos,
+    renderTime
   } = props;
   const [searching, setSearching] = useState(false);
   const [results, setResults] = useState<Array<ComputedPlayListItem>>([]);
@@ -173,6 +174,7 @@ const _ResultView = (props: ResultViewProps) => {
             setItemId={setItemId}
             thumbnailType={thumbnailType}
             executeHandler={executeHandler}
+            renderTime={renderTime}
           />
         );
       }
@@ -317,6 +319,7 @@ interface ResultViewProps {
   item?: ComputedPlayListItem;
   executeHandler: (itemId: number) => void;
   missingThumbnailInfos: Array<ThumbnailInfo>;
+  renderTime: number;
 }
 
 export default ResultView;

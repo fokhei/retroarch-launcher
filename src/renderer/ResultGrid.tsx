@@ -19,7 +19,8 @@ const _ResultGrid = (props: ResultGridProps) => {
     thumbnailType,
     itemId,
     setItemId,
-    executeHandler
+    executeHandler,
+    renderTime
   } = props;
   const gridRef: RefObject<any> = createRef();
   const [columnCount, setColumnCount] = useState(1);
@@ -51,7 +52,7 @@ const _ResultGrid = (props: ResultGridProps) => {
         const { label, db_name } = data;
         let img = toRetroArchThumbnail(label);
 
-        const filePath = `${thumbnailDir}\/${db_name}\/${thumbnailType}\/${img}`;
+        let filePath = `${thumbnailDir}\/${db_name}\/${thumbnailType}\/${img}`;
         const fileExists = ipcRenderer.sendSync(
           AppEvent.IS_FILE_EXISTS,
           filePath
@@ -59,6 +60,7 @@ const _ResultGrid = (props: ResultGridProps) => {
 
         let style: any = {};
         if (fileExists) {
+          filePath += "?" + renderTime;
           style.backgroundImage = toBackgroundUrl(filePath);
         }
 
@@ -176,6 +178,7 @@ interface ResultGridProps {
   itemId: number;
   setItemId: (itemId: number) => void;
   executeHandler: (itemId: number) => void;
+  renderTime: number;
 }
 
 export default ResultGrid;

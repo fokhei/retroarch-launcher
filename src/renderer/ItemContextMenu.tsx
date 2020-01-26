@@ -24,8 +24,8 @@ const ItemContextMenu = (props: ItemContextMenuProps) => {
       ipcRenderer.send(AppEvent.DOWNLOAD_THUMBNAILS, item);
     } else if (action == ContextMenuAction.GOOGLE_SEARCH_GAME_ITEM) {
       let keyword = "";
-      if (config.shortNames.hasOwnProperty(item.category)) {
-          keyword += config.shortNames[item.category] + "+";
+      if (config.shortNames.hasOwnProperty(item.db_name)) {
+          keyword += config.shortNames[item.db_name] + "+";
       }
       keyword += item.label;
       const q = toGoogleKeyword(keyword);

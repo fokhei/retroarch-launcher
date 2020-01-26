@@ -126,7 +126,7 @@ ipcMain.on(
         event.reply(AppEvent.ITEM_UPDATE, item.id);
       });
       inStr.pipe(outStr);
-    } else if (ext == ".jpg" || ext == ".jpeg") {
+    } else if (ext == ".jpg" || ext == ".jpeg" || ext == ".bmp") {
       Jimp.read(filePath, (err: any, image: any) => {
         if (!err) {
           image.write(outPath, () => {

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { ComputedPlayListItem } from "../libs/ComputedPlaylistItem";
 import { ThumbnailType } from "../libs/ThumbnailType";
 import { toRetroArchThumbnail } from "../libs/toRetroArchThumbnail";
-import { ipcRenderer } from "electron";
+import { ipcRenderer, remote } from "electron";
 import { AppEvent } from "../libs/AppEvent";
 import ThumbnailDropzone from "./ThumbnailDropzone";
 import { ContextMenuId } from "./ContextMenuId";
@@ -20,6 +20,15 @@ const _RightBar = (props: RightBarProps) => {
   } = props;
   const thumbnailDir = config.retroArch.dir.thumbnails.replace(/\\/gi, "/");
 
+  const onThumbnailDoubleClick = (evt: any) => {
+    const thumbnailType = evt.currentTarget.getAttribute(
+      "data-thumbnail-type"
+    ) as ThumbnailType;
+    const filePath = getThumbnailFilePath(item, thumbnailType);
+    remote.shell.openItem(filePath);
+  };
+
+
   const onThumbnailRightClick = (evt: any) => {
     const thumbnailType = evt.currentTarget.getAttribute(
       "data-thumbnail-type"
@@ -27,6 +36,7 @@ const _RightBar = (props: RightBarProps) => {
     const filePath = getThumbnailFilePath(item, thumbnailType);
     setThumbnailFilePath(filePath);
   };
+  
 
   const getThumbnailFilePath = (item: ComputedPlayListItem, thumbnailType) => {
     const { label, db_name } = item;
@@ -69,6 +79,7 @@ const _RightBar = (props: RightBarProps) => {
               className={className}
               style={style}
               data-thumbnail-type={thumbnailType}
+              onDoubleClick={onThumbnailDoubleClick}
               onContextMenu={onThumbnailRightClick}
             />
           </ContextMenuTrigger>

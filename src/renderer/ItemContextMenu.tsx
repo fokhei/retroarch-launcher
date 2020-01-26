@@ -29,7 +29,6 @@ const ItemContextMenu = (props: ItemContextMenuProps) => {
       }
       keyword += item.label;
       const q = toGoogleKeyword(keyword);
-
       shell.openExternal(`https://www.google.com/search?tbm=isch&q=${q}`);
     }
   };

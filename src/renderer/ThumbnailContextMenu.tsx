@@ -12,8 +12,11 @@ const ThumbnailContextMenu = (props: ThumbnailContextMenuProps) => {
   const onMenuItemClick = (_evt: any, data: any) => {
     //console.log("onMenuItemClick", data.action);
     const { action } = data;
-
-    if (action == ContextMenuAction.SHOW_THUMBNAIL_DIRECTORY) {
+    if (action == ContextMenuAction.OPEN_THUMBNAIL) {
+      if (thumbnailFilePath) {
+        remote.shell.openItem(thumbnailFilePath);
+      }
+    } else if (action == ContextMenuAction.SHOW_THUMBNAIL_DIRECTORY) {
       if (thumbnailFilePath) {
         remote.shell.showItemInFolder(thumbnailFilePath);
       } else {
@@ -28,6 +31,12 @@ const ThumbnailContextMenu = (props: ThumbnailContextMenuProps) => {
 
   return (
     <ContextMenu id={ContextMenuId.THUMBNAIL}>
+      <MenuItem
+        onClick={onMenuItemClick}
+        data={{ action: ContextMenuAction.OPEN_THUMBNAIL }}
+      >
+        Open Image
+      </MenuItem>
       <MenuItem
         onClick={onMenuItemClick}
         data={{ action: ContextMenuAction.SHOW_THUMBNAIL_DIRECTORY }}

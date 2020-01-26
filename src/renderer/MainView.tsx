@@ -183,7 +183,7 @@ const _MainView = (props: MainViewProps) => {
         item={item}
         playOnRetroArch={playOnRetroArch}
       />
-      <DropZoneContextMenu item={item} />
+      <DropZoneContextMenu config={config} item={item} />
       <ThumbnailContextMenu
         config={config}
         item={item}

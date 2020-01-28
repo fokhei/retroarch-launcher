@@ -112,6 +112,7 @@ ipcMain.on(
     item: ComputedPlayListItem,
     thumbnailType: ThumbnailType
   ) => {
+    prepareThumbnailDir(item);
     const ext = path.extname(filePath).toLowerCase();
     const thumbnailDir = config.retroArch.dir.thumbnails.replace(/\\/gi, "/");
     const dbDir = path.resolve(thumbnailDir, item.db_name);

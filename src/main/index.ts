@@ -51,13 +51,13 @@ ipcMain.on(AppEvent.REFRESH_PLAYLISTS, (event: any) => {
   lpls = [];
   items = [];
   itemsMap = {};
-  const files = fs.readdirSync(config.retroArch.dir.playlists);
+  const files = fs.readdirSync(config.retroArch.playlists);
   files.map((file: string) => {
     const ext = path.extname(file);
     if (ext == ".lpl") {
       lpls.push(file);
       const text: any = fs.readFileSync(
-        path.resolve(config.retroArch.dir.playlists, file)
+        path.resolve(config.retroArch.playlists, file)
       );
       const playlist = JSON.parse(text) as RetroArchPlayList;
       playlist.items.map(item => {
@@ -75,7 +75,7 @@ ipcMain.on(AppEvent.REFRESH_PLAYLIST, (event: any, category: string) => {
   removeItemsByCategory(category);
   const file = category + ".lpl";
   const text: any = fs.readFileSync(
-    path.resolve(config.retroArch.dir.playlists, file)
+    path.resolve(config.retroArch.playlists, file)
   );
   const playlist = JSON.parse(text) as RetroArchPlayList;
   playlist.items.map(item => {
@@ -114,7 +114,7 @@ ipcMain.on(
   ) => {
     prepareThumbnailDir(item);
     const ext = path.extname(filePath).toLowerCase();
-    const thumbnailDir = config.retroArch.dir.thumbnails.replace(/\\/gi, "/");
+    const thumbnailDir = config.retroArch.thumbnails.replace(/\\/gi, "/");
     const dbDir = path.resolve(thumbnailDir, item.db_name);
     const typeDir = path.resolve(dbDir, thumbnailType);
     let img = toRetroArchThumbnail(item.label);
@@ -213,7 +213,7 @@ const getThumbnailInfo = (
   item: ComputedPlayListItem,
   thumbnailType: ThumbnailType
 ): ThumbnailInfo => {
-  const thumbnailDir = config.retroArch.dir.thumbnails.replace(/\\/gi, "/");
+  const thumbnailDir = config.retroArch.thumbnails.replace(/\\/gi, "/");
   const dbDir = path.resolve(thumbnailDir, item.db_name);
   const typeDir = path.resolve(dbDir, thumbnailType);
   const category = encodeURIComponent(item.category);
@@ -249,7 +249,7 @@ const getMissingThumbnailInfos = (
 };
 
 const prepareThumbnailDir = (item: ComputedPlayListItem) => {
-  const thumbnailDir = config.retroArch.dir.thumbnails.replace(/\\/gi, "/");
+  const thumbnailDir = config.retroArch.thumbnails.replace(/\\/gi, "/");
   const dbDir = path.resolve(thumbnailDir, item.db_name);
   if (!fs.existsSync(dbDir)) {
     fs.mkdirSync(dbDir);

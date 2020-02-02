@@ -20,7 +20,7 @@ const ThumbnailContextMenu = (props: ThumbnailContextMenuProps) => {
       if (thumbnailFilePath) {
         remote.shell.showItemInFolder(thumbnailFilePath);
       } else {
-        remote.shell.openItem(config.retroArch.dir.thumbnails);
+        remote.shell.openItem(config.retroArch.thumbnails);
       }
     } else if (action == ContextMenuAction.REMOVE_THUMBNAIL) {
       if (item && thumbnailFilePath) {

@@ -19,7 +19,7 @@ const _RightBar = (props: RightBarProps) => {
     setThumbnailFilePath,
     renderTime
   } = props;
-  const thumbnailDir = config.retroArch.dir.thumbnails.replace(/\\/gi, "/");
+  const thumbnailDir = config.retroArch.thumbnails.replace(/\\/gi, "/");
 
   const onThumbnailDoubleClick = (evt: any) => {
     const thumbnailType = evt.currentTarget.getAttribute(

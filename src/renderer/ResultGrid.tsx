@@ -24,7 +24,7 @@ const _ResultGrid = (props: ResultGridProps) => {
   } = props;
   const gridRef: RefObject<any> = createRef();
   const [columnCount, setColumnCount] = useState(1);
-  const thumbnailDir = config.retroArch.dir.thumbnails.replace(/\\/gi, "/");
+  const thumbnailDir = config.retroArch.thumbnails.replace(/\\/gi, "/");
 
   const onItemClick = (evt: any) => {
     const itemId = Number(evt.currentTarget.getAttribute("data-item-id"));

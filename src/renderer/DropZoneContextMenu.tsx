@@ -18,15 +18,15 @@ const DropZoneContextMenu = (props: DropZoneContextMenuProps) => {
     } else if (action == ContextMenuAction.DOWNLOAD_SNAPSHOT) {
       ipcRenderer.send(AppEvent.DOWNLOAD_THUMBNAIL, item, ThumbnailType.SNAP);
     } else if (action == ContextMenuAction.SHOW_BOX_THUMBNAIL_DIRECTORY) {
-      let path = config.retroArch.dir.thumbnails;
+      let path = config.retroArch.thumbnails;
       path += "\\" + item.category + "\\" + ThumbnailType.BOX + "\\";
       remote.shell.openItem(path);
     } else if (action == ContextMenuAction.SHOW_TITLE_THUMBNAIL_DIRECTORY) {
-      let path = config.retroArch.dir.thumbnails;
+      let path = config.retroArch.thumbnails;
       path += "\\" + item.category + "\\" + ThumbnailType.TITLE + "\\";
       remote.shell.openItem(path);
     } else if (action == ContextMenuAction.SHOW_SNAP_THUMBNAIL_DIRECTORY) {
-      let path = config.retroArch.dir.thumbnails;
+      let path = config.retroArch.thumbnails;
       path += "\\" + item.category + "\\" + ThumbnailType.SNAP + "\\";
       remote.shell.openItem(path);
     }

@@ -17,7 +17,7 @@ const PaylistContextMenu = (props: PaylistContextMenuProps) => {
     } else if (action == ContextMenuAction.DOWNLOAD_PLAYLIST_THUMBNAILS) {
       ipcRenderer.send(AppEvent.DOWNLOAD_PLAYLIST_THUMBNAILS, category);
     } else if (action == ContextMenuAction.SHOW_PAYLIST_DIRECTORY) {
-      const path = config.retroArch.dir.playlists;
+      const path = config.retroArch.playlists;
       if (category == CategoryAll) {
         remote.shell.openItem(path);
       } else {

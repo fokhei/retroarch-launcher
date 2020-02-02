@@ -8,6 +8,12 @@
     "dist": "yarn compile && electron-builder",
     "dist:dir": "yarn dist --dir -c.compression=store -c.mac.identity=null"
   },
+  "build": {
+    "extraFiles": [
+      "config.json"
+    ]
+  },
+
   "devDependencies": {
     "@types/debounce": "^1.2.0",
     "@types/lazy.js": "^0.5.2",

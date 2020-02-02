@@ -1,7 +1,7 @@
 import React from "react";
 import { ContextMenu, MenuItem } from "react-contextmenu";
 import { ContextMenuId } from "./ContextMenuId";
-import { remote, ipcRenderer } from "electron";
+import { remote, ipcRenderer, clipboard } from "electron";
 import { ContextMenuAction } from "./ContextMenuAction";
 import { AppEvent } from "../libs/AppEvent";
 import { CategoryAll } from "./MainView";
@@ -11,7 +11,10 @@ const PaylistContextMenu = (props: PaylistContextMenuProps) => {
   const onMenuItemClick = (_evt: any, data: any) => {
     //console.log("onMenuItemClick", data.action);
     const { action } = data;
-    if (action == ContextMenuAction.DOWNLOAD_PLAYLIST_THUMBNAILS) {
+
+    if (action == ContextMenuAction.COPY_PLAYLIST_NAME) {
+      clipboard.writeText(category, "selection");
+    } else if (action == ContextMenuAction.DOWNLOAD_PLAYLIST_THUMBNAILS) {
       ipcRenderer.send(AppEvent.DOWNLOAD_PLAYLIST_THUMBNAILS, category);
     } else if (action == ContextMenuAction.SHOW_PAYLIST_DIRECTORY) {
       const path = config.retroArch.dir.playlists;
@@ -31,6 +34,13 @@ const PaylistContextMenu = (props: PaylistContextMenuProps) => {
 
   return (
     <ContextMenu id={ContextMenuId.PLAYLIST}>
+      <MenuItem
+        onClick={onMenuItemClick}
+        data={{ action: ContextMenuAction.COPY_PLAYLIST_NAME }}
+      >
+        Copy name
+      </MenuItem>
+
       <MenuItem
         onClick={onMenuItemClick}
         data={{ action: ContextMenuAction.DOWNLOAD_PLAYLIST_THUMBNAILS }}

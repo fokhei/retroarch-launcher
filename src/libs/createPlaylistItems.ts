@@ -31,6 +31,8 @@ export const createPlaylistItems = (
       if (indexes.hasOwnProperty(titleId)) {
         const index = indexes[titleId];
         gameName = index.gameName;
+      } else {
+        gameName = arrs[1];
       }
     }
 

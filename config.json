@@ -34,15 +34,17 @@
       "romsPath": "D:\\roms\\Nintendo - Nintendo 3DS\\chinese",
       "thumbnailDB": "Nintendo - Nintendo 3DS",
       "dllName": "",
-      "options": {}
+      "options": {
+        "datPath": "D:\\roms\\dats\\No-Intro\\Nintendo - Nintendo 3DS (Encrypted) (20200110-095855).dat",
+        "datParser": "NoIntro_3ds"
+      }
     },
 
     "Nintendo - Game Boy": {
       "shortName": "gb",
       "romsPath": "D:\\roms\\Nintendo - Game Boy",
       "thumbnailDB": "Nintendo - Game Boy",
-      "dllName": "gambatte_libretro.dll",
-      "options": {}
+      "dllName": "gambatte_libretro.dll"
     },
 
     "Nintendo - Switch": {

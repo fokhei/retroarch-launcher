@@ -51,6 +51,8 @@ const _PlaylistCreator = (props: PlaylistCreatorProps) => {
   const onItemClick = (evt: any) => {
     const category = evt.currentTarget.getAttribute("data-category");
     setCategory(category);
+    setLogs([]);
+    setStarted(false);
   };
 
   const renderRow = (props: ListRowProps) => {

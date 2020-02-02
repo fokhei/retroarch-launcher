@@ -2,6 +2,7 @@ import * as path from "path";
 import fs from "fs";
 import { RetroArchPlayList } from "./RetroArchPlayList";
 import { RetroArchPlayListItem } from "./RetroArchPlayListItem";
+import AppConfig from './AppConfig';
 
 export const exportPlaylistFile = (
   config: AppConfig,

@@ -5,6 +5,7 @@ import { remote, ipcRenderer, clipboard } from "electron";
 import { ContextMenuAction } from "./ContextMenuAction";
 import { AppEvent } from "../libs/AppEvent";
 import { CategoryAll } from "./MainView";
+import AppConfig from '../libs/AppConfig';
 
 const PaylistContextMenu = (props: PaylistContextMenuProps) => {
   const { category, config } = props;

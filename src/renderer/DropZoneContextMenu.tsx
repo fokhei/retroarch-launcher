@@ -5,6 +5,7 @@ import { ContextMenuAction } from "./ContextMenuAction";
 import { ComputedPlayListItem } from "../libs/ComputedPlaylistItem";
 import { ThumbnailType } from "../libs/ThumbnailType";
 import { AppEvent } from "../libs/AppEvent";
+import AppConfig from '../libs/AppConfig';
 
 const DropZoneContextMenu = (props: DropZoneContextMenuProps) => {
   const { config, item } = props;

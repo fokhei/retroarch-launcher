@@ -10,6 +10,7 @@ import { CategoryAll } from "./MainView";
 import { ContextMenuTrigger } from "react-contextmenu";
 import { ContextMenuId } from "./ContextMenuId";
 import { ThumbnailInfo } from "../libs/ThumbnailInfos";
+import AppConfig from '../libs/AppConfig';
 
 let _updateResults: any;
 let _category: string = "";

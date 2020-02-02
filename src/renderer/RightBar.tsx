@@ -9,6 +9,7 @@ import ThumbnailDropzone from "./ThumbnailDropzone";
 import { ContextMenuId } from "./ContextMenuId";
 import { ContextMenuTrigger } from "react-contextmenu";
 import { toBackgroundUrl } from "./toBackgroundUrl";
+import AppConfig from '../libs/AppConfig';
 
 const _RightBar = (props: RightBarProps) => {
   const {

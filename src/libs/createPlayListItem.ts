@@ -1,5 +1,6 @@
 import * as path from "path";
 import { RetroArchPlayListItem } from "./RetroArchPlayListItem";
+import AppConfig from './AppConfig';
 
 export const createPlayListItem = (
   config: AppConfig,

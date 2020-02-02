@@ -10,6 +10,7 @@ import {
 } from "react-virtualized";
 import { ipcRenderer } from "electron";
 import { AppEvent } from "../libs/AppEvent";
+import AppConfig from '../libs/AppConfig';
 
 const _PlaylistCreator = (props: PlaylistCreatorProps) => {
   const { className, hideHandler, config } = props;

@@ -9,6 +9,7 @@ import { ContextMenuId } from "./ContextMenuId";
 import { ipcRenderer } from "electron";
 import { AppEvent } from "../libs/AppEvent";
 import { toBackgroundUrl } from "./toBackgroundUrl";
+import AppConfig from '../libs/AppConfig';
 
 const _ResultGrid = (props: ResultGridProps) => {
   const {

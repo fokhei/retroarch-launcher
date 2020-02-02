@@ -15,35 +15,43 @@
       "romsPath": "D:\\roms\\Sony - PlayStation Vita",
       "thumbnailDB": "Sony - PlayStation Vita",
       "dllName": "",
-      "datPath": "D:\\roms\\dats\\noPayStation\\TSV\\GAMES\\PSV_GAMES.tsv"
+      "options": {
+        "datPath": "D:\\roms\\dats\\noPayStation\\TSV\\GAMES\\PSV_GAMES.tsv"
+      }
     },
     "Nintendo - Nintendo 3DS": {
       "shortName": "3ds",
       "romsPath": "D:\\roms\\Nintendo - Nintendo 3DS\\games",
       "thumbnailDB": "Nintendo - Nintendo 3DS",
       "dllName": "",
-      "datPath": "D:\\roms\\dats\\No-Intro\\Nintendo - Nintendo 3DS (Encrypted) (20200110-095855).dat"
+      "options": {
+        "datPath": "D:\\roms\\dats\\No-Intro\\Nintendo - Nintendo 3DS (Encrypted) (20200110-095855).dat"
+      }
     },
     "Nintendo - Nintendo 3DS (Chinese)": {
       "shortName": "3ds",
       "romsPath": "D:\\roms\\Nintendo - Nintendo 3DS\\chinese",
       "thumbnailDB": "Nintendo - Nintendo 3DS",
       "dllName": "",
-      "datPath": ""
+      "options": {}
     },
     "Nintendo - Switch": {
       "shortName": "switch",
       "romsPath": "D:\\roms\\Nintendo - Switch",
       "thumbnailDB": "Nintendo - Nintendo 3DS",
       "dllName": "",
-      "datPath": ""
+      "options": {}
     },
     "Nintendo - GameCube": {
       "shortName": "gamecube",
       "romsPath": "D:\\roms\\Nintendo - GameCube\\redump-gcz",
       "thumbnailDB": "Nintendo - GameCube",
       "dllName": "dolphin_libretro.dll",
-      "datPath": ""
+      "options": {
+        "skipNonFirstDisc": true,
+        "removeLangInfo": true,
+        "removeDiscInfo": true
+      }
     }
   }
 }

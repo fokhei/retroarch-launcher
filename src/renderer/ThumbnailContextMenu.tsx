@@ -5,6 +5,7 @@ import { remote, ipcRenderer } from "electron";
 import { ContextMenuAction } from "./ContextMenuAction";
 import { ComputedPlayListItem } from "../libs/ComputedPlaylistItem";
 import { AppEvent } from "../libs/AppEvent";
+import AppConfig from '../libs/AppConfig';
 
 const ThumbnailContextMenu = (props: ThumbnailContextMenuProps) => {
   const { config, item, thumbnailFilePath } = props;

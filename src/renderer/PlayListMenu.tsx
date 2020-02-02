@@ -12,7 +12,15 @@ import { ContextMenuId } from "./ContextMenuId";
 import { ContextMenuTrigger } from "react-contextmenu";
 
 const _PlayListMenu = (props: PlayListMenuProps) => {
-  const { className, lpls, category, setCategory, setKeyword, createPlaylistHandler } = props;
+  const {
+    className,
+    lpls,
+    category,
+    setCategory,
+    setKeyword,
+    createPlaylistHandler
+  } = props;
+
   const listRef: RefObject<any> = createRef();
 
   const categories: Array<string> = [CategoryAll, ...lpls];
@@ -55,7 +63,7 @@ const _PlayListMenu = (props: PlayListMenuProps) => {
 
   const renderItem = (style: any, index: number) => {
     let child: any;
-    if (index < lpls.length) {
+    if (index < categories.length) {
       const lpl = categories[index];
       const label = lpl.replace(".lpl", "");
       let className = "category";
@@ -105,7 +113,7 @@ const _PlayListMenu = (props: PlayListMenuProps) => {
               width={width}
               height={height}
               deferredMeasurementCache={cellMeasurerCache}
-              rowCount={lpls.length}
+              rowCount={categories.length}
               rowHeight={cellMeasurerCache.rowHeight}
               rowRenderer={renderRow}
               overscanRowCount={1}

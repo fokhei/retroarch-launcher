@@ -18,6 +18,7 @@ import { ThumbnailInfo } from "../libs/ThumbnailInfos";
 import { getFiles } from "../libs/getFiles";
 import { createPlaylistItems } from "../libs/createPlaylistItems";
 import { exportPlaylistFile } from "../libs/exportPlaylistFile";
+import AppConfig from "../libs/AppConfig";
 
 let _id = 0;
 let mainWindow: BrowserWindow | null;
@@ -218,6 +219,10 @@ ipcMain.on(AppEvent.CREATE_PLAYLIST, (event: any, category: string) => {
     .then((files: Array<string>) => {
       const items = createPlaylistItems(config, category, files);
       const message = exportPlaylistFile(config, category, items);
+      const lpl = category + ".lpl";
+      if (!lpls.includes(lpl)) {
+        lpls.push(lpl);
+      }
       event.reply(AppEvent.CREATE_PLAYLIST_MESSAGE, category, message);
     })
     .catch(err => {

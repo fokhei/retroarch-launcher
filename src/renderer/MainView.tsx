@@ -16,6 +16,7 @@ import RomNameContextMenu from "./RomNameContextMenu";
 import DropZoneContextMenu from "./DropZoneContextMenu";
 import { ThumbnailInfo } from "../libs/ThumbnailInfos";
 import PlaylistCreator from "./PlaylistCreator";
+import AppConfig from '../libs/AppConfig';
 
 enum WaitingFor {
   NONE,
@@ -39,7 +40,7 @@ const _MainView = (props: MainViewProps) => {
     Array<ThumbnailInfo>
   >([]);
   const [gridSize, setGridSize] = useState(160);
-  const [playlistCreatorVisible, setPlaylistCreatorVisible] = useState(true);
+  const [playlistCreatorVisible, setPlaylistCreatorVisible] = useState(false);
   const [renderTime, setRenderTime] = useState(new Date().getTime());
 
   const reRender = () => {

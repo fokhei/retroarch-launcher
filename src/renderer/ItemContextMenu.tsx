@@ -6,6 +6,7 @@ import { ContextMenuAction } from "./ContextMenuAction";
 import { toGoogleKeyword } from "../libs/toGoogleKeyword";
 import { ComputedPlayListItem } from "../libs/ComputedPlaylistItem";
 import { AppEvent } from "../libs/AppEvent";
+import AppConfig, { getPlatform } from "../libs/AppConfig";
 
 const ItemContextMenu = (props: ItemContextMenuProps) => {
   const { config, item, playOnRetroArch } = props;
@@ -25,11 +26,9 @@ const ItemContextMenu = (props: ItemContextMenuProps) => {
     } else if (action == ContextMenuAction.GOOGLE_SEARCH_GAME_ITEM) {
       let keyword = "";
 
-      if (config.platforms.hasOwnProperty(item.db_name)) {
-        const platform = config.platforms[item.db_name];
-        if (platform.hasOwnProperty("shortName")) {
-          keyword += platform["shortName"] + "+";
-        }
+      const platform = getPlatform(config, item.db_name);
+      if (platform) {
+        keyword += platform.shortName + "+";
       }
 
       keyword += item.label;

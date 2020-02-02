@@ -5,7 +5,7 @@ import { remote, ipcRenderer, clipboard } from "electron";
 import { ContextMenuAction } from "./ContextMenuAction";
 import { AppEvent } from "../libs/AppEvent";
 import { CategoryAll } from "./MainView";
-import AppConfig from '../libs/AppConfig';
+import AppConfig from "../libs/AppConfig";
 
 const PaylistContextMenu = (props: PaylistContextMenuProps) => {
   const { category, config } = props;
@@ -30,6 +30,8 @@ const PaylistContextMenu = (props: PaylistContextMenuProps) => {
       } else {
         ipcRenderer.send(AppEvent.REFRESH_PLAYLIST, category);
       }
+    } else if (action == ContextMenuAction.REMOVE_PLAYLIST) {
+      ipcRenderer.send(AppEvent.REMOVE_PLAYLIST, category);
     }
   };
 
@@ -60,6 +62,13 @@ const PaylistContextMenu = (props: PaylistContextMenuProps) => {
         data={{ action: ContextMenuAction.REFRESH_PLAYLIST }}
       >
         Refresh playlist
+      </MenuItem>
+
+      <MenuItem
+        onClick={onMenuItemClick}
+        data={{ action: ContextMenuAction.REMOVE_PLAYLIST }}
+      >
+        Remove playlist
       </MenuItem>
     </ContextMenu>
   );

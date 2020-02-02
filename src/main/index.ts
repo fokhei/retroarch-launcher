@@ -91,6 +91,15 @@ ipcMain.on(AppEvent.REFRESH_PLAYLIST, (event: any, category: string) => {
   event.reply(AppEvent.PLAYLISTS, lpls.sort(), items, itemsMap);
 });
 
+ipcMain.on(AppEvent.REMOVE_PLAYLIST, (event: any, category: string) => {
+  removeItemsByCategory(category);
+  lpls = lazy(lpls)
+    .reject(lpl => lpl == category + ".lpl")
+    .toArray()
+    .sort();
+  event.reply(AppEvent.PLAYLISTS, lpls, items, itemsMap);
+});
+
 const createComputedPlayListItem = (
   item: RetroArchPlayListItem,
   category: string

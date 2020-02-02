@@ -15,6 +15,7 @@ import GameNameContextMenu from "./GameNameContextMenu";
 import RomNameContextMenu from "./RomNameContextMenu";
 import DropZoneContextMenu from "./DropZoneContextMenu";
 import { ThumbnailInfo } from "../libs/ThumbnailInfos";
+import PlaylistCreator from "./PlaylistCreator";
 
 enum WaitingFor {
   NONE,
@@ -38,6 +39,7 @@ const _MainView = (props: MainViewProps) => {
     Array<ThumbnailInfo>
   >([]);
   const [gridSize, setGridSize] = useState(160);
+  const [playlistCreatorVisible, setPlaylistCreatorVisible] = useState(true);
   const [renderTime, setRenderTime] = useState(new Date().getTime());
 
   const reRender = () => {
@@ -91,12 +93,22 @@ const _MainView = (props: MainViewProps) => {
     setMissingThumbnailInfos(infos);
   };
 
+  const showPlaylistCreator = () => {
+    setPlaylistCreatorVisible(true);
+  };
+
+  const hidePlaylistcreator = () => {
+    setPlaylistCreatorVisible(false);
+  };
+
   const playOnRetroArch = () => {
     if (config) {
       const { path, core_path } = item;
       if (core_path) {
+        // console.log(core_path);
+        // console.log(path);
         child_process.spawn(config.retroArch.exe, ["-L", core_path, path], {
-          shell: true
+          // shell: true
         });
       } else {
         alert("core_path is not yet set on this item.");
@@ -112,6 +124,7 @@ const _MainView = (props: MainViewProps) => {
           category={category}
           setCategory={onSetCategory}
           setKeyword={setKeyword}
+          createPlaylistHandler={showPlaylistCreator}
         />
       );
     }
@@ -156,6 +169,15 @@ const _MainView = (props: MainViewProps) => {
     return undefined;
   };
 
+  const renderPlaylistCreator = () => {
+    if (playlistCreatorVisible && config) {
+      return (
+        <PlaylistCreator hideHandler={hidePlaylistcreator} config={config} />
+      );
+    }
+    return undefined;
+  };
+
   const mountEffect = () => {
     ipcRenderer.on(AppEvent.CRITICAL_ERROR, onCriticalError);
     ipcRenderer.on(AppEvent.CONFIG, onAppConfig);
@@ -177,6 +199,7 @@ const _MainView = (props: MainViewProps) => {
       {renderPlayLists()}
       {renderResultView()}
       {renderRightBar()}
+      {renderPlaylistCreator()}
       <GameNameContextMenu item={item} />
       <RomNameContextMenu item={item} />
       <PaylistContextMenu config={config} category={category} />

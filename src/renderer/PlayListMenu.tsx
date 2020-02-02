@@ -12,7 +12,7 @@ import { ContextMenuId } from "./ContextMenuId";
 import { ContextMenuTrigger } from "react-contextmenu";
 
 const _PlayListMenu = (props: PlayListMenuProps) => {
-  const { className, lpls, category, setCategory, setKeyword } = props;
+  const { className, lpls, category, setCategory, setKeyword, createPlaylistHandler } = props;
   const listRef: RefObject<any> = createRef();
 
   const categories: Array<string> = [CategoryAll, ...lpls];
@@ -113,6 +113,9 @@ const _PlayListMenu = (props: PlayListMenuProps) => {
           )}
         </AutoSizer>
       </div>
+      <div className="foot">
+        <a onClick={createPlaylistHandler}>Create Playlist</a>
+      </div>
     </div>
   );
 };
@@ -131,7 +134,7 @@ const PlayListMenu = styled(_PlayListMenu)`
     input {
       width: 100%;
       background-color: transparent;
-      border:none;
+      border: none;
       color: orange;
       padding: 2px 5px;
     }
@@ -158,6 +161,19 @@ const PlayListMenu = styled(_PlayListMenu)`
       }
     }
   }
+  > .foot {
+    height: 32px;
+    padding: 5px 12px;
+    text-align: right;
+    a {
+      user-select: none;
+      cursor: pointer;
+      color: #999;
+      &:hover {
+        color: orange;
+      }
+    }
+  }
 `;
 
 interface PlayListMenuProps {
@@ -166,6 +182,7 @@ interface PlayListMenuProps {
   category: string;
   setCategory: (category: string) => void;
   setKeyword: (keyword: string) => void;
+  createPlaylistHandler: () => void;
 }
 
 export default PlayListMenu;

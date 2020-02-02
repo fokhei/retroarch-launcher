@@ -15,6 +15,9 @@ import lazy from "lazy.js";
 import { RetroArchPlayListItem } from "../libs/RetroArchPlayListItem";
 import request from "request";
 import { ThumbnailInfo } from "../libs/ThumbnailInfos";
+import { getFiles } from "../libs/getFiles";
+import { createPlaylistItems } from "../libs/createPlaylistItems";
+import { exportPlaylistFile } from "../libs/exportPlaylistFile";
 
 let _id = 0;
 let mainWindow: BrowserWindow | null;
@@ -208,6 +211,19 @@ ipcMain.on(
     }
   }
 );
+
+ipcMain.on(AppEvent.CREATE_PLAYLIST, (event: any, category: string) => {
+  const platform = config.platforms[category];
+  getFiles(platform.romsPath)
+    .then((files: Array<string>) => {
+      const items = createPlaylistItems(config, category, files);
+      const message = exportPlaylistFile(config, category, items);
+      event.reply(AppEvent.CREATE_PLAYLIST_MESSAGE, category, message);
+    })
+    .catch(err => {
+      event.reply(AppEvent.ERROR, err);
+    });
+});
 
 const getThumbnailInfo = (
   item: ComputedPlayListItem,

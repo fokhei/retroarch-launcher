@@ -1,5 +1,9 @@
 interface platforms {
-  shortName?: string;
+  shortName: string;
+  romsPath: string;
+  thumbnailDB: string;
+  dllName: string;
+  datPath: string;
 }
 
 interface AppConfig {

@@ -10,15 +10,7 @@
     "height": 560
   },
   "platforms": {
-    "Sony - Playstation Vita": {
-      "shortName": "psv",
-      "romsPath": "D:\\roms\\Sony - PlayStation Vita",
-      "thumbnailDB": "Sony - PlayStation Vita",
-      "dllName": "",
-      "options": {
-        "datPath": "D:\\roms\\dats\\noPayStation\\TSV\\GAMES\\PSV_GAMES.tsv"
-      }
-    },
+    
     "Nintendo - Nintendo 3DS": {
       "shortName": "3ds",
       "romsPath": "D:\\roms\\Nintendo - Nintendo 3DS\\games",
@@ -66,6 +58,16 @@
         "skipNonFirstDisc": true,
         "removeLang": true,
         "removeDisc": true
+      }
+    },
+    "Sony - Playstation Vita": {
+      "shortName": "psv",
+      "romsPath": "D:\\roms\\Sony - PlayStation Vita",
+      "thumbnailDB": "Sony - PlayStation Vita",
+      "dllName": "",
+      "options": {
+        "datPath": "D:\\roms\\dats\\noPayStation\\TSV\\GAMES\\PSV_GAMES.tsv",
+        "datParser": "noPayStation_Psv_Tsv"
       }
     }
   }

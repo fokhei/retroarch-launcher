@@ -16,7 +16,7 @@ import RomNameContextMenu from "./RomNameContextMenu";
 import DropZoneContextMenu from "./DropZoneContextMenu";
 import { ThumbnailInfo } from "../libs/ThumbnailInfos";
 import PlaylistCreator from "./PlaylistCreator";
-import AppConfig from '../libs/AppConfig';
+import AppConfig from "../libs/AppConfig";
 
 enum WaitingFor {
   NONE,
@@ -173,7 +173,11 @@ const _MainView = (props: MainViewProps) => {
   const renderPlaylistCreator = () => {
     if (playlistCreatorVisible && config) {
       return (
-        <PlaylistCreator hideHandler={hidePlaylistcreator} config={config} />
+        <PlaylistCreator
+          hideHandler={hidePlaylistcreator}
+          config={config}
+          selectCategory={onSetCategory}
+        />
       );
     }
     return undefined;

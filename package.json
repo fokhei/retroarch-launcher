@@ -29,6 +29,7 @@
     "webpack": "~4.35.3"
   },
   "dependencies": {
+    "csv-parse": "^4.8.5",
     "debounce": "^1.2.0",
     "jimp": "^0.9.3",
     "lazy.js": "^0.5.1",

@@ -9,6 +9,37 @@ import { removeVersionBracket } from "./removeVersionBracket";
 import { removeNintendoTitleIdBracket } from "./removeNintendoTitleIdBracket";
 import { DatIndexes } from "./createDatIndexes";
 
+const updateGameNameByNoIntro3ds = (
+  romName: string,
+  indexes: DatIndexes,
+  _defaultGameName: string
+): string => {
+  const reg = /(.+)\s\[([ABCDEF\d]{16})\]/gi;
+  const arrs = reg.exec(romName);
+  const id = arrs[2];
+  if (indexes.hasOwnProperty(id)) {
+    const index = indexes[id];
+    return index.gameName;
+  } else {
+    return arrs[1];
+  }
+};
+
+const updateGameNameByNoPayStationPsvTsv = (
+  romName: string,
+  indexes: DatIndexes,
+  defaultGameName: string
+): string => {
+  const id = romName.match(/\w{4}\d{5}/);
+  if (id) {
+    if (indexes.hasOwnProperty(id.toString())) {
+      const index = indexes[id.toString()];
+      return index.gameName;
+    }
+  }
+  return defaultGameName;
+};
+
 export const createPlaylistItems = (
   config: AppConfig,
   category: string,
@@ -25,15 +56,9 @@ export const createPlaylistItems = (
 
     const datParser = getPlatformOptions(platform, "datParser") as DatParser;
     if (datParser == DatParser.NoIntro_3ds) {
-      const reg = /(.+)\s\[([ABCDEF\d]{16})\]/gi;
-      const arrs = reg.exec(romName);
-      const titleId = arrs[2];
-      if (indexes.hasOwnProperty(titleId)) {
-        const index = indexes[titleId];
-        gameName = index.gameName;
-      } else {
-        gameName = arrs[1];
-      }
+      gameName = updateGameNameByNoIntro3ds(romName, indexes, gameName);
+    } else if (datParser == DatParser.noPayStation_Psv_Tsv) {
+      gameName = updateGameNameByNoPayStationPsvTsv(romName, indexes, gameName);
     }
 
     let skip = false;

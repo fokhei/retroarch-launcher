@@ -13,7 +13,7 @@ import { AppEvent } from "../libs/AppEvent";
 import AppConfig from '../libs/AppConfig';
 
 const _PlaylistCreator = (props: PlaylistCreatorProps) => {
-  const { className, hideHandler, config } = props;
+  const { className, hideHandler, config, selectCategory } = props;
   const listRef: RefObject<any> = createRef();
   const [category, setCategory] = useState("");
   const [started, setStarted] = useState(false);
@@ -35,6 +35,7 @@ const _PlaylistCreator = (props: PlaylistCreatorProps) => {
     message: string
   ) => {
     setLogs([...logs, message]);
+    selectCategory(category);
     ipcRenderer.send(AppEvent.REFRESH_PLAYLIST, category);
   };
 
@@ -255,6 +256,7 @@ interface PlaylistCreatorProps {
   className?: string;
   hideHandler: () => void;
   config: AppConfig;
+  selectCategory: (category: string) => void;
 }
 
 export default PlaylistCreator;

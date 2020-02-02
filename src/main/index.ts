@@ -18,7 +18,8 @@ import { ThumbnailInfo } from "../libs/ThumbnailInfos";
 import { getFiles } from "../libs/getFiles";
 import { createPlaylistItems } from "../libs/createPlaylistItems";
 import { exportPlaylistFile } from "../libs/exportPlaylistFile";
-import AppConfig from "../libs/AppConfig";
+import AppConfig, { getPlatformOptions } from "../libs/AppConfig";
+import { createDatIndexes } from "../libs/createDatIndexes";
 
 let _id = 0;
 let mainWindow: BrowserWindow | null;
@@ -217,7 +218,12 @@ ipcMain.on(AppEvent.CREATE_PLAYLIST, (event: any, category: string) => {
   const platform = config.platforms[category];
   getFiles(platform.romsPath)
     .then((files: Array<string>) => {
-      const items = createPlaylistItems(config, category, files);
+      if (getPlatformOptions(platform, "datPath")) {
+      }
+
+      const indexes = createDatIndexes(config, category);
+      const items = createPlaylistItems(config, category, files, indexes);
+
       const message = exportPlaylistFile(config, category, items);
       const lpl = category + ".lpl";
       if (!lpls.includes(lpl)) {

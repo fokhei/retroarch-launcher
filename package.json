@@ -13,7 +13,6 @@
       "config.json"
     ]
   },
-
   "devDependencies": {
     "@types/debounce": "^1.2.0",
     "@types/lazy.js": "^0.5.2",
@@ -40,6 +39,7 @@
     "request": "^2.88.0",
     "rimraf": "^3.0.0",
     "source-map-support": "^0.5.12",
-    "styled-components": "^4.2.0"
+    "styled-components": "^4.2.0",
+    "xml-js": "^1.6.11"
   }
 }

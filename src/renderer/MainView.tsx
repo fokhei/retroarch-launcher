@@ -40,7 +40,7 @@ const _MainView = (props: MainViewProps) => {
     Array<ThumbnailInfo>
   >([]);
   const [gridSize, setGridSize] = useState(160);
-  const [playlistCreatorVisible, setPlaylistCreatorVisible] = useState(false);
+  const [playlistCreatorVisible, setPlaylistCreatorVisible] = useState(true);
   const [renderTime, setRenderTime] = useState(new Date().getTime());
 
   const reRender = () => {

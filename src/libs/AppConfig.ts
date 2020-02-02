@@ -13,6 +13,11 @@ interface PlatformOptions {
   removeVersion?: boolean;
   removeTitleId?: boolean;
   datPath?: string;
+  datParser?: DatParser;
+}
+
+export enum DatParser {
+  NoIntro_3ds = "NoIntro_3ds"
 }
 
 export interface AppConfig {

@@ -1,3 +1,9 @@
+interface platforms {
+  shortName?: string;
+  
+}
+
+
 interface AppConfig {
   retroArch: {
     exe: string;
@@ -8,7 +14,7 @@ interface AppConfig {
     };
   };
   windowOption: Electron.BrowserWindowConstructorOptions;
-  shortNames: {
-    [key: string]: string
+  platforms: {
+    [key: string]: platforms
   }
 }

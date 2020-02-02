@@ -24,9 +24,14 @@ const ItemContextMenu = (props: ItemContextMenuProps) => {
       ipcRenderer.send(AppEvent.DOWNLOAD_THUMBNAILS, item);
     } else if (action == ContextMenuAction.GOOGLE_SEARCH_GAME_ITEM) {
       let keyword = "";
-      if (config.shortNames.hasOwnProperty(item.db_name)) {
-          keyword += config.shortNames[item.db_name] + "+";
+
+      if (config.platforms.hasOwnProperty(item.db_name)) {
+        const platform = config.platforms[item.db_name];
+        if (platform.hasOwnProperty("shortName")) {
+          keyword += platform["shortName"] + "+";
+        }
       }
+
       keyword += item.label;
       const q = toGoogleKeyword(keyword);
       shell.openExternal(`https://www.google.com/search?tbm=isch&q=${q}`);

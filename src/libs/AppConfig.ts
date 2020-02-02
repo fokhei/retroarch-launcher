@@ -8,8 +8,10 @@ interface Platform {
 
 interface PlatformOptions {
   skipNonFirstDisc?: boolean;
-  removeLangInfo?: boolean;
-  removeDiscInfo?: boolean;
+  removeLang?: boolean;
+  removeDisc?: boolean;
+  removeVersion?: boolean;
+  removeTitleId?: boolean;
   datPath?: string;
 }
 

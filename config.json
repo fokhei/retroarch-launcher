@@ -38,9 +38,12 @@
     "Nintendo - Switch": {
       "shortName": "switch",
       "romsPath": "D:\\roms\\Nintendo - Switch",
-      "thumbnailDB": "Nintendo - Nintendo 3DS",
+      "thumbnailDB": "Nintendo - Switch",
       "dllName": "",
-      "options": {}
+      "options": {
+        "removeVersion": true,
+        "removeTitleId": true
+      }
     },
     "Nintendo - GameCube": {
       "shortName": "gamecube",
@@ -49,8 +52,8 @@
       "dllName": "dolphin_libretro.dll",
       "options": {
         "skipNonFirstDisc": true,
-        "removeLangInfo": true,
-        "removeDiscInfo": true
+        "removeLang": true,
+        "removeDisc": true
       }
     }
   }

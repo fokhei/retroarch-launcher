@@ -4,6 +4,9 @@ import { RetroArchPlayListItem } from "./RetroArchPlayListItem";
 import AppConfig, { getPlatformOptions } from "./AppConfig";
 import { removeLangBracket } from "./removeLangBracket";
 import { removeDiscBracket } from "./removeDiscBracket";
+import { removeAlias } from "./removeAlias";
+import { removeVersionBracket } from "./removeVersionBracket";
+import { removeNintendoTitleIdBracket } from "./removeNintendoTitleIdBracket";
 
 export const createPlaylistItems = (
   config: AppConfig,
@@ -14,9 +17,10 @@ export const createPlaylistItems = (
 
   let items = [];
   files.forEach(file => {
-    const romName = path.basename(file);
+    const romName = removeAlias(path.basename(file));
     const ext = path.extname(romName);
     let gameName = romName.replace(ext, "");
+
     let skip = false;
 
     //skipNonFirstDisc
@@ -31,13 +35,20 @@ export const createPlaylistItems = (
     }
 
     if (!skip) {
-      if (getPlatformOptions(platform, "removeLangInfo")) {
+      if (getPlatformOptions(platform, "removeLang")) {
         gameName = removeLangBracket(gameName);
       }
-      if (getPlatformOptions(platform, "removeDiscInfo")) {
+      if (getPlatformOptions(platform, "removeDisc")) {
         gameName = removeDiscBracket(gameName);
       }
+      if (getPlatformOptions(platform, "removeVersion")) {
+        gameName = removeVersionBracket(gameName);
+      }
+      if (getPlatformOptions(platform, "removeTitleId")) {
+        gameName = removeNintendoTitleIdBracket(gameName);
+      }
 
+      gameName = gameName.trim();
       const item = createPlayListItem(config, category, file, gameName);
       items.push(item);
     }

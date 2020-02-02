@@ -59,6 +59,27 @@
         "removeDisc": true
       }
     },
+    "Sony - PlayStation": {
+      "shortName": "ps1",
+      "romsPath": "D:\\roms\\Sony - PlayStation\\redump",
+      "thumbnailDB": "Sony - PlayStation",
+      "dllName": "pcsx_rearmed_libretro.dll",
+      "options": {
+        "skipNonFirstDisc": true,
+        "removeDisc": true
+      }
+    },
+
+    "Sony - PlayStation Portable": {
+      "shortName": "psp",
+      "romsPath": "D:\\roms\\Sony - PlayStation Portable\\cso",
+      "thumbnailDB": "Sony - PlayStation Portable",
+      "dllName": "ppsspp_libretro.dll",
+      "options": {
+        "skipNonFirstDisc": true
+      }
+    },
+
     "Sony - Playstation Vita": {
       "shortName": "psv",
       "romsPath": "D:\\roms\\Sony - PlayStation Vita",

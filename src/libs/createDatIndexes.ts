@@ -14,7 +14,8 @@ export interface DatIndexes {
 
 const readXmlAsJs = (datPath: string): any => {
   const xml = fs.readFileSync(datPath, "utf8");
-  return convert.xml2js(xml, { compact: true, spaces: 4 });
+  const convertAny = convert.xml2js as any;
+  return convertAny(xml, { compact: true, spaces: 4 });
 };
 
 const createIndexByNoIntro3DS = (datPath: string, indexes: DatIndexes) => {

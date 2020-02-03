@@ -14,6 +14,8 @@ interface PlatformOptions {
   removeTitleId?: boolean;
   datPath?: string;
   datParser?: DatParser;
+  includeRomOfs?: Array<string>;
+  excludeRomOfs?: Array<string>;
 }
 
 export enum DatParser {

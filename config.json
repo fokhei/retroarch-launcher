@@ -112,8 +112,21 @@
       "options": {
         "datPath": "D:\\roms\\dats\\MAME 0.216 (Arcade).dat",
         "datParser": "mame",
+        "excludeRomOfs": ["awbios", "naomi"],
         "exportStatus": ["good", "imperfect"],
         "exportYear": 1984
+      }
+    },
+
+    "Sega - Naomi - Atomiswave": {
+      "shortName": "naomi",
+      "romsPath": "D:\\roms\\MAME\\v0.216-merged",
+      "thumbnailDB": "MAME",
+      "dllName": "flycast_libretro.dll",
+      "options": {
+        "datPath": "D:\\roms\\dats\\MAME 0.216 (Arcade).dat",
+        "datParser": "mame",
+        "includeRomOfs": ["awbios", "naomi"]
       }
     }
   }

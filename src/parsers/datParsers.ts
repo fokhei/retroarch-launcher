@@ -75,6 +75,7 @@ const datParsers: DatParsers = {
       DriverStatus
     >;
     const exportYear = getPlatformOptions(platform, "exportYear") as number;
+
     const js = readXmlAsJs(datPath);
     const games = js.datafile.game;
     const { length } = games;
@@ -98,7 +99,7 @@ const datParsers: DatParsers = {
         }
       }
 
-      if (exportYear) {
+      if (!isNaN(exportYear)) {
         const year = Number(game.year._text.substr(0, 4));
         if (year < exportYear) {
           continue;
@@ -118,6 +119,15 @@ const datParsers: DatParsers = {
   [ParserType.mame]: (props: DatParsersProps) => {
     const { platform, indexes } = props;
     const datPath = getPlatformOptions(platform, "datPath") as string;
+    const excludeRomOfs = getPlatformOptions(
+      platform,
+      "excludeRomOfs"
+    ) as Array<string>;
+    const includeRomOfs = getPlatformOptions(
+      platform,
+      "includeRomOfs"
+    ) as Array<string>;
+
     const js = readXmlAsJs(datPath);
     const games = js.datafile.machine;
     const { length } = games;
@@ -128,10 +138,18 @@ const datParsers: DatParsers = {
       if (isdevice || isbios) {
         continue;
       }
-      if (["awbios", "naomi"].includes(romof)) {
-        //exclude Naomi and Atomiswave System
-        continue;
+      if (excludeRomOfs && excludeRomOfs.length) {
+        if (excludeRomOfs.includes(romof)) {
+          continue;
+        }
       }
+
+      if (includeRomOfs && includeRomOfs.length) {
+        if (!includeRomOfs.includes(romof)) {
+          continue;
+        }
+      }
+
       let diskName = "";
       if (game.hasOwnProperty("disk")) {
         const disk = game.disk;

@@ -91,7 +91,7 @@ export const exportMamePlaylistFiles = (
               key = "chd";
               const diskPath = path.resolve(
                 romsPath,
-                romName,
+                romName.replace(".zip", ""),
                 index.diskName + ".chd"
               );
               diskExist = fs.existsSync(diskPath);

@@ -4,11 +4,17 @@ import { RetroArchPlayList } from "./RetroArchPlayList";
 import { RetroArchPlayListItem } from "./RetroArchPlayListItem";
 import AppConfig from "./AppConfig";
 
+export interface ExportPlaylistResult {
+  lpl: string;
+  distFile: string;
+  itemCount: number;
+}
+
 export const exportPlaylistFile = (
   config: AppConfig,
   category: string,
   items: Array<RetroArchPlayListItem>
-) => {
+): ExportPlaylistResult => {
   const playlist: RetroArchPlayList = {
     version: new Date().getTime().toString(),
     default_core_path: "",
@@ -18,7 +24,12 @@ export const exportPlaylistFile = (
     left_thumbnail_mode: 0,
     items
   };
-  const distFile = path.resolve(config.retroArch.playlists, category + ".lpl");
+  const lpl = category + ".lpl";
+  const distFile = path.resolve(config.retroArch.playlists, lpl);
   fs.writeFileSync(distFile, JSON.stringify(playlist, null, 4));
-  return `${items.length} game(s) export to ${distFile}`;
+  return {
+    lpl,
+    distFile,
+    itemCount: items.length
+  };
 };

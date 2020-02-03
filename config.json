@@ -102,6 +102,19 @@
         "exportStatus": ["good", "imperfect"],
         "exportYear": 1984
       }
+    },
+
+    "MAME": {
+      "shortName": "mame",
+      "romsPath": "D:\\roms\\MAME\\v0.216-merged",
+      "thumbnailDB": "MAME",
+      "dllName": "mame_libretro.dll",
+      "options": {
+        "datPath": "D:\\roms\\dats\\MAME 0.216 (Arcade).dat",
+        "datParser": "mame",
+        "exportStatus": ["good", "imperfect"],
+        "exportYear": 1984
+      }
     }
   }
 }

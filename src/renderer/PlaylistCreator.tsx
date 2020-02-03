@@ -11,6 +11,7 @@ import {
 import { ipcRenderer } from "electron";
 import { AppEvent } from "../libs/AppEvent";
 import AppConfig from "../libs/AppConfig";
+import { ExportPlaylistResult } from "../libs/exportPlaylistFile";
 
 const _PlaylistCreator = (props: PlaylistCreatorProps) => {
   const { className, hideHandler, config, selectCategory } = props;
@@ -18,7 +19,7 @@ const _PlaylistCreator = (props: PlaylistCreatorProps) => {
   const [category, setCategory] = useState("");
   const [started, setStarted] = useState(false);
   const [ended, setEnded] = useState(false);
-  const [logs, setLogs] = useState<Array<string>>([]);
+  const [logs, setLogs] = useState<Array<ExportPlaylistResult | Error>>([]);
 
   const categories = lazy(Object.keys(config.platforms))
     .toArray()
@@ -33,17 +34,17 @@ const _PlaylistCreator = (props: PlaylistCreatorProps) => {
   const onCreatePlaylistSuccess = (
     _evt: any,
     category: string,
-    message: string
+    results: Array<ExportPlaylistResult>
   ) => {
-    setLogs([...logs, message]);
+    let _logs = [].concat(logs, results);
+    setLogs(_logs);
     selectCategory(category);
     setEnded(true);
-    ipcRenderer.send(AppEvent.REFRESH_PLAYLIST, category);
+    ipcRenderer.send(AppEvent.REFRESH_PLAYLISTS);
   };
 
-  const onCreatePlaylistError = (_evt: any, error: any) => {
-    let _logs = [].concat(logs, error);
-    setLogs(_logs);
+  const onCreatePlaylistError = (_evt: any, _error: any) => {
+    setLogs([new Error("Error on create play list!")]);
     setEnded(true);
   };
 
@@ -157,11 +158,25 @@ const _PlaylistCreator = (props: PlaylistCreatorProps) => {
 
   const renderLogs = () => {
     if (started) {
-      return (
-        <div className="logs">
-          <pre>{logs.join("/r/n")}</pre>
-        </div>
-      );
+      let childs: Array<any> = [];
+      logs.map((log, index) => {
+        if (log.hasOwnProperty("itemCount")) {
+          const { lpl, itemCount } = log as ExportPlaylistResult;
+          const message = `${itemCount} game(s) export to ${lpl}`;
+          childs.push(
+            <div key={index} className="log success">
+              {message}
+            </div>
+          );
+        } else {
+          childs.push(
+            <div key={index} className="log error">
+              {log.toString()}
+            </div>
+          );
+        }
+      });
+      return <div className="logs">{childs}</div>;
     }
     return null;
   };
@@ -262,6 +277,15 @@ const PlaylistCreator = styled(_PlaylistCreator)`
     }
     > .logs {
       padding: 20px 20px 20px 20px;
+      .log {
+        padding: 5px;
+        &.success {
+          color: green;
+        }
+        &.error {
+          color: red;
+        }
+      }
     }
   }
 

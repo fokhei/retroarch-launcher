@@ -17,9 +17,13 @@ import request from "request";
 import { ThumbnailInfo } from "../libs/ThumbnailInfos";
 import { getFiles } from "../libs/getFiles";
 import { createPlaylistItems } from "../libs/createPlaylistItems";
-import { exportPlaylistFile } from "../libs/exportPlaylistFile";
+import {
+  exportPlaylistFile,
+  ExportPlaylistResult
+} from "../libs/exportPlaylistFile";
 import AppConfig from "../libs/AppConfig";
 import { createDatIndexes } from "../libs/createDatIndexes";
+import { exportMamePlaylistFiles } from "../libs/exportMamePlaylistFiles";
 
 let _id = 0;
 let mainWindow: BrowserWindow | null;
@@ -224,27 +228,46 @@ ipcMain.on(
 );
 
 ipcMain.on(AppEvent.CREATE_PLAYLIST, (event: any, category: string) => {
-  createPaylistEvent = event;
-  const platform = config.platforms[category];
-  getFiles(platform.romsPath)
-    .then((files: Array<string>) => {
-      const indexes = createDatIndexes(config, category);
-      const items = createPlaylistItems(config, category, files, indexes);
-      const message = exportPlaylistFile(config, category, items);
-      const lpl = category + ".lpl";
-      if (!lpls.includes(lpl)) {
-        lpls.push(lpl);
-      }
-      createPaylistEvent.reply(
-        AppEvent.CREATE_PLAYLIST_SUCCESS,
-        category,
-        message
-      );
-    })
-    .catch((err: any) => {
-      createPaylistEvent.reply(AppEvent.CREATE_PLAYLIST_ERROR, err);
+  if (category == "MAME") {
+    const indexes = createDatIndexes(config, category);
+    const callback = (results: Array<ExportPlaylistResult>) => {
+      handleExportResults(event, category, results);
+    };
+    exportMamePlaylistFiles({
+      config,
+      category,
+      indexes,
+      callback
     });
+  } else {
+    const platform = config.platforms[category];
+    getFiles(platform.romsPath)
+      .then((files: Array<string>) => {
+        const indexes = createDatIndexes(config, category);
+        const items = createPlaylistItems(config, category, files, indexes);
+        let result = exportPlaylistFile(config, category, items);
+        handleExportResults(event, category, [result]);
+      })
+      .catch((err: any) => {
+        console.error(err);
+        createPaylistEvent.reply(AppEvent.CREATE_PLAYLIST_ERROR, err);
+      });
+  }
 });
+
+const handleExportResults = (
+  event: any,
+  category: string,
+  results: Array<ExportPlaylistResult>
+) => {
+  results.map(result => {
+    const { lpl } = result;
+    if (!lpls.includes(lpl)) {
+      lpls.push(lpl);
+    }
+  });
+  event.reply(AppEvent.CREATE_PLAYLIST_SUCCESS, category, results);
+};
 
 const getThumbnailInfo = (
   item: ComputedPlayListItem,

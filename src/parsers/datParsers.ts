@@ -7,6 +7,10 @@ import { Platform, getPlatformOptions, DriverStatus } from "../libs/AppConfig";
 export interface DatIndex {
   id: string;
   gameName: string;
+  sourcefile?: string;
+  driverStatus?: string;
+  diskName?: string;
+  year?: string;
 }
 
 export interface DatIndexes {
@@ -108,8 +112,53 @@ const datParsers: DatParsers = {
         gameName
       };
     }
+    return indexes;
+  },
 
-    console.log(Object.keys(indexes).length)
+  [ParserType.mame]: (props: DatParsersProps) => {
+    const { platform, indexes } = props;
+    const datPath = getPlatformOptions(platform, "datPath") as string;
+    const js = readXmlAsJs(datPath);
+    const games = js.datafile.machine;
+    const { length } = games;
+    for (let i = 0; i < length; i++) {
+      const game = games[i];
+      const attrs = game._attributes;
+      const { name, isbios, isdevice, romof, sourcefile } = attrs;
+      if (isdevice || isbios) {
+        continue;
+      }
+      if (["awbios", "naomi"].includes(romof)) {
+        //exclude Naomi and Atomiswave System
+        continue;
+      }
+      let diskName = "";
+      if (game.hasOwnProperty("disk")) {
+        const disk = game.disk;
+        if (disk.hasOwnProperty("_attributes")) {
+          const diskAttrs = game.disk._attributes;
+          if (diskAttrs.hasOwnProperty("name")) {
+            diskName = diskAttrs.name;
+            // console.log(label, "|", name, "|", diskName);
+          }
+        }
+      }
+      if (game.hasOwnProperty("driver")) {
+        const driverStatus = game.driver._attributes.status;
+        const gameName = game.description._text;
+        const id = name + ".zip";
+        const year = game.year._text.substr(0, 4);
+        indexes[id] = {
+          id,
+          gameName,
+          sourcefile,
+          driverStatus,
+          diskName,
+          year
+        };
+      }
+    }
+
     return indexes;
   }
 };

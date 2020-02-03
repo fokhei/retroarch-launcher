@@ -19,7 +19,7 @@ const createMainWindow = (config?: AppConfig) => {
   const window = new BrowserWindow(windowOption);
   window.removeMenu();
   if (isDevelopment) {
-    // window.webContents.openDevTools();
+    //  window.webContents.openDevTools();
   }
 
   if (isDevelopment) {

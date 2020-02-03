@@ -8,7 +8,7 @@ interface NameParserProps {
 }
 
 interface NameParsers {
-  [key: string]: (props: NameParserProps) => string|null;
+  [key: string]: (props: NameParserProps) => string | null;
 }
 
 const nameParsers: NameParsers = {
@@ -37,6 +37,15 @@ const nameParsers: NameParsers = {
   },
 
   [ParserType.fba]: (props: NameParserProps) => {
+    const { romName, indexes } = props;
+    if (indexes.hasOwnProperty(romName)) {
+      const index = indexes[romName];
+      return index.gameName;
+    }
+    return null;
+  },
+
+  [ParserType.mame]: (props: NameParserProps) => {
     const { romName, indexes } = props;
     if (indexes.hasOwnProperty(romName)) {
       const index = indexes[romName];

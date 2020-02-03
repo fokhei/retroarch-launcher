@@ -7,38 +7,8 @@ import { removeDiscBracket } from "./removeDiscBracket";
 import { removeAlias } from "./removeAlias";
 import { removeVersionBracket } from "./removeVersionBracket";
 import { removeNintendoTitleIdBracket } from "./removeNintendoTitleIdBracket";
-import { DatIndexes } from "./createDatIndexes";
-
-const updateGameNameByNoIntro3ds = (
-  romName: string,
-  indexes: DatIndexes,
-  _defaultGameName: string
-): string => {
-  const reg = /(.+)\s\[([ABCDEF\d]{16})\]/gi;
-  const arrs = reg.exec(romName);
-  const id = arrs[2];
-  if (indexes.hasOwnProperty(id)) {
-    const index = indexes[id];
-    return index.gameName;
-  } else {
-    return arrs[1];
-  }
-};
-
-const updateGameNameByNoPayStationPsvTsv = (
-  romName: string,
-  indexes: DatIndexes,
-  defaultGameName: string
-): string => {
-  const id = romName.match(/\w{4}\d{5}/);
-  if (id) {
-    if (indexes.hasOwnProperty(id.toString())) {
-      const index = indexes[id.toString()];
-      return index.gameName;
-    }
-  }
-  return defaultGameName;
-};
+import { DatIndexes } from "../parsers/datParsers";
+import nameParsers from "../parsers/nameParsers";
 
 export const createPlaylistItems = (
   config: AppConfig,
@@ -55,13 +25,14 @@ export const createPlaylistItems = (
     let gameName = romName.replace(ext, "");
 
     const datParser = getPlatformOptions(platform, "datParser") as DatParser;
-    if (datParser == DatParser.NoIntro_3ds) {
-      gameName = updateGameNameByNoIntro3ds(romName, indexes, gameName);
-    } else if (datParser == DatParser.noPayStation_Psv_Tsv) {
-      gameName = updateGameNameByNoPayStationPsvTsv(romName, indexes, gameName);
+    if (datParser) {
+      if (nameParsers.hasOwnProperty(datParser)) {
+        const func = nameParsers[datParser];
+        gameName = func({ romName, indexes, gameName });
+      }
     }
 
-    let skip = false;
+    let skip = !gameName;
     //skipNonFirstDisc
     if (getPlatformOptions(platform, "skipNonFirstDisc")) {
       const diskMatch = gameName.match(/\(Disc (\d{1})\)/);

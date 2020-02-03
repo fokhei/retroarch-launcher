@@ -18,7 +18,7 @@ import { ThumbnailInfo } from "../libs/ThumbnailInfos";
 import { getFiles } from "../libs/getFiles";
 import { createPlaylistItems } from "../libs/createPlaylistItems";
 import { exportPlaylistFile } from "../libs/exportPlaylistFile";
-import AppConfig, { getPlatformOptions } from "../libs/AppConfig";
+import AppConfig from "../libs/AppConfig";
 import { createDatIndexes } from "../libs/createDatIndexes";
 
 let _id = 0;
@@ -30,6 +30,7 @@ let items: Array<ComputedPlayListItem> = [];
 let itemsMap: ComputedPlayListMap = {};
 let missingThumbnailInfos: Array<ThumbnailInfo> = [];
 let downloadEvent: any;
+let createPaylistEvent: any;
 
 const configPath = "./config.json";
 if (fs.existsSync(configPath)) {
@@ -73,7 +74,7 @@ ipcMain.on(AppEvent.REFRESH_PLAYLISTS, (event: any) => {
       });
     }
   });
-  event.reply(AppEvent.PLAYLISTS, lpls.sort(), items, itemsMap);
+  event.reply(AppEvent.PLAYLISTS, lpls, items, itemsMap);
 });
 
 ipcMain.on(AppEvent.REFRESH_PLAYLIST, (event: any, category: string) => {
@@ -88,15 +89,14 @@ ipcMain.on(AppEvent.REFRESH_PLAYLIST, (event: any, category: string) => {
     items.push(computedItem);
     itemsMap[computedItem.id.toString()] = computedItem;
   });
-  event.reply(AppEvent.PLAYLISTS, lpls.sort(), items, itemsMap);
+  event.reply(AppEvent.PLAYLISTS, lpls, items, itemsMap);
 });
 
 ipcMain.on(AppEvent.REMOVE_PLAYLIST, (event: any, category: string) => {
   removeItemsByCategory(category);
   lpls = lazy(lpls)
     .reject(lpl => lpl == category + ".lpl")
-    .toArray()
-    .sort();
+    .toArray();
   event.reply(AppEvent.PLAYLISTS, lpls, items, itemsMap);
 });
 
@@ -224,24 +224,25 @@ ipcMain.on(
 );
 
 ipcMain.on(AppEvent.CREATE_PLAYLIST, (event: any, category: string) => {
+  createPaylistEvent = event;
   const platform = config.platforms[category];
   getFiles(platform.romsPath)
     .then((files: Array<string>) => {
-      if (getPlatformOptions(platform, "datPath")) {
-      }
-
       const indexes = createDatIndexes(config, category);
       const items = createPlaylistItems(config, category, files, indexes);
-
       const message = exportPlaylistFile(config, category, items);
       const lpl = category + ".lpl";
       if (!lpls.includes(lpl)) {
         lpls.push(lpl);
       }
-      event.reply(AppEvent.CREATE_PLAYLIST_MESSAGE, category, message);
+      createPaylistEvent.reply(
+        AppEvent.CREATE_PLAYLIST_SUCCESS,
+        category,
+        message
+      );
     })
-    .catch(err => {
-      event.reply(AppEvent.ERROR, err);
+    .catch((err: any) => {
+      createPaylistEvent.reply(AppEvent.CREATE_PLAYLIST_ERROR, err);
     });
 });
 

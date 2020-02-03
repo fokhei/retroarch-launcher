@@ -10,18 +10,19 @@ import {
 } from "react-virtualized";
 import { ipcRenderer } from "electron";
 import { AppEvent } from "../libs/AppEvent";
-import AppConfig from '../libs/AppConfig';
+import AppConfig from "../libs/AppConfig";
 
 const _PlaylistCreator = (props: PlaylistCreatorProps) => {
   const { className, hideHandler, config, selectCategory } = props;
   const listRef: RefObject<any> = createRef();
   const [category, setCategory] = useState("");
   const [started, setStarted] = useState(false);
+  const [ended, setEnded] = useState(false);
   const [logs, setLogs] = useState<Array<string>>([]);
 
   const categories = lazy(Object.keys(config.platforms))
-    .sort()
-    .toArray();
+    .toArray()
+    .sort();
 
   const cellMeasurerCache = new CellMeasurerCache({
     fixedWidth: true,
@@ -29,23 +30,26 @@ const _PlaylistCreator = (props: PlaylistCreatorProps) => {
     minHeight: 22
   });
 
-  const onCreatePlaylistMessage = (
+  const onCreatePlaylistSuccess = (
     _evt: any,
     category: string,
     message: string
   ) => {
     setLogs([...logs, message]);
     selectCategory(category);
+    setEnded(true);
     ipcRenderer.send(AppEvent.REFRESH_PLAYLIST, category);
+  };
+
+  const onCreatePlaylistError = (_evt: any, error: any) => {
+    let _logs = [].concat(logs, error);
+    setLogs(_logs);
+    setEnded(true);
   };
 
   const onStart = () => {
     setStarted(true);
     ipcRenderer.send(AppEvent.CREATE_PLAYLIST, category);
-  };
-
-  const onError = (_evt: any, error: any) => {
-    setLogs([...logs, JSON.stringify(error)]);
   };
 
   const onItemClick = (evt: any) => {
@@ -143,6 +147,10 @@ const _PlaylistCreator = (props: PlaylistCreatorProps) => {
           <button onClick={onStart}>Start</button>
         </div>
       );
+    } else {
+      if (!ended) {
+        return <div className="busy">Scanning ...</div>;
+      }
     }
     return null;
   };
@@ -159,14 +167,17 @@ const _PlaylistCreator = (props: PlaylistCreatorProps) => {
   };
 
   const mountEffect = () => {
-    ipcRenderer.on(AppEvent.CREATE_PLAYLIST_MESSAGE, onCreatePlaylistMessage);
-    ipcRenderer.on(AppEvent.ERROR, onError);
+    ipcRenderer.on(AppEvent.CREATE_PLAYLIST_SUCCESS, onCreatePlaylistSuccess);
+    ipcRenderer.on(AppEvent.CREATE_PLAYLIST_ERROR, onCreatePlaylistError);
     return () => {
       ipcRenderer.removeListener(
-        AppEvent.CREATE_PLAYLIST_MESSAGE,
-        onCreatePlaylistMessage
+        AppEvent.CREATE_PLAYLIST_SUCCESS,
+        onCreatePlaylistSuccess
       );
-      ipcRenderer.removeListener(AppEvent.ERROR, onError);
+      ipcRenderer.removeListener(
+        AppEvent.CREATE_PLAYLIST_ERROR,
+        onCreatePlaylistError
+      );
     };
   };
 
@@ -234,6 +245,7 @@ const PlaylistCreator = styled(_PlaylistCreator)`
       color: orange;
     }
     > .config {
+      display: none;
       padding: 20px 20px 0 20px;
       pre {
         border: 1px solid rgba(100, 100, 100, 0.5);
@@ -242,6 +254,10 @@ const PlaylistCreator = styled(_PlaylistCreator)`
       }
     }
     > .startButton {
+      padding: 20px 20px 0 20px;
+    }
+
+    > .busy {
       padding: 20px 20px 0 20px;
     }
     > .logs {

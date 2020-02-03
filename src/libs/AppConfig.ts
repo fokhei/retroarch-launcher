@@ -1,4 +1,4 @@
-interface Platform {
+export interface Platform {
   shortName: string;
   romsPath: string;
   thumbnailDB: string;
@@ -19,6 +19,12 @@ interface PlatformOptions {
 export enum DatParser {
   NoIntro_3ds = "NoIntro_3ds",
   noPayStation_Psv_Tsv = "noPayStation_Psv_Tsv"
+}
+
+export enum DriverStatus {
+  GOOD = "good",
+  IMPERFECT = "imperfect",
+  PRELIMINARY = "preliminary"
 }
 
 export interface AppConfig {

@@ -17,7 +17,7 @@
       "dllName": "",
       "options": {
         "datPath": "D:\\roms\\dats\\No-Intro\\Nintendo - Nintendo 3DS (Encrypted) (20200110-095855).dat",
-        "datParser": "NoIntro_3ds"
+        "datParser": "noIntro3ds"
       }
     },
     "Nintendo - Nintendo 3DS (Chinese)": {
@@ -27,7 +27,7 @@
       "dllName": "",
       "options": {
         "datPath": "D:\\roms\\dats\\No-Intro\\Nintendo - Nintendo 3DS (Encrypted) (20200110-095855).dat",
-        "datParser": "NoIntro_3ds"
+        "datParser": "noIntro3ds"
       }
     },
 
@@ -87,7 +87,20 @@
       "dllName": "",
       "options": {
         "datPath": "D:\\roms\\dats\\noPayStation\\TSV\\GAMES\\PSV_GAMES.tsv",
-        "datParser": "noPayStation_Psv_Tsv"
+        "datParser": "noPayStationPsvTsv"
+      }
+    },
+
+    "FBNeo - Arcade Games": {
+      "shortName": "fba",
+      "romsPath": "D:\\roms\\FBNeo\\arcade",
+      "thumbnailDB": "FBNeo - Arcade Games",
+      "dllName": "fbneo_libretro.dll",
+      "options": {
+        "datPath": "D:\\roms\\dats\\FinalBurn Neo 0.2.97.44 (Arcade).dat",
+        "datParser": "fba",
+        "exportStatus": ["good", "imperfect"],
+        "exportYear": 1984
       }
     }
   }

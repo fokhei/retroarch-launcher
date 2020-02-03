@@ -23,7 +23,7 @@ const _PlayListMenu = (props: PlayListMenuProps) => {
 
   const listRef: RefObject<any> = createRef();
 
-  const categories: Array<string> = [CategoryAll, ...lpls];
+  const categories: Array<string> = [CategoryAll, ...lpls.sort()];
 
   const cellMeasurerCache = new CellMeasurerCache({
     fixedWidth: true,

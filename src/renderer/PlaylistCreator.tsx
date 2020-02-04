@@ -232,8 +232,9 @@ const PlaylistCreator = styled(_PlaylistCreator)`
       flex: 1;
       padding-top: 20px;
       .item {
-        padding: 10px 20px;
+        padding: 5px 20px;
         user-select: none;
+        border-top: 1px solid rgba(100,100,100,0.1);
         cursor: pointer;
         &:hover {
           background-color: rgba(100, 100, 100, 0.2);

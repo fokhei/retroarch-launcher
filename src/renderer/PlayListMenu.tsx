@@ -129,7 +129,7 @@ const _PlayListMenu = (props: PlayListMenuProps) => {
 };
 
 const PlayListMenu = styled(_PlayListMenu)`
-  width: 260px;
+  width: 300px;
   font-size: 12px;
   background-color: rgba(0, 0, 0, 0.5);
   border-right: 1px solid rgba(100, 100, 100, 0.1);
@@ -171,14 +171,16 @@ const PlayListMenu = styled(_PlayListMenu)`
   }
   > .foot {
     height: 32px;
-    padding: 5px 12px;
-    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 10px;
     a {
       user-select: none;
       cursor: pointer;
-      color: #999;
+      color: #444;
       &:hover {
-        color: orange;
+        color: #ccc;
       }
     }
   }

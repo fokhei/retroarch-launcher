@@ -144,7 +144,7 @@ const _ResultView = (props: ResultViewProps) => {
             className="slider"
             type="range"
             min="80"
-            max="400"
+            max="640"
             value={gridSize}
             onChange={onSliderChange}
           />
@@ -303,6 +303,7 @@ const ResultView = styled(_ResultView)`
     color: #555;
     padding: 5px;
     font-size: 12px;
+    cursor: pointer;
   }
 `;
 

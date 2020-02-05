@@ -128,7 +128,10 @@
       "shortName": "wii",
       "romsPath": "D:\\roms\\Nintendo - Wii",
       "thumbnailDB": "Nintendo - Wii",
-      "dllName": "dolphin_libretro.dll"
+      "dllName": "dolphin_libretro.dll",
+      "options": {
+        "removeLang": true
+      }
     },
 
     "Sega - Mega Drive - Genesis": {

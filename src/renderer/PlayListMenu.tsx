@@ -30,6 +30,7 @@ const _PlayListMenu = (props: PlayListMenuProps) => {
     defaultHeight: 22,
     minHeight: 22
   });
+  
 
   const onCategoryClick = (evt: any) => {
     const category = evt.currentTarget.getAttribute("data-category");

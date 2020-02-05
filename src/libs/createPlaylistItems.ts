@@ -9,6 +9,7 @@ import { removeVersionBracket } from "./removeVersionBracket";
 import { removeNintendoTitleIdBracket } from "./removeNintendoTitleIdBracket";
 import { DatIndexes } from "../parsers/datParsers";
 import nameParsers from "../parsers/nameParsers";
+import { removeDoubleSpace } from './removeDoubleSpace';
 
 export const createPlaylistItems = (
   config: AppConfig,
@@ -58,7 +59,7 @@ export const createPlaylistItems = (
         gameName = removeNintendoTitleIdBracket(gameName);
       }
 
-      gameName = gameName.trim();
+      gameName = removeDoubleSpace(gameName);
       const item = createPlayListItem(config, category, file, gameName);
       items.push(item);
     }

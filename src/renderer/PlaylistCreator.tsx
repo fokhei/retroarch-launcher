@@ -145,7 +145,7 @@ const _PlaylistCreator = (props: PlaylistCreatorProps) => {
     if (!started) {
       return (
         <div className="startButton">
-          <button onClick={onStart}>Start</button>
+          <button onClick={onStart}>Scan</button>
         </div>
       );
     } else {

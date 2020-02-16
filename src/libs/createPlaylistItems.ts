@@ -2,15 +2,16 @@ import * as path from "path";
 import { createPlayListItem } from "./createPlayListItem";
 import { RetroArchPlayListItem } from "./RetroArchPlayListItem";
 import AppConfig, { getPlatformOptions, DatParser } from "./AppConfig";
-import { removeLangBracket } from "./removeLangBracket";
-import { removeDiscBracket } from "./removeDiscBracket";
-import { removeAlias } from "./removeAlias";
-import { removeVersionBracket } from "./removeVersionBracket";
-import { removeNintendoTitleIdBracket } from "./removeNintendoTitleIdBracket";
+import { removeLangBracket } from "./naming/removeLangBracket";
+import { removeDiscBracket } from "./naming/removeDiscBracket";
+import { removeAlias } from "./naming/removeAlias";
+import { removeVersionBracket } from "./naming/removeVersionBracket";
+import { removeNintendoTitleIdBracket } from "./naming/removeNintendoTitleIdBracket";
 import { DatIndexes } from "../parsers/datParsers";
 import nameParsers from "../parsers/nameParsers";
-import { removeDoubleSpace } from './removeDoubleSpace';
-import { removeAllBrackets } from './removeAllBrackets';
+import { removeDoubleSpace } from './naming/removeDoubleSpace';
+import { removeAllBrackets } from './naming/removeAllBrackets';
+
 
 export const createPlaylistItems = (
   config: AppConfig,
@@ -59,6 +60,7 @@ export const createPlaylistItems = (
       if (getPlatformOptions(platform, "removeTitleId")) {
         gameName = removeNintendoTitleIdBracket(gameName);
       }
+     
       if (getPlatformOptions(platform, "removeAllBrackets")) {
         gameName = removeAllBrackets(gameName);
       }

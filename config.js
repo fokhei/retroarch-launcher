@@ -21,7 +21,7 @@
       }
     },
 
-    "DOS 中文遊戲": {
+    "DOS (中文遊戲)": {
       "shortName": "dos",
       "romsPath": "D:\\roms\\DOS\\games\\中文遊戲",
       "thumbnailDB": "DOS",
@@ -105,7 +105,7 @@
       }
     },
 
-    "Nintendo - Nintendo 3DS (Chinese)": {
+    "Nintendo - Nintendo 3DS (中文遊戲)": {
       "shortName": "3ds",
       "romsPath": "D:\\roms\\Nintendo - Nintendo 3DS\\chinese",
       "thumbnailDB": "Nintendo - Nintendo 3DS",

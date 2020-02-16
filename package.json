@@ -10,7 +10,7 @@
   },
   "build": {
     "extraFiles": [
-      "config.json"
+      "config.js"
     ]
   },
   "devDependencies": {

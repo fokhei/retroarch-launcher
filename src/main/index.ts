@@ -36,16 +36,16 @@ let missingThumbnailInfos: Array<ThumbnailInfo> = [];
 let downloadEvent: any;
 let createPaylistEvent: any;
 
-const configPath = "./config.json";
+const configPath = "./config.js";
 if (fs.existsSync(configPath)) {
   try {
-    const text: any = fs.readFileSync(configPath);
-    config = JSON.parse(text) as AppConfig;
+    const text: string = fs.readFileSync(configPath).toString();
+    eval("config="+ text) as AppConfig;
   } catch (e) {
-    critialError = "parse error on config.json";
+    critialError = "parse error on config.js";
   }
 } else {
-  critialError = "config.json not found!";
+  critialError = "config.js not found!";
 }
 
 ipcMain.on(AppEvent.MAIN_VIEW_MOUNT, (event: any) => {

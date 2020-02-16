@@ -1,6 +1,9 @@
 import fs from "fs";
 import * as path from "path";
-import AppConfig, { getPlatformOptions, DriverStatus } from "./AppConfig";
+import AppConfig, {
+  DriverStatus,
+  getRomFilter
+} from "./AppConfig";
 import { DatIndexes } from "../parsers/datParsers";
 import { createPlayListItem } from "./createPlayListItem";
 import { ExportPlaylistResult, exportPlaylistFile } from "./exportPlaylistFile";
@@ -64,10 +67,10 @@ export const exportMamePlaylistFiles = (
   const { config, category, indexes, callback } = props;
   const platform = config.platforms[category];
   const { romsPath } = platform;
-  const exportStatus = getPlatformOptions(platform, "exportStatus") as Array<
+  const includeStatus = getRomFilter(platform, "includeStatus") as Array<
     DriverStatus
   >;
-  const exportYear = getPlatformOptions(platform, "exportYear") as number;
+  const incldueMinYear = getRomFilter(platform, "incldueMinYear") as number;
   let playlists: any = {};
   fs.readdir(romsPath, (err: any, files: Array<string>) => {
     if (err) {
@@ -97,9 +100,12 @@ export const exportMamePlaylistFiles = (
               diskExist = fs.existsSync(diskPath);
             }
             if (diskExist) {
-              if (exportStatus.includes(index.driverStatus as DriverStatus)) {
+              if (
+                includeStatus &&
+                includeStatus.includes(index.driverStatus as DriverStatus)
+              ) {
                 const gameYear = Number(index.year);
-                if (gameYear >= exportYear) {
+                if (!isNaN(gameYear) && gameYear >= incldueMinYear) {
                   shouldExport = true;
                 }
               }

@@ -2,7 +2,7 @@ import fs from "fs";
 import parse from "csv-parse";
 import { ParserType } from "./Parser";
 import readXmlAsJs from "../libs/readXmlAsJs";
-import { Platform, getPlatformOptions, DriverStatus } from "../libs/AppConfig";
+import { Platform, getPlatformOptions, DriverStatus, getRomFilter } from "../libs/AppConfig";
 
 export interface DatIndex {
   id: string;
@@ -71,10 +71,10 @@ const datParsers: DatParsers = {
   [ParserType.fba]: (props: DatParsersProps) => {
     const { platform, indexes } = props;
     const datPath = getPlatformOptions(platform, "datPath") as string;
-    const exportStatus = getPlatformOptions(platform, "exportStatus") as Array<
+    const includeStatus = getRomFilter(platform, "includeStatus") as Array<
       DriverStatus
     >;
-    const exportYear = getPlatformOptions(platform, "exportYear") as number;
+    const includeMinYear = getRomFilter(platform, "includeMinYear") as number;
 
     const js = readXmlAsJs(datPath);
     const games = js.datafile.game;
@@ -92,16 +92,16 @@ const datParsers: DatParsers = {
         continue;
       }
 
-      if (exportStatus) {
+      if (includeStatus) {
         const driverStatus = game.driver._attributes.status;
-        if (!exportStatus.includes(driverStatus)) {
+        if (!includeStatus.includes(driverStatus)) {
           continue;
         }
       }
 
-      if (!isNaN(exportYear)) {
+      if (!isNaN(includeMinYear)) {
         const year = Number(game.year._text.substr(0, 4));
-        if (year < exportYear) {
+        if (year < includeMinYear) {
           continue;
         }
       }
@@ -119,11 +119,11 @@ const datParsers: DatParsers = {
   [ParserType.mame]: (props: DatParsersProps) => {
     const { platform, indexes } = props;
     const datPath = getPlatformOptions(platform, "datPath") as string;
-    const excludeRomOfs = getPlatformOptions(
+    const excludeRomOfs = getRomFilter(
       platform,
       "excludeRomOfs"
     ) as Array<string>;
-    const includeRomOfs = getPlatformOptions(
+    const includeRomOfs = getRomFilter(
       platform,
       "includeRomOfs"
     ) as Array<string>;

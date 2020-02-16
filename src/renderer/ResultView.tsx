@@ -143,7 +143,7 @@ const _ResultView = (props: ResultViewProps) => {
           <input
             className="slider"
             type="range"
-            min="80"
+            min="60"
             max="640"
             value={gridSize}
             onChange={onSliderChange}

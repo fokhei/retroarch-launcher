@@ -1,4 +1,4 @@
-import { removeAllBrackets } from './naming/removeAllBrackets';
+import { removeAllBrackets } from './nameFilters/removeAllBrackets';
 
 export const toGoogleKeyword = (str: string) => {
   let keyword = removeAllBrackets(str);

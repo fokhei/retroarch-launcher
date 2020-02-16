@@ -6,16 +6,31 @@ export interface Platform {
   options: PlatformOptions;
 }
 
-interface PlatformOptions {
-  skipNonFirstDisc?: boolean;
+interface RomFilter {
+  excludeBios?: boolean;
+  excludeNonFirstDisc?: boolean;
+  includeRomOfs?: Array<string>;
+  excludeRomOfs?: Array<string>;
+  excludeBeta?: boolean;
+  excludeProto?: boolean;
+  excludeSample?: boolean;
+  excludeDemo?: boolean;
+  includeStatus?: Array<string>;
+  includeMinYear?: number;
+}
+
+interface NameFilter {
   removeLang?: boolean;
   removeDisc?: boolean;
   removeVersion?: boolean;
   removeTitleId?: boolean;
+}
+
+interface PlatformOptions {
   datPath?: string;
   datParser?: DatParser;
-  includeRomOfs?: Array<string>;
-  excludeRomOfs?: Array<string>;
+  romFilter?: RomFilter;
+  nameFilter?: NameFilter;
 }
 
 export enum DatParser {
@@ -62,6 +77,22 @@ export const getPlatformOptions = (
       return null;
     }
     return null;
+  }
+  return null;
+};
+
+export const getRomFilter = (platform: Platform, filterName: string) => {
+  const filters = getPlatformOptions(platform, "romFilter");
+  if (filters && filters.hasOwnProperty(filterName)) {
+    return filters[filterName];
+  }
+  return null;
+};
+
+export const getNameFilter = (platform: Platform, filterName: string) => {
+  const filters = getPlatformOptions(platform, "nameFilter");
+  if (filters && filters.hasOwnProperty(filterName)) {
+    return filters[filterName];
   }
   return null;
 };

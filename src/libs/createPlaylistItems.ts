@@ -1,17 +1,21 @@
 import * as path from "path";
 import { createPlayListItem } from "./createPlayListItem";
 import { RetroArchPlayListItem } from "./RetroArchPlayListItem";
-import AppConfig, { getPlatformOptions, DatParser } from "./AppConfig";
-import { removeLangBracket } from "./naming/removeLangBracket";
-import { removeDiscBracket } from "./naming/removeDiscBracket";
-import { removeAlias } from "./naming/removeAlias";
-import { removeVersionBracket } from "./naming/removeVersionBracket";
-import { removeNintendoTitleIdBracket } from "./naming/removeNintendoTitleIdBracket";
+import AppConfig, {
+  getPlatformOptions,
+  DatParser,
+  getNameFilter,
+  getRomFilter
+} from "./AppConfig";
+import { removeLangBracket } from "./nameFilters/removeLangBracket";
+import { removeDiscBracket } from "./nameFilters/removeDiscBracket";
+import { removeAlias } from "./nameFilters/removeAlias";
+import { removeVersionBracket } from "./nameFilters/removeVersionBracket";
+import { removeNintendoTitleIdBracket } from "./nameFilters/removeNintendoTitleIdBracket";
 import { DatIndexes } from "../parsers/datParsers";
 import nameParsers from "../parsers/nameParsers";
-import { removeDoubleSpace } from './naming/removeDoubleSpace';
-import { removeAllBrackets } from './naming/removeAllBrackets';
-
+import { removeDoubleSpace } from "./nameFilters/removeDoubleSpace";
+import { removeAllBrackets } from "./nameFilters/removeAllBrackets";
 
 export const createPlaylistItems = (
   config: AppConfig,
@@ -36,32 +40,81 @@ export const createPlaylistItems = (
     }
 
     let skip = !gameName;
-    //skipNonFirstDisc
-    if (getPlatformOptions(platform, "skipNonFirstDisc")) {
-      const diskMatch = gameName.match(/\(Disc (\d{1})\)/);
-      if (diskMatch) {
-        const diskNum = Number(diskMatch[1]);
-        if (diskNum > 1) {
+
+    if (!skip) {
+      if (getRomFilter(platform, "excludeBios")) {
+        const matchs = gameName.match(/\[BIOS\]/);
+        if (matchs) {
           skip = true;
         }
       }
     }
 
     if (!skip) {
-      if (getPlatformOptions(platform, "removeLang")) {
+      if (getRomFilter(platform, "excludeNonFirstDisc")) {
+        const matchs = gameName.match(/\(Disc (\d{1})\)/);
+        if (matchs) {
+          const diskNum = Number(matchs[1]);
+          if (diskNum > 1) {
+            skip = true;
+          }
+        }
+      }
+    }
+
+    if (!skip) {
+      if (getRomFilter(platform, "excludeBeta")) {
+        const matchs = gameName.match(/\(Beta\s?\d?\)/);
+        if (matchs) {
+          skip = true;
+        }
+      }
+    }
+
+    if (!skip) {
+      if (getRomFilter(platform, "excludeProto")) {
+        const matchs = gameName.match(/\(Proto\)/);
+        if (matchs) {
+          skip = true;
+        }
+      }
+    }
+
+    if (!skip) {
+      if (getRomFilter(platform, "excludeSample")) {
+        const matchs = gameName.match(/\(Sample\)/);
+        if (matchs) {
+          skip = true;
+        }
+      }
+    }
+
+
+    if (!skip) {
+      if (getRomFilter(platform, "excludeDemo")) {
+        const matchs = gameName.match(/\(Demo\)/);
+        if (matchs) {
+          skip = true;
+        }
+      }
+    }
+
+
+
+    if (!skip) {
+      if (getNameFilter(platform, "removeLang")) {
         gameName = removeLangBracket(gameName);
       }
-      if (getPlatformOptions(platform, "removeDisc")) {
+      if (getNameFilter(platform, "removeDisc")) {
         gameName = removeDiscBracket(gameName);
       }
-      if (getPlatformOptions(platform, "removeVersion")) {
+      if (getNameFilter(platform, "removeVersion")) {
         gameName = removeVersionBracket(gameName);
       }
-      if (getPlatformOptions(platform, "removeTitleId")) {
+      if (getNameFilter(platform, "removeTitleId")) {
         gameName = removeNintendoTitleIdBracket(gameName);
       }
-     
-      if (getPlatformOptions(platform, "removeAllBrackets")) {
+      if (getNameFilter(platform, "removeAllBrackets")) {
         gameName = removeAllBrackets(gameName);
       }
 

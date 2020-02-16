@@ -10,6 +10,27 @@
     "height": 560
   },
   "platforms": {
+    "DOS": {
+      "shortName": "dos",
+      "romsPath": "D:\\roms\\DOS\\games\\dosCenter",
+      "thumbnailDB": "DOS",
+      "dllName": "dosbox_svn_libretro.dll",
+      "options": {
+        "removeAllBrackets": true,
+        "removeVersion": true
+      }
+    },
+
+    "DOS 中文遊戲": {
+      "shortName": "dos",
+      "romsPath": "D:\\roms\\DOS\\games\\中文遊戲",
+      "thumbnailDB": "DOS",
+      "dllName": "dosbox_svn_libretro.dll",
+      "options": {
+        "removeAllBrackets": true
+      }
+    },
+
     "FBNeo - Arcade Games": {
       "shortName": "fba",
       "romsPath": "D:\\roms\\FBNeo\\arcade",
@@ -141,6 +162,14 @@
       "dllName": "genesis_plus_gx_libretro.dll"
     },
 
+
+    "Sega - Mega-CD - Sega CD": {
+      "shortName": "sega-cd",
+      "romsPath": "D:\\roms\\Sega - Mega-CD - Sega CD\\games",
+      "thumbnailDB": "Sega - Mega-CD - Sega CD",
+      "dllName": "genesis_plus_gx_libretro.dll"
+    },
+
     "Sega - Naomi - Atomiswave": {
       "shortName": "naomi",
       "romsPath": "D:\\roms\\MAME\\v0.216-merged",
@@ -171,6 +200,13 @@
       }
     },
 
+    "Sony - PlayStation Minis": {
+      "shortName": "ps-minis",
+      "romsPath": "D:\\roms\\Sony - PlayStation Minis\\cso",
+      "thumbnailDB": "Sony - PlayStation Minis",
+      "dllName": "ppsspp_libretro.dll"
+    },
+
     "Sony - PlayStation Portable": {
       "shortName": "psp",
       "romsPath": "D:\\roms\\Sony - PlayStation Portable\\cso",
@@ -190,6 +226,12 @@
         "datPath": "D:\\roms\\dats\\noPayStation\\TSV\\GAMES\\PSV_GAMES.tsv",
         "datParser": "noPayStationPsvTsv"
       }
+    },
+
+    "Taito Type X2": {
+      "shortName": "ttx2",
+      "romsPath": "D:\\roms\\Taito Type X2",
+      "thumbnailDB": "Taito Type X2"
     },
 
     "The 3DO Company - 3DO": {

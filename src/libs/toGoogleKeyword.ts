@@ -1,7 +1,7 @@
-import { removeBrackets } from './removeAllBrackets';
+import { removeAllBrackets } from './removeAllBrackets';
 
 export const toGoogleKeyword = (str: string) => {
-  let keyword = removeBrackets(str);
+  let keyword = removeAllBrackets(str);
   keyword = keyword.replace(/[\s]/gi, "+");
   keyword = encodeURIComponent(keyword);
   return keyword;

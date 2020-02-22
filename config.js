@@ -153,7 +153,7 @@
       shortName: "sfc",
       romsPath: "D:\\roms\\Nintendo - Super Nintendo Entertainment System\\no-intro",
       thumbnailDB: "Nintendo - Super Nintendo Entertainment System",
-      dllName: "",
+      dllName: "snes9x_libretro.dll",
       options: { 
         romFilter: {
           excludeBeta: true,

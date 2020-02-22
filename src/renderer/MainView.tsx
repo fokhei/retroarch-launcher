@@ -106,13 +106,9 @@ const _MainView = (props: MainViewProps) => {
     if (config) {
       const { path, core_path } = item;
       if (core_path) {
-        // console.log(core_path);
-        // console.log(path);
-        child_process.spawn(config.retroArch.exe, ["-L", core_path, path], {
-          // shell: true
-        });
+        child_process.spawn(config.retroArch.exe, ["-L", core_path, path], {});
       } else {
-        alert("core_path is not yet set on this item.");
+        alert("dllName is not yet set on this item.");
       }
     }
   };

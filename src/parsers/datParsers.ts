@@ -3,6 +3,7 @@ import parse from "csv-parse";
 import { ParserType } from "./Parser";
 import readXmlAsJs from "../libs/readXmlAsJs";
 import { Platform, getPlatformOptions, DriverStatus, getRomFilter } from "../libs/AppConfig";
+import { removeAllBrackets } from '../libs/nameFilters/removeAllBrackets';
 
 export interface DatIndex {
   id: string;
@@ -59,8 +60,9 @@ const datParsers: DatParsers = {
     let record: any;
     while ((record = parser.read())) {
       const id = record[0];
-      // const region = record[1];
-      const gameName = record[2];
+      const region = record[1];
+      const fileName = record[2];
+      const gameName = removeAllBrackets(fileName) + ` (${region})`;
       indexes[id] = {
         id,
         gameName

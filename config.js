@@ -265,7 +265,7 @@
       }
     },
 
-    "Sony - Playstation Vita": {
+    "Sony - PlayStation Vita": {
       shortName: "psv",
       romsPath: "D:\\roms\\Sony - PlayStation Vita",
       thumbnailDB: "Sony - PlayStation Vita",

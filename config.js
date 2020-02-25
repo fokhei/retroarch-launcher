@@ -228,8 +228,27 @@
       shortName: "ss",
       romsPath: "D:\\roms\\Sega - Saturn\\redump",
       thumbnailDB: "Sega - Saturn",
+      dllName: "yabasanshiro_libretro.dll",
+      options: {
+        nameFilter: {
+          removeLang: true,
+          removeDisc: true,
+          removeNonFirstBrackets: true
+        },
+        romFilter: {
+          excludeNonFirstDisc: true
+        }
+      }
+    },
+
+
+    "Sega - Saturn (中文遊戲)": {
+      shortName: "ss",
+      romsPath: "D:\\roms\\Sega - Saturn\\chinese",
+      thumbnailDB: "Sega - Saturn",
       dllName: "yabasanshiro_libretro.dll"
     },
+
 
     "Sony - PlayStation": {
       shortName: "ps1",

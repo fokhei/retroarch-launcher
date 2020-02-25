@@ -24,6 +24,8 @@ interface NameFilter {
   removeDisc?: boolean;
   removeVersion?: boolean;
   removeTitleId?: boolean;
+  removeAllBrackets?: boolean;
+  removeNonFirstBrackets?: boolean;
 }
 
 interface PlatformOptions {

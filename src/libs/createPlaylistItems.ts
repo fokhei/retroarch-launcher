@@ -16,6 +16,7 @@ import { DatIndexes } from "../parsers/datParsers";
 import nameParsers from "../parsers/nameParsers";
 import { removeDoubleSpace } from "./nameFilters/removeDoubleSpace";
 import { removeAllBrackets } from "./nameFilters/removeAllBrackets";
+import { removeNonFirstBrackets } from "./nameFilters/removeNonFirstBrackets";
 
 export const createPlaylistItems = (
   config: AppConfig,
@@ -52,11 +53,15 @@ export const createPlaylistItems = (
 
     if (!skip) {
       if (getRomFilter(platform, "excludeNonFirstDisc")) {
-        const matchs = gameName.match(/\(Disc (\d{1})\)/);
+        const matchs = gameName.match(/\(Disc ([\w\d]+)\)/);
         if (matchs) {
           const diskNum = Number(matchs[1]);
-          if (diskNum > 1) {
-            skip = true;
+          if (!isNaN(diskNum)) {
+            if (diskNum > 1) {
+              skip = true;
+            }
+          } else {
+            skip = (matchs[1] != "I" && matchs[1] != "A");
           }
         }
       }
@@ -89,7 +94,6 @@ export const createPlaylistItems = (
       }
     }
 
-
     if (!skip) {
       if (getRomFilter(platform, "excludeDemo")) {
         const matchs = gameName.match(/\(Demo\)/);
@@ -98,8 +102,6 @@ export const createPlaylistItems = (
         }
       }
     }
-
-
 
     if (!skip) {
       if (getNameFilter(platform, "removeLang")) {
@@ -116,6 +118,10 @@ export const createPlaylistItems = (
       }
       if (getNameFilter(platform, "removeAllBrackets")) {
         gameName = removeAllBrackets(gameName);
+      }
+
+      if (getNameFilter(platform, "removeNonFirstBrackets")) {
+        gameName = removeNonFirstBrackets(gameName);
       }
 
       gameName = removeDoubleSpace(gameName);

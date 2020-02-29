@@ -24,6 +24,7 @@ import {
 import AppConfig from "../libs/AppConfig";
 import { createDatIndexes } from "../libs/createDatIndexes";
 import { exportMamePlaylistFiles } from "../libs/exportMamePlaylistFiles";
+import webp from "webp-converter";
 
 let _id = 0;
 let mainWindow: BrowserWindow | null;
@@ -40,7 +41,7 @@ const configPath = "./config.js";
 if (fs.existsSync(configPath)) {
   try {
     const text: string = fs.readFileSync(configPath).toString();
-    eval("config="+ text) as AppConfig;
+    eval("config=" + text) as AppConfig;
   } catch (e) {
     critialError = "parse error on config.js";
   }
@@ -151,6 +152,16 @@ ipcMain.on(
           image.write(outPath, () => {
             event.reply(AppEvent.ITEM_UPDATE, item.id);
           });
+        }
+      });
+    } else if (ext == ".webp") {
+      const temp = "tmp.png";
+      webp.dwebp(filePath, temp, "-o", (status: string, _error: any) => {
+        //if conversion successful status will be '100'
+        //if conversion fails status will be '101'
+        if (status == "100") {
+          fs.renameSync(temp, outPath);
+          event.reply(AppEvent.ITEM_UPDATE, item.id);
         }
       });
     }

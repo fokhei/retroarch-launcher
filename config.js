@@ -12,7 +12,7 @@
   platforms: {
     DOS: {
       shortName: "dos",
-      romsPath: "D:\\roms\\DOS\\games\\dosCenter",
+      romsPath: "F:\\roms\\DOS\\games\\dosCenter",
       thumbnailDB: "DOS",
       dllName: "dosbox_svn_libretro.dll",
       options: {
@@ -25,7 +25,7 @@
 
     "DOS (中文遊戲)": {
       shortName: "dos",
-      romsPath: "D:\\roms\\DOS\\games\\中文遊戲",
+      romsPath: "F:\\roms\\DOS\\games\\中文遊戲",
       thumbnailDB: "DOS",
       dllName: "dosbox_svn_libretro.dll",
       options: {
@@ -37,11 +37,11 @@
 
     "FBNeo - Arcade Games": {
       shortName: "fba",
-      romsPath: "D:\\roms\\FBNeo\\arcade",
+      romsPath: "F:\\roms\\FBNeo\\arcade",
       thumbnailDB: "FBNeo - Arcade Games",
       dllName: "fbneo_libretro.dll",
       options: {
-        datPath: "D:\\roms\\dats\\FinalBurn Neo 0.2.97.44 (Arcade).dat",
+        datPath: "F:\\dats\\FinalBurn Neo 0.2.97.44 (Arcade).dat",
         datParser: "fba",
         romFilter: {
           includeStatus: ["good", "imperfect"],
@@ -52,11 +52,11 @@
 
     MAME: {
       shortName: "mame",
-      romsPath: "D:\\roms\\MAME\\v0.216-merged",
+      romsPath: "F:\\roms\\MAME\\v0.216-merged",
       thumbnailDB: "MAME",
       dllName: "mame_libretro.dll",
       options: {
-        datPath: "D:\\roms\\dats\\MAME 0.216 (Arcade).dat",
+        datPath: "F:\\dats\\MAME 0.216 (Arcade).dat",
         datParser: "mame",
         romFilter: {
           excludeRomOfs: ["awbios", "naomi"],
@@ -69,42 +69,45 @@
 
     "NEC - PC Engine CD - TurboGrafx-CD": {
       shortName: "pce",
-      romsPath: "D:\\roms\\NEC - PC Engine CD - TurboGrafx-CD\\redump",
+      romsPath: "F:\\roms\\NEC - PC Engine CD - TurboGrafx-CD\\redump",
       thumbnailDB: "NEC - PC Engine CD - TurboGrafx-CD",
       dllName: "mednafen_pce_fast_libretro.dll"
     },
 
     "Nintendo - Family Computer Disk System": {
       shortName: "fds",
-      romsPath: "D:\\roms\\Nintendo - Family Computer Disk System",
+      romsPath: "F:\\roms\\Nintendo - Family Computer Disk System",
       thumbnailDB: "Nintendo - Family Computer Disk System",
       dllName: "nestopia_libretro.dll"
     },
 
+     "Nintendo - Game Boy": {
+      shortName: "gb",
+      romsPath: "F:\\roms\\Nintendo - Game Boy",
+      thumbnailDB: "Nintendo - Game Boy",
+      dllName: "gambatte_libretro.dll"
+    },
+
+
     "Nintendo - Game Boy Advance": {
       shortName: "gba",
-      romsPath: "D:\\roms\\Nintendo - Game Boy Advance",
+      romsPath: "F:\\roms\\Nintendo - Game Boy Advance",
       thumbnailDB: "Nintendo - Game Boy Advance",
       dllName: "mednafen_gba_libretro.dll"
     },
 
     "Nintendo - Game Boy Color": {
       shortName: "gbc",
-      romsPath: "D:\\roms\\Nintendo - Game Boy Color",
+      romsPath: "F:\\roms\\Nintendo - Game Boy Color",
       thumbnailDB: "Nintendo - Game Boy Color",
       dllName: "gambatte_libretro.dll"
     },
 
-    "Nintendo - Game Boy": {
-      shortName: "gb",
-      romsPath: "D:\\roms\\Nintendo - Game Boy",
-      thumbnailDB: "Nintendo - Game Boy",
-      dllName: "gambatte_libretro.dll"
-    },
+   
 
     "Nintendo - GameCube": {
       shortName: "gamecube",
-      romsPath: "D:\\roms\\Nintendo - GameCube\\redump-gcz",
+      romsPath: "F:\\roms\\Nintendo - GameCube\\redump-gcz",
       thumbnailDB: "Nintendo - GameCube",
       dllName: "dolphin_libretro.dll",
       options: {
@@ -144,14 +147,14 @@
 
     "Nintendo - Nintendo Entertainment System": {
       shortName: "nes",
-      romsPath: "D:\\roms\\Nintendo - Nintendo Entertainment System",
+      romsPath: "F:\\roms\\Nintendo - Nintendo Entertainment System",
       thumbnailDB: "Nintendo - Nintendo Entertainment System",
       dllName: "nestopia_libretro.dll"
     },
 
     "Nintendo - Super Nintendo Entertainment System": {
       shortName: "sfc",
-      romsPath: "D:\\roms\\Nintendo - Super Nintendo Entertainment System\\no-intro",
+      romsPath: "F:\\roms\\Nintendo - Super Nintendo Entertainment System\\no-intro",
       thumbnailDB: "Nintendo - Super Nintendo Entertainment System",
       dllName: "snes9x_libretro.dll",
       options: { 
@@ -166,7 +169,7 @@
 
     "Nintendo - Switch": {
       shortName: "switch",
-      romsPath: "D:\\roms\\Nintendo - Switch",
+      romsPath: "F:\\roms\\Nintendo - Switch",
       thumbnailDB: "Nintendo - Switch",
       dllName: "",
       options: {
@@ -179,7 +182,7 @@
 
     "Nintendo - Wii": {
       shortName: "wii",
-      romsPath: "D:\\roms\\Nintendo - Wii",
+      romsPath: "F:\\roms\\Nintendo - Wii",
       thumbnailDB: "Nintendo - Wii",
       dllName: "dolphin_libretro.dll",
       options: {
@@ -191,7 +194,7 @@
 
     "Sega - Mega Drive - Genesis": {
       shortName: "md",
-      romsPath: "D:\\roms\\Sega - Mega Drive - Genesis",
+      romsPath: "F:\\roms\\Sega - Mega Drive - Genesis",
       thumbnailDB: "Sega - Mega Drive - Genesis",
       dllName: "genesis_plus_gx_libretro.dll",
       options: {
@@ -212,11 +215,11 @@
 
     "Sega - Naomi - Atomiswave": {
       shortName: "naomi",
-      romsPath: "D:\\roms\\MAME\\v0.216-merged",
+      romsPath: "F:\\roms\\MAME\\v0.216-merged",
       thumbnailDB: "MAME",
       dllName: "flycast_libretro.dll",
       options: {
-        datPath: "D:\\roms\\dats\\MAME 0.216 (Arcade).dat",
+        datPath: "F:\\roms\\dats\\MAME 0.216 (Arcade).dat",
         datParser: "mame",
         romFilter: {
           includeRomOfs: ["awbios", "naomi"]
@@ -226,7 +229,7 @@
 
     "Sega - Saturn": {
       shortName: "ss",
-      romsPath: "D:\\roms\\Sega - Saturn\\redump",
+      romsPath: "F:\\roms\\Sega - Saturn\\redump",
       thumbnailDB: "Sega - Saturn",
       dllName: "yabasanshiro_libretro.dll",
       options: {
@@ -244,7 +247,7 @@
 
     "Sega - Saturn (中文遊戲)": {
       shortName: "ss",
-      romsPath: "D:\\roms\\Sega - Saturn\\chinese",
+      romsPath: "F:\\roms\\Sega - Saturn\\chinese",
       thumbnailDB: "Sega - Saturn",
       dllName: "yabasanshiro_libretro.dll"
     },
@@ -286,24 +289,24 @@
 
     "Sony - PlayStation Vita": {
       shortName: "psv",
-      romsPath: "D:\\roms\\Sony - PlayStation Vita",
+      romsPath: "F:\\roms\\Sony - PlayStation Vita",
       thumbnailDB: "Sony - PlayStation Vita",
       dllName: "",
       options: {
-        datPath: "D:\\roms\\dats\\noPayStation\\TSV\\GAMES\\PSV_GAMES.tsv",
+        datPath: "F:\\dats\\noPayStation\\TSV\\GAMES\\PSV_GAMES.tsv",
         datParser: "noPayStationPsvTsv"
       }
     },
 
     "Taito Type X2": {
       shortName: "ttx2",
-      romsPath: "D:\\roms\\Taito Type X2",
+      romsPath: "F:\\roms\\Taito Type X2",
       thumbnailDB: "Taito Type X2"
     },
 
     "The 3DO Company - 3DO": {
       shortName: "3do",
-      romsPath: "D:\\roms\\The 3DO Company - 3DO\\redump",
+      romsPath: "F:\\roms\\The 3DO Company - 3DO\\redump",
       thumbnailDB: "The 3DO Company - 3DO",
       dllName: "4do_libretro.dll"
     }

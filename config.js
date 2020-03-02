@@ -112,8 +112,8 @@
       dllName: "dolphin_libretro.dll",
       options: {
         nameFilter: {
-          removeLang: true,
-          removeDisc: true
+          removeLangBracket: true,
+          removeDiscBracket: true
         },
         romFilter: {
           excludeNonFirstDisc: true
@@ -187,7 +187,7 @@
       dllName: "dolphin_libretro.dll",
       options: {
         nameFilter: {
-          removeLang: true
+          removeLangBracket: true
         }
       }
     },
@@ -234,8 +234,8 @@
       dllName: "yabasanshiro_libretro.dll",
       options: {
         nameFilter: {
-          removeLang: true,
-          removeDisc: true,
+          removeLangBracket: true,
+          removeDiscBracket: true,
           removeNonFirstBrackets: true
         },
         romFilter: {
@@ -263,7 +263,7 @@
           excludeNonFirstDisc: true,
         },
         nameFilter: {
-          removeDisc: true
+          removeDiscBracket: true
         }
       }
     },
@@ -283,6 +283,11 @@
       options: {
         romFilter: {
           excludeNonFirstDisc: true
+        },
+        nameFilter: {
+          removeVersion: true,
+          removeDiscBracket: true,
+          removePspIdBracket: true
         }
       }
     },
@@ -295,6 +300,11 @@
       options: {
         romFilter: {
           excludeNonFirstDisc: true
+        },
+        nameFilter: {
+          removeVersion: true,
+          removeDiscBracket: true,
+          removePspIdBracket: true
         }
       }
     },

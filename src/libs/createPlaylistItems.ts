@@ -17,6 +17,7 @@ import nameParsers from "../parsers/nameParsers";
 import { removeDoubleSpace } from "./nameFilters/removeDoubleSpace";
 import { removeAllBrackets } from "./nameFilters/removeAllBrackets";
 import { removeNonFirstBrackets } from "./nameFilters/removeNonFirstBrackets";
+import { removePspIdBracket } from "./nameFilters/removePspIdBracket";
 
 export const createPlaylistItems = (
   config: AppConfig,
@@ -41,6 +42,7 @@ export const createPlaylistItems = (
     }
 
     let skip = !gameName;
+    
 
     if (!skip) {
       if (getRomFilter(platform, "excludeBios")) {
@@ -53,7 +55,7 @@ export const createPlaylistItems = (
 
     if (!skip) {
       if (getRomFilter(platform, "excludeNonFirstDisc")) {
-        const matchs = gameName.match(/\(Disc ([\w\d]+)\)/);
+        const matchs = gameName.match(/Disc\s?([\w\d]+)\)/);
         if (matchs) {
           const diskNum = Number(matchs[1]);
           if (!isNaN(diskNum)) {
@@ -61,7 +63,7 @@ export const createPlaylistItems = (
               skip = true;
             }
           } else {
-            skip = (matchs[1] != "I" && matchs[1] != "A");
+            skip = matchs[1] != "I" && matchs[1] != "A";
           }
         }
       }
@@ -104,10 +106,10 @@ export const createPlaylistItems = (
     }
 
     if (!skip) {
-      if (getNameFilter(platform, "removeLang")) {
+      if (getNameFilter(platform, "removeLangBracket")) {
         gameName = removeLangBracket(gameName);
       }
-      if (getNameFilter(platform, "removeDisc")) {
+      if (getNameFilter(platform, "removeDiscBracket")) {
         gameName = removeDiscBracket(gameName);
       }
       if (getNameFilter(platform, "removeVersion")) {
@@ -116,12 +118,14 @@ export const createPlaylistItems = (
       if (getNameFilter(platform, "removeTitleId")) {
         gameName = removeNintendoTitleIdBracket(gameName);
       }
-      if (getNameFilter(platform, "removeAllBrackets")) {
-        gameName = removeAllBrackets(gameName);
-      }
-
       if (getNameFilter(platform, "removeNonFirstBrackets")) {
         gameName = removeNonFirstBrackets(gameName);
+      }
+      if (getNameFilter(platform, "removePspIdBracket")) {
+        gameName = removePspIdBracket(gameName);
+      }
+      if (getNameFilter(platform, "removeAllBrackets")) {
+        gameName = removeAllBrackets(gameName);
       }
 
       gameName = removeDoubleSpace(gameName);

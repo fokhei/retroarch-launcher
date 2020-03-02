@@ -10,7 +10,8 @@
   },
   "build": {
     "extraFiles": [
-      "config.js"
+      "config.js",
+      "icon.png"
     ]
   },
   "devDependencies": {

@@ -173,6 +173,7 @@ ipcMain.on(
   (event: any, item: ComputedPlayListItem, filePath: string) => {
     if (fs.existsSync(filePath)) {
       rimraf.sync(filePath);
+      // shell.moveItemToTrash(filePath)
     }
     downloadEvent = event.reply(AppEvent.ITEM_UPDATE, item.id);
   }

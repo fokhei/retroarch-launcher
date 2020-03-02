@@ -287,6 +287,19 @@
       }
     },
 
+    "Sony - PlayStation Portable (中文遊戲)": {
+      shortName: "psp",
+      romsPath: "D:\\roms\\Sony - PlayStation Portable\\chinese",
+      thumbnailDB: "Sony - PlayStation Portable",
+      dllName: "ppsspp_libretro.dll",
+      options: {
+        romFilter: {
+          excludeNonFirstDisc: true
+        }
+      }
+    },
+
+
     "Sony - PlayStation Vita": {
       shortName: "psv",
       romsPath: "F:\\roms\\Sony - PlayStation Vita",

@@ -255,7 +255,7 @@
 
     "Sony - PlayStation": {
       shortName: "ps1",
-      romsPath: "D:\\roms\\Sony - PlayStation\\redump",
+      romsPath: "F:\\roms\\Sony - PlayStation\\redump-usa",
       thumbnailDB: "Sony - PlayStation",
       dllName: "pcsx_rearmed_libretro.dll",
       options: {
@@ -268,16 +268,27 @@
       }
     },
 
-    "Sony - PlayStation Minis": {
-      shortName: "ps-minis",
-      romsPath: "D:\\roms\\Sony - PlayStation Minis\\cso",
-      thumbnailDB: "Sony - PlayStation Minis",
-      dllName: "ppsspp_libretro.dll"
+
+    "Sony - PlayStation (中文遊戲)": {
+      shortName: "ps1",
+      romsPath: "F:\\roms\\Sony - PlayStation\\chinese",
+      thumbnailDB: "Sony - PlayStation",
+      dllName: "pcsx_rearmed_libretro.dll",
+      options: {
+        romFilter: {
+          excludeNonFirstDisc: true,
+        },
+        nameFilter: {
+          removeDiscBracket: true
+        }
+      }
     },
 
+
+   
     "Sony - PlayStation Portable": {
       shortName: "psp",
-      romsPath: "D:\\roms\\Sony - PlayStation Portable\\cso",
+      romsPath: "F:\\roms\\Sony - PlayStation Portable\\cso",
       thumbnailDB: "Sony - PlayStation Portable",
       dllName: "ppsspp_libretro.dll",
       options: {
@@ -285,7 +296,6 @@
           excludeNonFirstDisc: true
         },
         nameFilter: {
-          removeVersion: true,
           removeDiscBracket: true,
           removePspIdBracket: true
         }
@@ -294,7 +304,7 @@
 
     "Sony - PlayStation Portable (中文遊戲)": {
       shortName: "psp",
-      romsPath: "D:\\roms\\Sony - PlayStation Portable\\chinese",
+      romsPath: "F:\\roms\\Sony - PlayStation Portable\\chinese",
       thumbnailDB: "Sony - PlayStation Portable",
       dllName: "ppsspp_libretro.dll",
       options: {
@@ -302,12 +312,24 @@
           excludeNonFirstDisc: true
         },
         nameFilter: {
-          removeVersion: true,
           removeDiscBracket: true,
           removePspIdBracket: true
         }
       }
     },
+
+    "Sony - PlayStation Portable (Minis)": {
+      shortName: "psp-minis",
+      romsPath: "F:\\roms\\Sony - PlayStation Portable\\minis",
+      thumbnailDB: "Sony - PlayStation Portable",
+      dllName: "ppsspp_libretro.dll",
+      options: {
+        nameFilter: {
+          removePspIdBracket: true
+        }
+      }
+    },
+
 
 
     "Sony - PlayStation Vita": {
@@ -321,17 +343,22 @@
       }
     },
 
-    "Taito Type X2": {
-      shortName: "ttx2",
-      romsPath: "F:\\roms\\Taito Type X2",
-      thumbnailDB: "Taito Type X2"
-    },
+    
 
     "The 3DO Company - 3DO": {
       shortName: "3do",
       romsPath: "F:\\roms\\The 3DO Company - 3DO\\redump",
       thumbnailDB: "The 3DO Company - 3DO",
       dllName: "4do_libretro.dll"
-    }
+    },
+
+
+    "IGS - PolyGame Master 2": {
+      shortName: "pgm2",
+      romsPath: "F:\\roms\\IGS - PolyGame Master 2\\roms",
+      thumbnailDB: "IGS - PolyGame Master 2",
+      dllName: ""
+    },
+
   }
 };

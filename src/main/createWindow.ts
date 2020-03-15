@@ -18,9 +18,9 @@ const createMainWindow = (config?: AppConfig) => {
 
   const window = new BrowserWindow(windowOption);
   window.removeMenu();
-  if (isDevelopment) {
-     window.webContents.openDevTools();
-  }
+  // if (isDevelopment) {
+  //    window.webContents.openDevTools();
+  // }
 
   if (isDevelopment) {
     window.loadURL(`http://localhost:${process.env.ELECTRON_WEBPACK_WDS_PORT}`);
@@ -34,12 +34,12 @@ const createMainWindow = (config?: AppConfig) => {
     );
   }
 
-  window.webContents.on("devtools-opened", () => {
-    window.focus();
-    setImmediate(() => {
-      window.focus();
-    });
-  });
+  // window.webContents.on("devtools-opened", () => {
+  //   window.focus();
+  //   setImmediate(() => {
+  //     window.focus();
+  //   });
+  // });
 
   return window;
 };

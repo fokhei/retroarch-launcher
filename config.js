@@ -343,22 +343,25 @@
       }
     },
 
-    
+    "Taito - Type X": {
+      shortName: "ttx2",
+      romsPath: "D:\\roms\\Taito - Type X\\games",
+      thumbnailDB: "Taito - Type X",
+      dllName: "",
+      options: {
+        scanType: "folder"
+      }
+    },
 
     "The 3DO Company - 3DO": {
       shortName: "3do",
       romsPath: "F:\\roms\\The 3DO Company - 3DO\\redump",
       thumbnailDB: "The 3DO Company - 3DO",
       dllName: "4do_libretro.dll"
-    },
+    }
 
 
-    "IGS - PolyGame Master 2": {
-      shortName: "pgm2",
-      romsPath: "F:\\roms\\IGS - PolyGame Master 2\\roms",
-      thumbnailDB: "IGS - PolyGame Master 2",
-      dllName: ""
-    },
+
 
   }
 };

@@ -8,12 +8,12 @@ import { ComputedPlayListItem } from "../libs/ComputedPlaylistItem";
 import { ComputedPlayListMap } from "../libs/ComputedPlayListMap";
 import RightBar from "./RightBar";
 import child_process from "child_process";
-import ItemContextMenu from "./ItemContextMenu";
-import ThumbnailContextMenu from "./ThumbnailContextMenu";
-import PaylistContextMenu from "./PaylistContextMenu";
-import GameNameContextMenu from "./GameNameContextMenu";
-import RomNameContextMenu from "./RomNameContextMenu";
-import DropZoneContextMenu from "./DropZoneContextMenu";
+import ItemContextMenu from "../contextMenus/ItemContextMenu";
+import ThumbnailContextMenu from "../contextMenus/ThumbnailContextMenu";
+import PaylistContextMenu from "../contextMenus/PaylistContextMenu";
+import GameNameContextMenu from "../contextMenus/GameNameContextMenu";
+import RomNameContextMenu from "../contextMenus/RomNameContextMenu";
+import DropZoneContextMenu from "../contextMenus/DropZoneContextMenu";
 import { ThumbnailInfo } from "../libs/ThumbnailInfos";
 import PlaylistCreator from "./PlaylistCreator";
 import AppConfig from "../libs/AppConfig";
@@ -179,6 +179,14 @@ const _MainView = (props: MainViewProps) => {
     return undefined;
   };
 
+  const onKeyUp = (evt:KeyboardEvent) => {
+    // console.log("onKeyUp", evt.keyCode);
+    if (evt.keyCode==123) {
+      evt.preventDefault();
+      ipcRenderer.send(AppEvent.OPEN_DEV_TOOLS);
+    }
+  }
+
   const mountEffect = () => {
     ipcRenderer.on(AppEvent.CRITICAL_ERROR, onCriticalError);
     ipcRenderer.on(AppEvent.CONFIG, onAppConfig);
@@ -186,6 +194,11 @@ const _MainView = (props: MainViewProps) => {
     ipcRenderer.on(AppEvent.ITEM_UPDATE, reRender);
     ipcRenderer.on(AppEvent.MISSING_THUMBNAIL_INFOS, onMissingThumbnailInfos);
     ipcRenderer.send(AppEvent.MAIN_VIEW_MOUNT);
+
+
+    
+    window.addEventListener('keyup', onKeyUp, true);
+
     return () => {
       ipcRenderer.removeListener(AppEvent.CRITICAL_ERROR, onCriticalError);
       ipcRenderer.removeListener(AppEvent.ITEM_UPDATE, reRender);

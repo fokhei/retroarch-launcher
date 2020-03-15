@@ -1,8 +1,8 @@
 import React from "react";
 import { ContextMenu, MenuItem } from "react-contextmenu";
-import { ContextMenuId } from "./ContextMenuId";
+import { ContextMenuId } from "../renderer/ContextMenuId";
 import { clipboard } from "electron";
-import { ContextMenuAction } from "./ContextMenuAction";
+import { ContextMenuAction } from "../renderer/ContextMenuAction";
 import { ComputedPlayListItem } from "../libs/ComputedPlaylistItem";
 
 const GameNameContextMenu = (props: GameNameContextMenuProps) => {

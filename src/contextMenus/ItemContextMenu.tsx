@@ -1,12 +1,12 @@
 import React from "react";
 import { ContextMenu, MenuItem } from "react-contextmenu";
-import { ContextMenuId } from "./ContextMenuId";
-import { remote, shell, ipcRenderer } from "electron";
-import { ContextMenuAction } from "./ContextMenuAction";
-import { toGoogleKeyword } from "../libs/toGoogleKeyword";
+import { ContextMenuId } from "../renderer/ContextMenuId";
+import { remote, ipcRenderer } from "electron";
+import { ContextMenuAction } from "../renderer/ContextMenuAction";
 import { ComputedPlayListItem } from "../libs/ComputedPlaylistItem";
 import { AppEvent } from "../libs/AppEvent";
-import AppConfig, { getPlatform } from "../libs/AppConfig";
+import AppConfig from "../libs/AppConfig";
+import { googleSearch } from "../libs/googleSearch";
 
 const ItemContextMenu = (props: ItemContextMenuProps) => {
   const { config, item, playOnRetroArch } = props;
@@ -24,15 +24,7 @@ const ItemContextMenu = (props: ItemContextMenuProps) => {
     } else if (action == ContextMenuAction.DOWNLOAD_THUMBNAILS) {
       ipcRenderer.send(AppEvent.DOWNLOAD_THUMBNAILS, item);
     } else if (action == ContextMenuAction.GOOGLE_SEARCH_GAME_ITEM) {
-      let keyword = "";
-      const platform = getPlatform(config, item.db_name);
-      if (platform) {
-        keyword += platform.shortName + "+";
-      }
-
-      keyword += item.label;
-      const q = toGoogleKeyword(keyword);
-      shell.openExternal(`https://www.google.com/search?tbm=isch&q=${q}`);
+      googleSearch(config, item);
     }
   };
 

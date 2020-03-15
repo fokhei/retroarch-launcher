@@ -1,10 +1,10 @@
 import React from "react";
 import { ContextMenu, MenuItem } from "react-contextmenu";
-import { ContextMenuId } from "./ContextMenuId";
+import { ContextMenuId } from "../renderer/ContextMenuId";
 import { remote, ipcRenderer, clipboard } from "electron";
-import { ContextMenuAction } from "./ContextMenuAction";
+import { ContextMenuAction } from "../renderer/ContextMenuAction";
 import { AppEvent } from "../libs/AppEvent";
-import { CategoryAll } from "./MainView";
+import { CategoryAll } from "../renderer/MainView";
 import AppConfig from "../libs/AppConfig";
 
 const PaylistContextMenu = (props: PaylistContextMenuProps) => {

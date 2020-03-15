@@ -28,9 +28,15 @@ interface NameFilter {
   removeNonFirstBrackets?: boolean;
 }
 
+export enum ScanType {
+  FILE= "file",
+  FOLDER = "folder"
+}
+
 interface PlatformOptions {
   datPath?: string;
   datParser?: DatParser;
+  scanType?: ScanType;
   romFilter?: RomFilter;
   nameFilter?: NameFilter;
 }

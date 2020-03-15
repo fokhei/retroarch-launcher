@@ -4,27 +4,28 @@ import { AppEvent } from "../libs/AppEvent";
 import { ipcMain } from "electron";
 import fs from "fs";
 import * as path from "path";
+import rimraf from "rimraf";
+import Jimp from "Jimp";
+import lazy from "lazy.js";
+import webp from "webp-converter";
+import request from "request";
 import { RetroArchPlayList } from "../libs/RetroArchPlayList";
 import { ComputedPlayListItem } from "../libs/ComputedPlaylistItem";
 import { ComputedPlayListMap } from "../libs/ComputedPlayListMap";
 import { ThumbnailType } from "../libs/ThumbnailType";
 import { toRetroArchThumbnail } from "../libs/toRetroArchThumbnail";
-import rimraf from "rimraf";
-import Jimp from "Jimp";
-import lazy from "lazy.js";
 import { RetroArchPlayListItem } from "../libs/RetroArchPlayListItem";
-import request from "request";
 import { ThumbnailInfo } from "../libs/ThumbnailInfos";
 import { getFiles } from "../libs/getFiles";
 import { createPlaylistItems } from "../libs/createPlaylistItems";
+import AppConfig, { getPlatformOptions, ScanType } from "../libs/AppConfig";
+import { createDatIndexes } from "../libs/createDatIndexes";
+import { exportMamePlaylistFiles } from "../libs/exportMamePlaylistFiles";
+import { getDirectoriesSync } from "../libs/getDirectoriesSync";
 import {
   exportPlaylistFile,
   ExportPlaylistResult
 } from "../libs/exportPlaylistFile";
-import AppConfig from "../libs/AppConfig";
-import { createDatIndexes } from "../libs/createDatIndexes";
-import { exportMamePlaylistFiles } from "../libs/exportMamePlaylistFiles";
-import webp from "webp-converter";
 
 let _id = 0;
 let mainWindow: BrowserWindow | null;
@@ -253,18 +254,31 @@ ipcMain.on(AppEvent.CREATE_PLAYLIST, (event: any, category: string) => {
     });
   } else {
     const platform = config.platforms[category];
-    getFiles(platform.romsPath)
-      .then((files: Array<string>) => {
-        const indexes = createDatIndexes(config, category);
-        const items = createPlaylistItems(config, category, files, indexes);
-        let result = exportPlaylistFile(config, category, items);
-        handleExportResults(event, category, [result]);
-      })
-      .catch((err: any) => {
-        console.error(err);
-        createPaylistEvent.reply(AppEvent.CREATE_PLAYLIST_ERROR, err);
-      });
+    const scanType = getPlatformOptions(platform, "scanType") as ScanType;
+    if (scanType == ScanType.FOLDER) {
+      const indexes = createDatIndexes(config, category);
+      const dirs = getDirectoriesSync(platform.romsPath);
+      const items = createPlaylistItems(config, category, dirs, indexes);
+      const result = exportPlaylistFile(config, category, items);
+      handleExportResults(event, category, [result]);
+    } else {
+      getFiles(platform.romsPath)
+        .then((files: Array<string>) => {
+          const indexes = createDatIndexes(config, category);
+          const items = createPlaylistItems(config, category, files, indexes);
+          const result = exportPlaylistFile(config, category, items);
+          handleExportResults(event, category, [result]);
+        })
+        .catch((err: any) => {
+          console.error(err);
+          createPaylistEvent.reply(AppEvent.CREATE_PLAYLIST_ERROR, err);
+        });
+    }
   }
+});
+
+ipcMain.on(AppEvent.OPEN_DEV_TOOLS, (_event: any) => {
+  mainWindow.webContents.openDevTools();
 });
 
 const handleExportResults = (

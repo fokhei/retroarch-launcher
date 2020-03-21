@@ -1,12 +1,15 @@
 import fs from "fs";
 import * as path from "path";
-import AppConfig, {
-  DriverStatus,
-  getRomFilter
-} from "./AppConfig";
+import AppConfig, { DriverStatus, getRomFilter } from "./AppConfig";
 import { DatIndexes } from "../parsers/datParsers";
 import { createPlayListItem } from "./createPlayListItem";
 import { ExportPlaylistResult, exportPlaylistFile } from "./exportPlaylistFile";
+
+import { serials } from "../mameGroups/serials";
+import { classics } from "../mameGroups/classics";
+import { gamble } from "../mameGroups/gamble";
+import { mahjong } from "../mameGroups/mahjong";
+import { sexy } from "../mameGroups/sexy";
 
 interface ExportMamePlaylistFilesProps {
   config: AppConfig;
@@ -15,53 +18,7 @@ interface ExportMamePlaylistFilesProps {
   callback: (results: Array<ExportPlaylistResult>) => void;
 }
 
-const lpls = {
-  "cps1.cpp": "Capcom - CP System I",
-  "cps2.cpp": "Capcom - CP System II",
-  "cps3.cpp": "Capcom - CP System III",
-  "pgm.cpp": "IGS - PolyGame Master",
-  "pgm2.cpp": "IGS - PolyGame Master 2",
-  //"pgm3.cpp": "IGS - PolyGame Master 3",
-  "namcos12.cpp": "Namco - System12",
-  "namcos22.cpp": "Namco - System22",
-  "model2.cpp": "Sega - Model2",
-  "model3.cpp": "Sega - Model3",
-  "stv.cpp": "Sega - STV",
-  "neogeo.cpp": "SNK - Neo Geo",
-  "zn.cpp": "Sony - ZN1 - ZN2",
-  //"model1.cpp": "Sega - Model1",
-  //"ddenlovr.cpp": "Dynax",
-  //"expro02.cpp": "Kaneko - EXPRO02",
-  //"eolith.cpp": "Eolith",
-  //"midtunit.cpp": "Midway - T unit system",
-  //"paradise.cpp": "Paradise",
-  //"peplus.cpp" : "Players Edge Plus",
-  //"gaelco3d.cpp": "Gaelco 3D",
-  //"m72.cpp" : "Irem M-72",
-  //"m92.cpp" : "Irem M-92",
-  //"itech32.cpp": "Itech32",
-  //"ksys573.cpp": "Konami System573",
-  //"mitchell.cpp" : "Mitchell",
-  //"namcos1.cpp": "Namco S1",
-  //"namcos2.cpp": "Namco S2",
-  //"nmk16.cpp": "NMK 16",
-  //"segas16b.cpp": "Sega System 16",
-  //"segas18.cpp": "Sega System 18",
-  //"system1.cpp": "Sega System 1",
-  //"segas24.cpp": "Sega System 24",
-  //"segas32.cpp": "Sega System 32",
-  //"segac2.cpp": "Sega System C-2",
-  //"seta.cpp": "Seta1",
-  //"taito_f2.cpp": "Taito F2",
-  //"taito_f3.cpp" : "Taito F3",
-  //"toaplan2.cpp": "Toaplan",
-  //"triforce.cpp" : "Triforce",
-  // "williams.cpp": "Williams",
-  chd: "MAME - CHD",
-  misc: "MAME"
-};
-
-const sourcefiles = Object.keys(lpls);
+const serialKeys = Object.keys(serials);
 
 export const exportMamePlaylistFiles = (
   props: ExportMamePlaylistFilesProps
@@ -72,7 +29,7 @@ export const exportMamePlaylistFiles = (
   const includeStatus = getRomFilter(platform, "includeStatus") as Array<
     DriverStatus
   >;
-  const incldueMinYear = getRomFilter(platform, "incldueMinYear") as number;
+  // const incldueMinYear = getRomFilter(platform, "incldueMinYear") as number;
   let playlists: any = {};
   fs.readdir(romsPath, (err: any, files: Array<string>) => {
     if (err) {
@@ -85,32 +42,60 @@ export const exportMamePlaylistFiles = (
         if (indexes.hasOwnProperty(romName)) {
           const romPath = path.resolve(romsPath, romName);
           const index = indexes[romName];
-          let key = "misc";
-          let shouldExport = false;
-          if (sourcefiles.includes(index.sourcefile)) {
-            key = index.sourcefile;
-            shouldExport = true;
+          let driver = index.sourcefile.replace(".cpp", "");
+
+          let lpl = "Misc";
+          if (serialKeys.includes(driver)) {
+            lpl = serials[driver];
           } else {
-            let diskExist = true;
-            if (index.diskName != "") {
-              key = "chd";
-              const diskPath = path.resolve(
-                romsPath,
-                romName.replace(".zip", ""),
-                index.diskName + ".chd"
-              );
-              diskExist = fs.existsSync(diskPath);
+            if (classics.includes(driver)) {
+              lpl = "Cassics";
+            } else if (gamble.includes(driver)) {
+              lpl = "Gamble";
+            } else if (mahjong.includes(driver)) {
+              lpl = "MahJong";
+            } else if (sexy.includes(driver)) {
+              lpl = "Sexy";
+            } else if (index.diskName != "") {
+              lpl = "CHD";
             }
-            if (diskExist) {
-              if (
-                includeStatus &&
-                includeStatus.includes(index.driverStatus as DriverStatus)
-              ) {
-                const gameYear = Number(index.year);
-                if (!isNaN(gameYear) && gameYear >= incldueMinYear) {
-                  shouldExport = true;
-                }
-              }
+          }
+
+          // let cpp = "misc";
+
+          // if (sourcefiles.includes(index.sourcefile)) {
+          //   cpp = index.sourcefile;
+          //   shouldExport = true;
+          // } else {
+          // let diskExist = true;
+          // if (index.diskName != "") {
+          // lpl = "CHD";
+          // const diskPath = path.resolve(
+          //   romsPath,
+          //   romName.replace(".zip", ""),
+          //   index.diskName + ".chd"
+          // );
+          // diskExist = fs.existsSync(diskPath);
+          // diskExist = true;
+          // }
+          // if (diskExist) {
+          // if (
+          //   includeStatus &&
+          //   includeStatus.includes(index.driverStatus as DriverStatus)
+          // ) {
+          //   const gameYear = Number(index.year);
+          //   if (!isNaN(gameYear) && gameYear >= incldueMinYear) {
+          //     shouldExport = true;
+          //   }
+          // }
+          // shouldExport = true;
+          // }
+          // }
+
+          let shouldExport = true;
+          if (includeStatus) {
+            if (!includeStatus.includes(index.driverStatus as DriverStatus)) {
+              shouldExport = false;
             }
           }
 
@@ -121,30 +106,23 @@ export const exportMamePlaylistFiles = (
               romPath,
               index.gameName
             );
-            // let item = {
-            //   path: romPath,
-            //   label: index.gameName,
-            //   core_path: dllPath,
-            //   core_name: core,
-            //   crc32: "00000000|crc",
-            //   db_name: db
-            // };
-
-            if (!playlists.hasOwnProperty(key)) {
-              playlists[key] = [item];
+            if (!playlists.hasOwnProperty(lpl)) {
+              playlists[lpl] = [item];
             } else {
-              playlists[key].push(item);
+              playlists[lpl].push(item);
             }
           }
         }
       }
     });
+
     let results: Array<ExportPlaylistResult> = [];
-    Object.keys(playlists).map(key => {
-      const items = playlists[key];
-      const subCategory = lpls[key];
-      results.push(exportPlaylistFile(config, subCategory, items));
+    Object.keys(playlists).map(lpl => {
+      const items = playlists[lpl];
+      let category = "MAME - " + lpl;
+      results.push(exportPlaylistFile(config, category, items));
     });
+
     callback(results);
   });
 };

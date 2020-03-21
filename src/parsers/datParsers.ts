@@ -2,8 +2,13 @@ import fs from "fs";
 import parse from "csv-parse";
 import { ParserType } from "./Parser";
 import readXmlAsJs from "../libs/readXmlAsJs";
-import { Platform, getPlatformOptions, DriverStatus, getRomFilter } from "../libs/AppConfig";
-import { removeAllBrackets } from '../libs/nameFilters/removeAllBrackets';
+import {
+  Platform,
+  getPlatformOptions,
+  DriverStatus,
+  getRomFilter
+} from "../libs/AppConfig";
+import { removeAllBrackets } from "../libs/nameFilters/removeAllBrackets";
 
 export interface DatIndex {
   id: string;
@@ -121,14 +126,12 @@ const datParsers: DatParsers = {
   [ParserType.mame]: (props: DatParsersProps) => {
     const { platform, indexes } = props;
     const datPath = getPlatformOptions(platform, "datPath") as string;
-    const excludeRomOfs = getRomFilter(
-      platform,
-      "excludeRomOfs"
-    ) as Array<string>;
-    const includeRomOfs = getRomFilter(
-      platform,
-      "includeRomOfs"
-    ) as Array<string>;
+    const excludeRomOfs = getRomFilter(platform, "excludeRomOfs") as Array<
+      string
+    >;
+    const includeRomOfs = getRomFilter(platform, "includeRomOfs") as Array<
+      string
+    >;
 
     const js = readXmlAsJs(datPath);
     const games = js.datafile.machine;
@@ -136,10 +139,20 @@ const datParsers: DatParsers = {
     for (let i = 0; i < length; i++) {
       const game = games[i];
       const attrs = game._attributes;
-      const { name, isbios, isdevice, romof, sourcefile } = attrs;
-      if (isdevice || isbios) {
+      const {
+        name,
+        isbios,
+        isdevice,
+        runnable,
+        ismechanical,
+        romof,
+        sourcefile
+      } = attrs;
+
+      if (isdevice || isbios || ismechanical || runnable) {
         continue;
       }
+
       if (excludeRomOfs && excludeRomOfs.length) {
         if (excludeRomOfs.includes(romof)) {
           continue;

@@ -208,7 +208,7 @@
 
     "Sega - Mega-CD - Sega CD": {
       shortName: "sega-cd",
-      romsPath: "D:\\roms\\Sega - Mega-CD - Sega CD\\games",
+      romsPath: "F:\\roms\\Sega - Mega-CD - Sega CD\\games",
       thumbnailDB: "Sega - Mega-CD - Sega CD",
       dllName: "genesis_plus_gx_libretro.dll"
     },

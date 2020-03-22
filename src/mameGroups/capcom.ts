@@ -1,0 +1,36 @@
+import { MameGroup } from ".";
+
+export const cps: MameGroup = {
+  name: "Capcom",
+  drivers: [
+    "1942",
+    "1943",
+    "aleck64",
+    "bionicc",
+    "blktiger",
+    "capbowl",
+    "cbasebal",
+    "commando",
+    "cps1",
+    "cps2",
+    "cps3",
+    "exedexes",
+    "ggconnie",
+    "gng",
+    "gunsmoke",
+    "higemaru",
+    "itech32",
+    "kenseim",
+    "lastduel",
+    "lwings",
+    "megadriv_acbl",
+    "mitchell",
+    "sf",
+    "sidearms",
+    "sonson",
+    "srumbler",
+    "tigeroad",
+    "tvcapcom",
+    "vulgus",
+  ]
+};

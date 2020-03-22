@@ -17,6 +17,7 @@ export interface DatIndex {
   driverStatus?: string;
   diskName?: string;
   year?: string;
+  manufacturer?: string;
 }
 
 export interface DatIndexes {
@@ -176,18 +177,26 @@ const datParsers: DatParsers = {
           }
         }
       }
+
       if (game.hasOwnProperty("driver")) {
         const driverStatus = game.driver._attributes.status;
         const gameName = game.description._text;
         const id = name + ".zip";
         const year = game.year._text.substr(0, 4);
+
+        let manufacturer = "";
+        if (game.hasOwnProperty("manufacturer")) {
+          manufacturer = game.manufacturer._text;
+        }
+
         indexes[id] = {
           id,
           gameName,
           sourcefile,
           driverStatus,
           diskName,
-          year
+          year,
+          manufacturer
         };
       }
     }

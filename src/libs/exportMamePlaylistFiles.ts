@@ -5,11 +5,8 @@ import { DatIndexes } from "../parsers/datParsers";
 import { createPlayListItem } from "./createPlayListItem";
 import { ExportPlaylistResult, exportPlaylistFile } from "./exportPlaylistFile";
 
+import { mameGroups } from "../mameGroups/";
 import { serials } from "../mameGroups/serials";
-import { classics } from "../mameGroups/classics";
-import { gamble } from "../mameGroups/gamble";
-import { mahjong } from "../mameGroups/mahjong";
-import { sexy } from "../mameGroups/sexy";
 
 interface ExportMamePlaylistFilesProps {
   config: AppConfig;
@@ -18,6 +15,7 @@ interface ExportMamePlaylistFilesProps {
   callback: (results: Array<ExportPlaylistResult>) => void;
 }
 
+const mameGroupKeys = Object.keys(mameGroups);
 const serialKeys = Object.keys(serials);
 
 export const exportMamePlaylistFiles = (
@@ -29,8 +27,8 @@ export const exportMamePlaylistFiles = (
   const includeStatus = getRomFilter(platform, "includeStatus") as Array<
     DriverStatus
   >;
-  // const incldueMinYear = getRomFilter(platform, "incldueMinYear") as number;
-  let playlists: any = {};
+
+  let playlist: any = {};
   fs.readdir(romsPath, (err: any, files: Array<string>) => {
     if (err) {
       throw err;
@@ -44,24 +42,29 @@ export const exportMamePlaylistFiles = (
           const index = indexes[romName];
           let driver = index.sourcefile.replace(".cpp", "");
 
-          let lpl = "Misc";
+          let lpl = "";
           if (serialKeys.includes(driver)) {
             lpl = serials[driver];
           } else {
-            if (classics.includes(driver)) {
-              lpl = "Cassics";
-            } else if (gamble.includes(driver)) {
-              lpl = "Gamble";
-            } else if (mahjong.includes(driver)) {
-              lpl = "MahJong";
-            } else if (sexy.includes(driver)) {
-              lpl = "Sexy";
-            } else if (index.diskName != "") {
-              lpl = "CHD";
+            for (let i = 0; i < mameGroupKeys.length; i++) {
+              const key = mameGroupKeys[i];
+              const mameGroup = mameGroups[key];
+              if (mameGroup.drivers.includes(driver)) {
+                lpl = key;
+                break;
+              }
+            }
+
+            if (lpl == "") {
+              if (index.diskName != "") {
+                lpl = "CHD";
+              }
+            }
+
+            if (lpl == "") {
+              lpl = "Misc";
             }
           }
-
-          // let cpp = "misc";
 
           // if (sourcefiles.includes(index.sourcefile)) {
           //   cpp = index.sourcefile;
@@ -106,10 +109,10 @@ export const exportMamePlaylistFiles = (
               romPath,
               index.gameName
             );
-            if (!playlists.hasOwnProperty(lpl)) {
-              playlists[lpl] = [item];
+            if (!playlist.hasOwnProperty(lpl)) {
+              playlist[lpl] = [item];
             } else {
-              playlists[lpl].push(item);
+              playlist[lpl].push(item);
             }
           }
         }
@@ -117,9 +120,9 @@ export const exportMamePlaylistFiles = (
     });
 
     let results: Array<ExportPlaylistResult> = [];
-    Object.keys(playlists).map(lpl => {
-      const items = playlists[lpl];
-      let category = "MAME - " + lpl;
+    Object.keys(playlist).map(key => {
+      const items = playlist[key];
+      let category = "MAME - " + key;
       results.push(exportPlaylistFile(config, category, items));
     });
 

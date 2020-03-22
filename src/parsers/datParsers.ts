@@ -82,7 +82,6 @@ const datParsers: DatParsers = {
     const includeStatus = getRomFilter(platform, "includeStatus") as Array<
       DriverStatus
     >;
-    const includeMinYear = getRomFilter(platform, "includeMinYear") as number;
 
     const js = readXmlAsJs(datPath);
     const games = js.datafile.game;

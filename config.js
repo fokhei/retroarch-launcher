@@ -45,7 +45,6 @@
         datParser: "fba",
         romFilter: {
           includeStatus: ["good", "imperfect"],
-          //includeMinYear: 1984
         }
       }
     },
@@ -61,9 +60,7 @@
         romFilter: {
           excludeRomOfs: ["awbios", "naomi"],
           includeStatus: ["good", "imperfect"],
-          includeMinYear: 1984
         }
-      
       }
     },
 

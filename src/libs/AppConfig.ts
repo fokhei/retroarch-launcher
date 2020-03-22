@@ -16,7 +16,6 @@ interface RomFilter {
   excludeSample?: boolean;
   excludeDemo?: boolean;
   includeStatus?: Array<string>;
-  includeMinYear?: number;
 }
 
 interface NameFilter {

@@ -35,7 +35,7 @@
       }
     },
 
-    "FBNeo - Arcade Games": {
+    "FBA": {
       shortName: "fba",
       romsPath: "F:\\roms\\FBNeo\\arcade",
       thumbnailDB: "FBNeo - Arcade Games",
@@ -45,7 +45,7 @@
         datParser: "fba",
         romFilter: {
           includeStatus: ["good", "imperfect"],
-          includeMinYear: 1984
+          //includeMinYear: 1984
         }
       }
     },
@@ -219,7 +219,7 @@
       thumbnailDB: "MAME",
       dllName: "flycast_libretro.dll",
       options: {
-        datPath: "F:\\roms\\dats\\MAME 0.216 (Arcade).dat",
+        datPath: "F:\\dats\\MAME 0.216 (Arcade).dat",
         datParser: "mame",
         romFilter: {
           includeRomOfs: ["awbios", "naomi"]

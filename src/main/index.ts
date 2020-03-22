@@ -26,6 +26,7 @@ import {
   exportPlaylistFile,
   ExportPlaylistResult
 } from "../libs/exportPlaylistFile";
+import { exportFbaPlaylistFiles } from '../libs/exportFbaPlaylistFiles';
 
 let _id = 0;
 let mainWindow: BrowserWindow | null;
@@ -247,6 +248,17 @@ ipcMain.on(AppEvent.CREATE_PLAYLIST, (event: any, category: string) => {
       handleExportResults(event, category, results);
     };
     exportMamePlaylistFiles({
+      config,
+      category,
+      indexes,
+      callback
+    });
+  } else if (category == "FBA") {
+    const indexes = createDatIndexes(config, category);
+    const callback = (results: Array<ExportPlaylistResult>) => {
+      handleExportResults(event, category, results);
+    };
+    exportFbaPlaylistFiles({
       config,
       category,
       indexes,

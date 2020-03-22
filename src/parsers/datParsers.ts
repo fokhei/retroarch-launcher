@@ -107,18 +107,22 @@ const datParsers: DatParsers = {
         }
       }
 
-      if (!isNaN(includeMinYear)) {
-        const year = Number(game.year._text.substr(0, 4));
-        if (year < includeMinYear) {
-          continue;
-        }
+      let manufacturer = "";
+      if (game.hasOwnProperty("manufacturer")) {
+        manufacturer = game.manufacturer._text;
       }
 
       const id = name + ".zip";
       const gameName = game.description._text;
+      const driverStatus = game.driver._attributes.status;
+      const year = game.year._text.substr(0, 4);
+
       indexes[id] = {
         id,
-        gameName
+        gameName,
+        manufacturer,
+        driverStatus,
+        year
       };
     }
     return indexes;

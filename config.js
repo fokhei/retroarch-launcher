@@ -231,6 +231,18 @@
       dllName: "genesis_plus_gx_libretro.dll"
     },
 
+
+    "Sega - Model2 (m2emulator)": {
+      shortName: "model2",
+      romsPath: "D:\\roms\\Sega Model2 (M2Emulator)",
+      thumbnailDB: "MAME",
+      options: {
+        datPath: "D:\\roms\\dats\\SEGA Model 2 Emulator v0.9.dat",
+        datParser: "m2emulator"
+      }
+    },
+
+
     "Sega - Naomi - Atomiswave": {
       shortName: "naomi",
       romsPath: "F:\\roms\\MAME\\v0.216-merged",

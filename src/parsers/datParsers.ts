@@ -6,7 +6,7 @@ import {
   Platform,
   getPlatformOptions,
   DriverStatus,
-  getRomFilter
+  getRomFilter,
 } from "../libs/AppConfig";
 import { removeAllBrackets } from "../libs/nameFilters/removeAllBrackets";
 
@@ -38,7 +38,7 @@ const datParsers: DatParsers = {
     const { platform, indexes } = props;
     const datPath = getPlatformOptions(platform, "datPath") as string;
     const js = readXmlAsJs(datPath);
-    js.datafile.game.map(game => {
+    js.datafile.game.map((game) => {
       if (game.hasOwnProperty("game_id")) {
         const attrs = game._attributes;
         const { name } = attrs;
@@ -48,7 +48,7 @@ const datParsers: DatParsers = {
           const gameName = name;
           indexes[id] = {
             id,
-            gameName
+            gameName,
           };
         }
       }
@@ -61,7 +61,7 @@ const datParsers: DatParsers = {
     const txt = fs.readFileSync(datPath, "utf8");
     const parser = parse(txt, {
       delimiter: "	",
-      skip_empty_lines: true
+      skip_empty_lines: true,
     });
     let record: any;
     while ((record = parser.read())) {
@@ -71,7 +71,7 @@ const datParsers: DatParsers = {
       const gameName = removeAllBrackets(fileName) + ` (${region})`;
       indexes[id] = {
         id,
-        gameName
+        gameName,
       };
     }
     return indexes;
@@ -121,7 +121,7 @@ const datParsers: DatParsers = {
         gameName,
         manufacturer,
         driverStatus,
-        year
+        year,
       };
     }
     return indexes;
@@ -150,7 +150,7 @@ const datParsers: DatParsers = {
         runnable,
         ismechanical,
         romof,
-        sourcefile
+        sourcefile,
       } = attrs;
 
       if (isdevice || isbios || ismechanical || runnable) {
@@ -199,13 +199,40 @@ const datParsers: DatParsers = {
           driverStatus,
           diskName,
           year,
-          manufacturer
+          manufacturer,
         };
       }
     }
 
     return indexes;
-  }
+  },
+
+  [ParserType.m2emulator]: (props: DatParsersProps) => {
+    const { platform, indexes } = props;
+    const datPath = getPlatformOptions(platform, "datPath") as string;
+    const js = readXmlAsJs(datPath);
+
+    const games = js.datafile.game;
+    const { length } = games;
+
+    for (let i = 0; i < length; i++) {
+      const game = games[i];
+      const attrs = game._attributes;
+      const { isbios, name } = attrs;
+
+      if (isbios) {
+        continue;
+      }
+      const gameName = game.description._text;
+
+      indexes[name] = {
+        id: name,
+        gameName,
+      };
+    }
+
+    return indexes;
+  },
 };
 
 export default datParsers;

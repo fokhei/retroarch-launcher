@@ -18,6 +18,7 @@ interface RomFilter {
   includeStatus?: Array<string>;
 }
 
+
 interface NameFilter {
   removeLang?: boolean;
   removeDisc?: boolean;

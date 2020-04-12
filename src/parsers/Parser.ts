@@ -3,6 +3,6 @@ export enum ParserType {
   noPayStationPsvTsv = "noPayStationPsvTsv",
   fba = "fba",
   mame = "mame",
-  m2emulator="m2emulator"
-
+  m2emulator = "m2emulator",
+  supermodel = "supermodel",
 }

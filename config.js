@@ -232,13 +232,23 @@
     },
 
 
-    "Sega - Model2 (m2emulator)": {
+    "Sega - Model2 (M2Emulator)": {
       shortName: "model2",
       romsPath: "D:\\roms\\Sega Model2 (M2Emulator)",
       thumbnailDB: "MAME",
       options: {
         datPath: "D:\\roms\\dats\\SEGA Model 2 Emulator v0.9.dat",
         datParser: "m2emulator"
+      }
+    },
+
+    "Sega - Model3 (SuperModel)": {
+      shortName: "model3",
+      romsPath: "D:\\emu\\Supermodel",
+      thumbnailDB: "MAME",
+      options: {
+        datPath: "D:\\emu\\Supermodel\\Config\\Games.xml",
+        datParser: "supermodel"
       }
     },
 

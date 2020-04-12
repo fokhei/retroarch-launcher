@@ -56,13 +56,21 @@ const nameParsers: NameParsers = {
 
   [ParserType.m2emulator]: (props: NameParserProps) => {
     const { romName, indexes } = props;
-    const noExt = romName.replace(".zip", "");
-    if (indexes.hasOwnProperty(noExt)) {
-      const index = indexes[noExt];
+    if (indexes.hasOwnProperty(romName)) {
+      const index = indexes[romName];
       return index.gameName;
     }
     return null;
-  }
+  },
+
+  [ParserType.supermodel]: (props: NameParserProps) => {
+    const { romName, indexes } = props;
+    if (indexes.hasOwnProperty(romName)) {
+      const index = indexes[romName];
+      return index.gameName;
+    }
+    return null;
+  },
 };
 
 export default nameParsers;

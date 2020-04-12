@@ -203,7 +203,6 @@ const datParsers: DatParsers = {
         };
       }
     }
-
     return indexes;
   },
 
@@ -211,26 +210,45 @@ const datParsers: DatParsers = {
     const { platform, indexes } = props;
     const datPath = getPlatformOptions(platform, "datPath") as string;
     const js = readXmlAsJs(datPath);
-
     const games = js.datafile.game;
     const { length } = games;
-
     for (let i = 0; i < length; i++) {
       const game = games[i];
       const attrs = game._attributes;
       const { isbios, name } = attrs;
-
+      const id = name + ".zip";
       if (isbios) {
         continue;
       }
       const gameName = game.description._text;
-
-      indexes[name] = {
-        id: name,
+      indexes[id] = {
+        id,
         gameName,
       };
     }
+    return indexes;
+  },
 
+  [ParserType.supermodel]: (props: DatParsersProps) => {
+    const { platform, indexes } = props;
+    const datPath = getPlatformOptions(platform, "datPath") as string;
+    const js = readXmlAsJs(datPath);
+    const games = js.games.game;
+    const { length } = games;
+    for (let i = 0; i < length; i++) {
+      const game = games[i];
+      const attrs = game._attributes;
+      const { name } = attrs;
+      const id = name + ".zip";
+      let gameName = game.identity.title._text;
+      if (game.identity.hasOwnProperty("version")) {
+        gameName += ` (${game.identity.version._text})`;
+      }
+      indexes[id] = {
+        id,
+        gameName,
+      };
+    }
     return indexes;
   },
 };

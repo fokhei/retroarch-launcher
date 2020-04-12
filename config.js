@@ -10,6 +10,27 @@
     height: 560
   },
   platforms: {
+
+    "Arcade PC - Standalone": {
+      shortName: "arcade",
+      romsPath: "D:\\roms\\Arcade PC\\Standalone",
+      thumbnailDB: "Arcade PC",
+      dllName: "",
+      options: {
+        scanType: "folder"
+      }
+    },
+
+    "Arcade PC - TeknoParrot": {
+      shortName: "arcade",
+      romsPath: "D:\\roms\\Arcade PC\\TeknoParrot",
+      thumbnailDB: "Arcade PC",
+      dllName: "",
+      options: {
+        scanType: "folder"
+      }
+    },
+    
     DOS: {
       shortName: "dos",
       romsPath: "F:\\roms\\DOS\\games\\dosCenter",
@@ -340,15 +361,8 @@
       }
     },
 
-    "Taito - Type X": {
-      shortName: "ttx2",
-      romsPath: "D:\\roms\\Taito - Type X\\games",
-      thumbnailDB: "Taito - Type X",
-      dllName: "",
-      options: {
-        scanType: "folder"
-      }
-    },
+    
+
 
     "The 3DO Company - 3DO": {
       shortName: "3do",

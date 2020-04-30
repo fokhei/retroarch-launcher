@@ -1,66 +1,50 @@
 import React from "react";
-import { ContextMenu, MenuItem } from "react-contextmenu";
-import { ContextMenuId } from "../renderer/ContextMenuId";
-import { remote, ipcRenderer } from "electron";
-import { ContextMenuAction } from "../renderer/ContextMenuAction";
-import { ComputedPlayListItem } from "../libs/ComputedPlaylistItem";
-import { AppEvent } from "../libs/AppEvent";
-import AppConfig from '../libs/AppConfig';
+import { ContextMenu, connectMenu } from "react-contextmenu";
+import { ContextMenuId } from "./ContextMenuId";
+import { remote } from "electron";
+import { createMenuItem } from "./createMenuItem";
+import { Dispatch } from "redux";
+import { removeThumbnail } from "../actions/removeThumbnail";
+import { ComputedGameItem } from "../interfaces/ComputedGameItem";
+import { ThumbnailType } from "../interfaces/ThumbnailType";
+
+const id = ContextMenuId.THUMBNAIL;
 
 const ThumbnailContextMenu = (props: ThumbnailContextMenuProps) => {
-  const { config, item, thumbnailFilePath } = props;
+  const { dispatch, trigger } = props;
+  const enabled = Boolean(trigger && trigger.item && trigger.thumbnailType);
 
-  const onMenuItemClick = (_evt: any, data: any) => {
-    //console.log("onMenuItemClick", data.action);
-    const { action } = data;
-    if (action == ContextMenuAction.OPEN_THUMBNAIL) {
-      if (thumbnailFilePath) {
-        remote.shell.openItem(thumbnailFilePath);
-      }
-    } else if (action == ContextMenuAction.SHOW_THUMBNAIL_DIRECTORY) {
-   
-      if (thumbnailFilePath) {
-      
-        remote.shell.showItemInFolder(thumbnailFilePath);
-      } else {
-     
-        remote.shell.openItem(config.retroArch.thumbnails);
-      }
-    } else if (action == ContextMenuAction.REMOVE_THUMBNAIL) {
-      if (item && thumbnailFilePath) {
-        ipcRenderer.send(AppEvent.REMOVE_THUMBNAIL, item, thumbnailFilePath);
-      }
-    }
+  const onOpen = () => {
+    const thumbnail = trigger.item.thumbnails[trigger.thumbnailType];
+    remote.shell.openItem(thumbnail);
+  };
+
+  const onShow = () => {
+    const thumbnail = trigger.item.thumbnails[trigger.thumbnailType];
+    remote.shell.showItemInFolder(thumbnail);
+  };
+
+  const onRemove = () => {
+    dispatch(removeThumbnail(trigger.item, trigger.thumbnailType));
   };
 
   return (
-    <ContextMenu id={ContextMenuId.THUMBNAIL}>
-      <MenuItem
-        onClick={onMenuItemClick}
-        data={{ action: ContextMenuAction.OPEN_THUMBNAIL }}
-      >
-        Open Image
-      </MenuItem>
-      <MenuItem
-        onClick={onMenuItemClick}
-        data={{ action: ContextMenuAction.SHOW_THUMBNAIL_DIRECTORY }}
-      >
-        Show thumbnail directory
-      </MenuItem>
-      <MenuItem
-        onClick={onMenuItemClick}
-        data={{ action: ContextMenuAction.REMOVE_THUMBNAIL }}
-      >
-        Remove thumbnail
-      </MenuItem>
+    <ContextMenu id={id}>
+      {createMenuItem("Open Image", onOpen, enabled)}
+      {createMenuItem("Show thumbnail directory", onShow, enabled)}
+      {createMenuItem("Remove thumbnail", onRemove, enabled)}
     </ContextMenu>
   );
 };
 
 interface ThumbnailContextMenuProps {
-  config: AppConfig;
-  item: ComputedPlayListItem;
-  thumbnailFilePath: string;
+  dispatch: Dispatch<any>;
+  trigger: ThumbnailTriggerProps;
 }
 
-export default ThumbnailContextMenu;
+export interface ThumbnailTriggerProps {
+  item: ComputedGameItem;
+  thumbnailType: ThumbnailType;
+}
+
+export default connectMenu(id)(ThumbnailContextMenu);

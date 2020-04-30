@@ -1,34 +1,32 @@
 import React from "react";
-import { ContextMenu, MenuItem } from "react-contextmenu";
-import { ContextMenuId } from "../renderer/ContextMenuId";
+import { ContextMenu, connectMenu } from "react-contextmenu";
+import { ContextMenuId } from "./ContextMenuId";
 import { clipboard } from "electron";
-import { ContextMenuAction } from "../renderer/ContextMenuAction";
-import { ComputedPlayListItem } from "../libs/ComputedPlaylistItem";
+import { createMenuItem } from "./createMenuItem";
+
+const id = ContextMenuId.ROM_NAME;
 
 const RomNameContextMenu = (props: RomNameContextMenuProps) => {
-  const { item } = props;
+  const { trigger } = props;
+  const enabled = Boolean(trigger && trigger.romPath);
 
-  const onMenuItemClick = (_evt: any, data: any) => {
-    const { action } = data;
-    if (action == ContextMenuAction.COPY_GAME_PATH_TO_CLIPBOARD) {
-      clipboard.writeText(item.path, "selection");
-    }
+  const onCopy = () => {
+    clipboard.writeText(trigger.romPath, "selection");
   };
 
   return (
-    <ContextMenu id={ContextMenuId.ROM_PATH}>
-      <MenuItem
-        onClick={onMenuItemClick}
-        data={{ action: ContextMenuAction.COPY_GAME_PATH_TO_CLIPBOARD }}
-      >
-        Copy rom path
-      </MenuItem>
+    <ContextMenu id={id}>
+      {createMenuItem("Copy rom path", onCopy, enabled)}
     </ContextMenu>
   );
 };
 
 interface RomNameContextMenuProps {
-  item: ComputedPlayListItem;
+  trigger: RomNameTriggerProps;
 }
 
-export default RomNameContextMenu;
+export interface RomNameTriggerProps {
+  romPath: string;
+}
+
+export default connectMenu(id)(RomNameContextMenu);

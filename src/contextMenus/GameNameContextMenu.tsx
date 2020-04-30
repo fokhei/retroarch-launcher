@@ -1,34 +1,32 @@
 import React from "react";
-import { ContextMenu, MenuItem } from "react-contextmenu";
-import { ContextMenuId } from "../renderer/ContextMenuId";
+import { ContextMenu, connectMenu } from "react-contextmenu";
+import { ContextMenuId } from "./ContextMenuId";
 import { clipboard } from "electron";
-import { ContextMenuAction } from "../renderer/ContextMenuAction";
-import { ComputedPlayListItem } from "../libs/ComputedPlaylistItem";
+import { createMenuItem } from "./createMenuItem";
+
+const id = ContextMenuId.GAME_NAME;
 
 const GameNameContextMenu = (props: GameNameContextMenuProps) => {
-  const { item } = props;
+  const { trigger } = props;
+  const enabled = Boolean(trigger && trigger.gameName);
 
-  const onMenuItemClick = (_evt: any, data: any) => {
-    const { action } = data;
-    if (action == ContextMenuAction.COPY_GAME_LABEL_TO_CLIPBOARD) {
-      clipboard.writeText(item.label, "selection");
-    }
+  const onCopy = () => {
+    clipboard.writeText(trigger.gameName, "selection");
   };
 
   return (
-    <ContextMenu id={ContextMenuId.GAME_NAME}>
-      <MenuItem
-        onClick={onMenuItemClick}
-        data={{ action: ContextMenuAction.COPY_GAME_LABEL_TO_CLIPBOARD }}
-      >
-        Copy game name
-      </MenuItem>
+    <ContextMenu id={id}>
+      {createMenuItem("Copy game name", onCopy, enabled)}
     </ContextMenu>
   );
 };
 
 interface GameNameContextMenuProps {
-  item: ComputedPlayListItem;
+  trigger: GameNameTriggerProps;
 }
 
-export default GameNameContextMenu;
+export interface GameNameTriggerProps {
+  gameName: string;
+}
+
+export default connectMenu(id)(GameNameContextMenu);

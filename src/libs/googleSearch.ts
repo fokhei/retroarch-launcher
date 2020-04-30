@@ -1,19 +1,20 @@
-import AppConfig, { getPlatform } from "./AppConfig";
 import { toGoogleKeyword } from "./toGoogleKeyword";
 import { shell } from "electron";
-import { ComputedPlayListItem } from "./ComputedPlaylistItem";
+import { ComputedGameItem } from "../interfaces/ComputedGameItem";
+import { AppConfigState } from "../states/appConfigState";
+import { getCategory } from "./getCategory";
 
 export const googleSearch = (
-  config: AppConfig,
-  item: ComputedPlayListItem,
+  config: AppConfigState,
+  item: ComputedGameItem,
   suffix: string = ""
 ) => {
   let keyword = "";
-  const platform = getPlatform(config, item.db_name);
-  if (platform) {
-    keyword += platform.shortName + "+";
+  const category = getCategory(config, item.categoryName);
+  if (category) {
+    keyword += category.shortName + "+";
   }
-  keyword += item.label;
+  keyword += item.gameName;
   if (suffix) {
     keyword += "+" + suffix;
   }

@@ -2,12 +2,6 @@
 
 a alternative launcher for RetroArch, using same playlist architecture for download thumnail and includes some custom features by context menu. Build by Electron + Typescript + React
 
-![screenshot](/screenshots/screenshot-1.png)
-![screenshot](/screenshots/screenshot-2.png)
-![screenshot](/screenshots/screenshot-3.png)
-![screenshot](/screenshots/screenshot-4.png)
-![screenshot](/screenshots/screenshot-5.png)
-![screenshot](/screenshots/screenshot-6.png)
 
 # install dependencies
 

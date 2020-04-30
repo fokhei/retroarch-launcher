@@ -1,6 +1,6 @@
 {
   "name": "retroarch-launcher",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "scripts": {
     "tsc": "tsc",
     "dev": "electron-webpack dev",
@@ -23,7 +23,7 @@
     "@types/styled-components": "^4.4.2",
     "electron": "5.0.6",
     "electron-builder": "^21.0.11",
-    "electron-webpack": "^2.7.4",
+    "electron-webpack": "^2.8.2",
     "electron-webpack-ts": "^3.2.0",
     "tslint": "^5.20.1",
     "typescript": "^3.7.5",
@@ -32,12 +32,16 @@
   "dependencies": {
     "csv-parse": "^4.8.5",
     "debounce": "^1.2.0",
+    "immutability-helper": "^3.0.2",
     "jimp": "^0.9.3",
     "lazy.js": "^0.5.1",
     "react": "^16.12.0",
     "react-contextmenu": "^2.13.0",
     "react-dom": "^16.12.0",
+    "react-redux": "6",
     "react-virtualized": "^9.21.2",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
     "request": "^2.88.0",
     "rimraf": "^3.0.0",
     "source-map-support": "^0.5.12",

@@ -62,11 +62,19 @@
 
       .react-contextmenu-item {
         padding: 5px 10px;
-        cursor: pointer;
       }
 
-      .react-contextmenu-item:hover {
-        background-color:rgba(0,0,0,0.5);
+      .react-contextmenu-item--disabled {
+        color: rgba(150,150,150, 0.3)
+      }
+    
+      .react-contextmenu-item:not(.react-contextmenu-item--disabled) {
+        cursor: pointer;
+        
+      }
+
+      .react-contextmenu-item:not(.react-contextmenu-item--disabled):hover {
+        background-color: rgba(0, 0, 0, 0.5);
         color: orange;
       }
     </style>

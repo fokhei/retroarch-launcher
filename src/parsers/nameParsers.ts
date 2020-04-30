@@ -1,72 +1,60 @@
-import { DatIndexes } from "./datParsers";
-import { ParserType } from "./Parser";
+import { NameParsers } from "../interfaces/NameParsers";
+import { ParserType } from "../interfaces/NameParserType";
+import { DatIndexes } from "../interfaces/DatIndexes";
 
-interface NameParserProps {
-  romName: string;
-  indexes: DatIndexes;
-  gameName: string;
-}
-
-interface NameParsers {
-  [key: string]: (props: NameParserProps) => string | null;
-}
-
-const nameParsers: NameParsers = {
-  [ParserType.noIntro3ds]: (props: NameParserProps) => {
-    const { romName, indexes } = props;
+export const nameParsers: NameParsers = {
+  [ParserType.NO_INTRO_3DS]: (romName: string, datIndexes: DatIndexes) => {
     const reg = /(.+)\s\[([ABCDEF\d]{16})\]/gi;
     const arrs = reg.exec(romName);
     const id = arrs[2];
-    if (indexes.hasOwnProperty(id)) {
-      const index = indexes[id];
+    if (datIndexes.hasOwnProperty(id)) {
+      const index = datIndexes[id];
       return index.gameName;
     } else {
       return arrs[1];
     }
   },
-  [ParserType.noPayStationPsvTsv]: (props: NameParserProps) => {
-    const { romName, indexes, gameName } = props;
+  [ParserType.NO_PAY_STATION_PSV_TSV]: (
+    romName: string,
+    datIndexes: DatIndexes
+  ) => {
     const id = romName.match(/\w{4}\d{5}/);
     if (id) {
-      if (indexes.hasOwnProperty(id.toString())) {
-        const index = indexes[id.toString()];
+      if (datIndexes.hasOwnProperty(id.toString())) {
+        const index = datIndexes[id.toString()];
         return index.gameName;
       }
     }
-    return gameName;
+    return romName;
   },
 
-  [ParserType.fba]: (props: NameParserProps) => {
-    const { romName, indexes } = props;
-    if (indexes.hasOwnProperty(romName)) {
-      const index = indexes[romName];
+  [ParserType.FBA]: (romName: string, datIndexes: DatIndexes) => {
+    if (datIndexes.hasOwnProperty(romName)) {
+      const index = datIndexes[romName];
       return index.gameName;
     }
     return null;
   },
 
-  [ParserType.mame]: (props: NameParserProps) => {
-    const { romName, indexes } = props;
-    if (indexes.hasOwnProperty(romName)) {
-      const index = indexes[romName];
+  [ParserType.MAME]: (romName: string, datIndexes: DatIndexes) => {
+    if (datIndexes.hasOwnProperty(romName)) {
+      const index = datIndexes[romName];
       return index.gameName;
     }
     return null;
   },
 
-  [ParserType.m2emulator]: (props: NameParserProps) => {
-    const { romName, indexes } = props;
-    if (indexes.hasOwnProperty(romName)) {
-      const index = indexes[romName];
+  [ParserType.M2_EMULATOR]: (romName: string, datIndexes: DatIndexes) => {
+    if (datIndexes.hasOwnProperty(romName)) {
+      const index = datIndexes[romName];
       return index.gameName;
     }
     return null;
   },
 
-  [ParserType.supermodel]: (props: NameParserProps) => {
-    const { romName, indexes } = props;
-    if (indexes.hasOwnProperty(romName)) {
-      const index = indexes[romName];
+  [ParserType.SUPER_MODEL]: (romName: string, datIndexes: DatIndexes) => {
+    if (datIndexes.hasOwnProperty(romName)) {
+      const index = datIndexes[romName];
       return index.gameName;
     }
     return null;

@@ -1,134 +1,209 @@
 {
-  retroArch: {
-    exe: "D:\\emu\\RetroArch\\retroarch.exe",
-    cores: "D:\\emu\\RetroArch\\cores",
-    playlists: "D:\\emu\\RetroArch\\playlists",
-    thumbnails: "D:\\roms\\RetroArch - thumbnails"
-  },
-  windowOption: {
-    width: 1100,
-    height: 560
-  },
-  platforms: {
 
-    "Arcade PC - Standalone": {
-      shortName: "arcade",
-      romsPath: "D:\\roms\\Arcade PC\\Standalone",
-      thumbnailDB: "Arcade PC",
-      dllName: "",
-      options: {
-        scanType: "folder"
-      }
-    },
+  playlistPath: "D:\\playlists",
+  thumbnailPath: "D:\\thumbnails",
 
-    "Arcade PC - TeknoParrot": {
-      shortName: "arcade",
-      romsPath: "D:\\roms\\Arcade PC\\TeknoParrot",
-      thumbnailDB: "Arcade PC",
-      dllName: "",
-      options: {
-        scanType: "folder"
-      }
-    },
-    
-    DOS: {
-      shortName: "dos",
-      romsPath: "F:\\roms\\DOS\\games\\dosCenter",
-      thumbnailDB: "DOS",
-      dllName: "dosbox_svn_libretro.dll",
-      options: {
+  externalApps: [
+      {
+          type: "RetroArch",
+          execPath: "D:\\emu\\RetroArch\\retroarch.exe",
+          coreDir: "D:\\emu\\RetroArch\\cores"
+      },
+      {
+          type: "TeknoParrot",
+          execPath: "D:\\emu\\TeknoParrot\\TeknoParrotUi.exe",
+      },
+      {
+        type: "D-Fend Reloaded",
+        execPath: "D:\\emu\\D-Fend Reloaded\\DFend.exe",
+      },
+      {
+        type: "M2 Emulator",
+        execPath: "D:\\emu\\m2emulator\\emulator_multicpu.exe",
+      },
+
+      {
+        type: "SuperModel",
+        execPath: "D:\\emu\\Supermodel\\Supermodel.exe",
+      },
+
+  ],
+
+
+  categories: [
+
+
+      {
+          name: "Arcade PC - Standalone",
+          thumbnailDir: "Arcade PC",
+          shortName: "arcade",
+          romsPath: "D:\\roms\\Arcade PC\\Standalone",
+          scanType: "folder"
+      },
+
+      {
+          name: "Arcade PC - TeknoParrot",
+          thumbnailDir: "Arcade PC",
+          shortName: "arcade",
+          romsPath: "D:\\roms\\Arcade PC\\TeknoParrot",
+          scanType: "folder",
+          players: [{
+              type: "TeknoParrot"
+          }]
+      },
+
+
+      {
+        name: "DOS",
+        thumbnailDir: "DOS",
+        shortName: "dos",
+        romsPath: "F:\\roms\\DOS\\games\\dosCenter",
         nameFilter: {
           removeAllBrackets: true,
           removeVersion: true
-        }
-      }
-    },
+        },
+        players: [
+          {
+            type: "D-Fend Reloaded"
+          },
+          {
+          type: "RetroArch",
+          retroArchCore: "dosbox_svn_libretro"
+        }]
+      },
 
-    "DOS (中文遊戲)": {
-      shortName: "dos",
-      romsPath: "F:\\roms\\DOS\\games\\中文遊戲",
-      thumbnailDB: "DOS",
-      dllName: "dosbox_svn_libretro.dll",
-      options: {
+
+      {
+        name: "DOS (中文)",
+        thumbnailDir: "DOS",
+        shortName: "dos",
+        romsPath: "F:\\roms\\DOS\\games\\中文遊戲",
         nameFilter: {
           removeAllBrackets: true
-        }
-      }
-    },
+        },
+        players: [ {
+          type: "D-Fend Reloaded"
+        },{
+          type: "RetroArch",
+          retroArchCore: "dosbox_svn_libretro"
+        }]
+      },
 
-    "FBA": {
-      shortName: "fba",
-      romsPath: "F:\\roms\\FBNeo\\arcade",
-      thumbnailDB: "FBNeo - Arcade Games",
-      dllName: "fbneo_libretro.dll",
-      options: {
-        datPath: "F:\\dats\\FinalBurn Neo 0.2.97.44 (Arcade).dat",
+
+
+      {
+        name: "FBA",
+        thumbnailDir: "FBNeo - Arcade Games",
+        shortName: "fba",
+        romsPath: "F:\\roms\\FBNeo\\arcade",
+        datPath: "D:\\dats\\FinalBurn Neo 0.2.97.44 (Arcade).dat",
         datParser: "fba",
         romFilter: {
           includeStatus: ["good", "imperfect"],
-        }
-      }
-    },
+        },
+        players: [{
+          type: "RetroArch",
+          retroArchCore: "fbneo_libretro"
+        }]
+      },
 
-    MAME: {
-      shortName: "mame",
-      romsPath: "F:\\roms\\MAME\\v0.216-merged",
-      thumbnailDB: "MAME",
-      dllName: "mame_libretro.dll",
-      options: {
-        datPath: "F:\\dats\\MAME 0.216 (Arcade).dat",
+
+      {
+        name: "MAME",
+        thumbnailDir: "MAME",
+        shortName: "mame",
+        romsPath: "F:\\roms\\MAME\\v0.216-merged",
+        datPath: "D:\\dats\\MAME 0.216 (Arcade).dat",
         datParser: "mame",
         romFilter: {
           excludeRomOfs: ["awbios", "naomi"],
           includeStatus: ["good", "imperfect"],
-        }
-      }
-    },
-
-    "NEC - PC Engine CD - TurboGrafx-CD": {
-      shortName: "pce",
-      romsPath: "F:\\roms\\NEC - PC Engine CD - TurboGrafx-CD\\redump",
-      thumbnailDB: "NEC - PC Engine CD - TurboGrafx-CD",
-      dllName: "mednafen_pce_fast_libretro.dll"
-    },
-
-    "Nintendo - Family Computer Disk System": {
-      shortName: "fds",
-      romsPath: "F:\\roms\\Nintendo - Family Computer Disk System",
-      thumbnailDB: "Nintendo - Family Computer Disk System",
-      dllName: "nestopia_libretro.dll"
-    },
-
-     "Nintendo - Game Boy": {
-      shortName: "gb",
-      romsPath: "F:\\roms\\Nintendo - Game Boy",
-      thumbnailDB: "Nintendo - Game Boy",
-      dllName: "gambatte_libretro.dll"
-    },
+        },
+        players: [{
+          type: "RetroArch",
+          retroArchCore: "mame_libretro"
+        }]
+      },
 
 
-    "Nintendo - Game Boy Advance": {
-      shortName: "gba",
-      romsPath: "F:\\roms\\Nintendo - Game Boy Advance",
-      thumbnailDB: "Nintendo - Game Boy Advance",
-      dllName: "mednafen_gba_libretro.dll"
-    },
+      {
+        name: "NEC - PC Engine CD - TurboGrafx-CD",
+        thumbnailDir: "NEC - PC Engine CD - TurboGrafx-CD",
+        shortName: "pce",
+        romsPath: "F:\\roms\\NEC - PC Engine CD - TurboGrafx-CD\\redump",
+        players: [{
+            type: "RetroArch",
+            retroArchCore: "mednafen_pce_fast_libretro"
+        }],
+      },
 
-    "Nintendo - Game Boy Color": {
-      shortName: "gbc",
-      romsPath: "F:\\roms\\Nintendo - Game Boy Color",
-      thumbnailDB: "Nintendo - Game Boy Color",
-      dllName: "gambatte_libretro.dll"
-    },
 
-   
+      {
+        name: "Nintendo - Family Computer Disk System",
+        thumbnailDir: "Nintendo - Family Computer Disk System",
+        shortName: "fds",
+        romsPath: "F:\\roms\\Nintendo - Family Computer Disk System",
+        players: [{
+            type: "RetroArch",
+            retroArchCore: "nestopia_libretro"
+        }],
+      },
 
-    "Nintendo - GameCube": {
-      shortName: "gamecube",
-      romsPath: "F:\\roms\\Nintendo - GameCube\\redump-gcz",
-      thumbnailDB: "Nintendo - GameCube",
-      dllName: "dolphin_libretro.dll",
-      options: {
+
+
+
+      {
+          name: "Nintendo - Game Boy",
+          thumbnailDir: "Nintendo - Game Boy",
+          shortName: "gb",
+          romsPath: "F:\\roms\\Nintendo - Game Boy",
+          romFilter: {
+              excludeBios: true
+          },
+          players: [{
+              type: "RetroArch",
+              retroArchCore: "gambatte_libretro"
+          }],
+      },
+
+
+      {
+        name: "Nintendo - Game Boy Advance",
+        thumbnailDir: "Nintendo - Game Boy Advance",
+        shortName: "gba",
+        romsPath: "F:\\roms\\Nintendo - Game Boy Advance",
+        players: [{
+            type: "RetroArch",
+            retroArchCore: "mednafen_gba_libretro"
+        }],
+      },
+
+
+
+      {
+          name: "Nintendo - Game Boy Color",
+          thumbnailDir: "Nintendo - Game Boy Color",
+          shortName: "gbc",
+          romsPath: "F:\\roms\\Nintendo - Game Boy Color",
+          romFilter: {
+              excludeBios: true
+          },
+          players: [{
+              type: "RetroArch",
+              retroArchCore: "gambatte_libretro"
+          }]
+      },
+
+
+      {
+        name: "Nintendo - GameCube",
+        thumbnailDir: "Nintendo - GameCube",
+        shortName: "gba",
+        romsPath: "F:\\roms\\Nintendo - GameCube\\redump-gcz",
+        players: [{
+            type: "RetroArch",
+            retroArchCore: "dolphin_libretro"
+        }],
         nameFilter: {
           removeLangBracket: true,
           removeDiscBracket: true
@@ -136,265 +211,334 @@
         romFilter: {
           excludeNonFirstDisc: true
         }
-      }
-    },
+      },
 
-    "Nintendo - Nintendo 3DS (中文遊戲)": {
-      shortName: "3ds",
-      romsPath: "D:\\roms\\Nintendo - Nintendo 3DS\\chinese",
-      thumbnailDB: "Nintendo - Nintendo 3DS",
-      dllName: "",
-      options: {
+
+
+     
+
+      {
+        name: "Nintendo - Nintendo 3DS",
+        thumbnailDir: "Nintendo - Nintendo 3DS",
+        shortName: "3ds",
+        romsPath: "D:\\roms\\Nintendo - Nintendo 3DS\\games",
         datPath:
-          "D:\\roms\\dats\\No-Intro\\Nintendo - Nintendo 3DS (Encrypted) (20200110-095855).dat",
+        "D:\\dats\\No-Intro\\Nintendo - Nintendo 3DS (Encrypted) (20200110-095855).dat",
         datParser: "noIntro3ds"
-      }
-    },
+      },
 
-    "Nintendo - Nintendo 3DS": {
-      shortName: "3ds",
-      romsPath: "D:\\roms\\Nintendo - Nintendo 3DS\\games",
-      thumbnailDB: "Nintendo - Nintendo 3DS",
-      dllName: "",
-      options: {
+
+      {
+        name: "Nintendo - Nintendo 3DS (中文)",
+        thumbnailDir: "Nintendo - Nintendo 3DS",
+        shortName: "3ds",
+        romsPath: "D:\\roms\\Nintendo - Nintendo 3DS\\chinese",
         datPath:
-          "D:\\roms\\dats\\No-Intro\\Nintendo - Nintendo 3DS (Encrypted) (20200110-095855).dat",
+        "D:\\dats\\No-Intro\\Nintendo - Nintendo 3DS (Encrypted) (20200110-095855).dat",
         datParser: "noIntro3ds"
-      }
-    },
+      },
 
-    "Nintendo - Nintendo Entertainment System": {
-      shortName: "nes",
-      romsPath: "F:\\roms\\Nintendo - Nintendo Entertainment System",
-      thumbnailDB: "Nintendo - Nintendo Entertainment System",
-      dllName: "nestopia_libretro.dll"
-    },
 
-    "Nintendo - Super Nintendo Entertainment System": {
-      shortName: "sfc",
-      romsPath: "F:\\roms\\Nintendo - Super Nintendo Entertainment System\\no-intro",
-      thumbnailDB: "Nintendo - Super Nintendo Entertainment System",
-      dllName: "snes9x_libretro.dll",
-      options: { 
-        romFilter: {
-          excludeBeta: true,
-          excludeProto: true,
-          excludeSample: true,
-          excludeDemo: true,
-        }
-      }
-    },
 
-    "Nintendo - Switch": {
-      shortName: "switch",
-      romsPath: "F:\\roms\\Nintendo - Switch",
-      thumbnailDB: "Nintendo - Switch",
-      dllName: "",
-      options: {
+      {
+        name: "Nintendo - Nintendo Entertainment System",
+        thumbnailDir: "Nintendo - Nintendo Entertainment System",
+        shortName: "nes",
+        romsPath: "F:\\roms\\Nintendo - Nintendo Entertainment System",
+        players: [{
+            type: "RetroArch",
+            retroArchCore: "nestopia_libretro"
+        }],
+      },
+
+
+      {
+        name: "Nintendo - Switch",
+        thumbnailDir: "Nintendo - Switch",
+        shortName: "nes",
+        romsPath: "D:\\roms\\Nintendo - Switch",
         nameFilter: {
           removeVersion: true,
           removeTitleId: true
         }
-      }
-    },
+      },
 
-    "Nintendo - Wii": {
-      shortName: "wii",
-      romsPath: "F:\\roms\\Nintendo - Wii",
-      thumbnailDB: "Nintendo - Wii",
-      dllName: "dolphin_libretro.dll",
-      options: {
+
+      {
+        name: "Nintendo - Wii",
+        thumbnailDir: "Nintendo - Wii",
+        shortName: "wii",
+        romsPath: "F:\\roms\\Nintendo - Wii",
+        players: [{
+            type: "RetroArch",
+            retroArchCore: "dolphin_libretro"
+        }],
         nameFilter: {
           removeLangBracket: true
         }
-      }
-    },
+      },
 
-    "Sega - Mega Drive - Genesis": {
-      shortName: "md",
-      romsPath: "F:\\roms\\Sega - Mega Drive - Genesis",
-      thumbnailDB: "Sega - Mega Drive - Genesis",
-      dllName: "genesis_plus_gx_libretro.dll",
-      options: {
+
+
+      {
+        name: "Sega - Mega Drive - Genesis",
+        thumbnailDir: "Sega - Mega Drive - Genesis",
+        shortName: "md",
+        romsPath: "F:\\roms\\Sega - Mega Drive - Genesis",
+        players: [{
+            type: "RetroArch",
+            retroArchCore: "genesis_plus_gx_libretro"
+        }],
         romFilter: {
           excludeBios: true,
           excludeBeta: true,
           excludeProto: true
         }
-      }
-    },
-
-    "Sega - Mega-CD - Sega CD": {
-      shortName: "sega-cd",
-      romsPath: "F:\\roms\\Sega - Mega-CD - Sega CD\\games",
-      thumbnailDB: "Sega - Mega-CD - Sega CD",
-      dllName: "genesis_plus_gx_libretro.dll"
-    },
+      },
 
 
-    "Sega - Model2 (M2Emulator)": {
-      shortName: "model2",
-      romsPath: "D:\\roms\\Sega Model2 (M2Emulator)",
-      thumbnailDB: "MAME",
-      options: {
-        datPath: "D:\\roms\\dats\\SEGA Model 2 Emulator v0.9.dat",
-        datParser: "m2emulator"
-      }
-    },
 
-    "Sega - Model3 (SuperModel)": {
-      shortName: "model3",
-      romsPath: "D:\\emu\\Supermodel",
-      thumbnailDB: "MAME",
-      options: {
+      {
+        name: "Sega - Mega-CD - Sega CD",
+        thumbnailDir: "Sega - Mega-CD - Sega CD",
+        shortName: "sega-cd",
+        romsPath: "F:\\roms\\Sega - Mega-CD - Sega CD\\games",
+        players: [{
+            type: "RetroArch",
+            retroArchCore: "genesis_plus_gx_libretro"
+        }]
+      },
+
+
+
+      {
+        name: "Sega - Model2 (M2Emulator)",
+        thumbnailDir: "MAME",
+        shortName: "model2",
+        romsPath: "D:\\emu\\m2emulator\\roms",
+        datPath: "D:\\dats\\SEGA Model 2 Emulator v0.9-mod.dat",
+        datParser: "m2emulator",
+        players: [{
+          type: "M2 Emulator"
+        }]
+      },
+
+
+
+      {
+        name: "Sega - Model3 (SuperModel)",
+        thumbnailDir: "MAME",
+        shortName: "model3",
+        romsPath: "D:\\emu\\Supermodel",
         datPath: "D:\\emu\\Supermodel\\Config\\Games.xml",
-        datParser: "supermodel"
-      }
-    },
+        datParser: "supermodel",
+        romFilter: {
+          includeExts:[".zip"]
+        },
+        players: [
+          {
+            type: "SuperModel"
+          }
+        ]
+      },
 
 
-    "Sega - Naomi - Atomiswave": {
-      shortName: "naomi",
-      romsPath: "F:\\roms\\MAME\\v0.216-merged",
-      thumbnailDB: "MAME",
-      dllName: "flycast_libretro.dll",
-      options: {
-        datPath: "F:\\dats\\MAME 0.216 (Arcade).dat",
+
+      {
+        name: "Sega - Naomi - Atomiswave",
+        thumbnailDir: "MAME",
+        shortName: "mame",
+        romsPath: "F:\\roms\\MAME\\v0.216-merged",
+        datPath: "D:\\dats\\MAME 0.216 (Arcade).dat",
         datParser: "mame",
         romFilter: {
           includeRomOfs: ["awbios", "naomi"]
-        }
-      }
-    },
+        },
+        players: [
+          {
+            type: "RetroArch",
+            retroArchCore: "flycast_libretro"
+          }
+        ]
+      },
 
-    "Sega - Saturn": {
-      shortName: "ss",
-      romsPath: "F:\\roms\\Sega - Saturn\\redump",
-      thumbnailDB: "Sega - Saturn",
-      dllName: "yabasanshiro_libretro.dll",
-      options: {
+
+
+      {
+        name: "Sega - Saturn",
+        thumbnailDir: "Sega - Saturn",
+        shortName: "ss",
+        romsPath: "F:\\roms\\Sega - Saturn\\redump",
+        romFilter: {
+          excludeNonFirstDisc: true
+        },
         nameFilter: {
           removeLangBracket: true,
           removeDiscBracket: true,
           removeNonFirstBrackets: true
         },
-        romFilter: {
-          excludeNonFirstDisc: true
-        }
-      }
-    },
+        players: [
+          {
+            type: "RetroArch",
+            retroArchCore: "yabasanshiro_libretro"
+          }
+        ]
+      },
 
 
-    "Sega - Saturn (中文遊戲)": {
-      shortName: "ss",
-      romsPath: "F:\\roms\\Sega - Saturn\\chinese",
-      thumbnailDB: "Sega - Saturn",
-      dllName: "yabasanshiro_libretro.dll"
-    },
+
+      {
+        name: "Sega - Saturn (中文)",
+        thumbnailDir: "Sega - Saturn",
+        shortName: "ss",
+        romsPath: "F:\\roms\\Sega - Saturn\\chinese",
+        players: [
+          {
+            type: "RetroArch",
+            retroArchCore: "yabasanshiro_libretro"
+          }
+        ]
+      },
 
 
-    "Sony - PlayStation": {
-      shortName: "ps1",
-      romsPath: "F:\\roms\\Sony - PlayStation\\redump-usa",
-      thumbnailDB: "Sony - PlayStation",
-      dllName: "pcsx_rearmed_libretro.dll",
-      options: {
-        romFilter: {
-          excludeNonFirstDisc: true,
-        },
-        nameFilter: {
-          removeDiscBracket: true
-        }
-      }
-    },
 
 
-    "Sony - PlayStation (中文遊戲)": {
-      shortName: "ps1",
-      romsPath: "F:\\roms\\Sony - PlayStation\\chinese",
-      thumbnailDB: "Sony - PlayStation",
-      dllName: "pcsx_rearmed_libretro.dll",
-      options: {
+      {
+        name: "Sony - PlayStation",
+        thumbnailDir: "Sony - PlayStation",
+        shortName: "ps1",
+        romsPath: "F:\\roms\\Sony - PlayStation\\redump-usa",
         romFilter: {
           excludeNonFirstDisc: true,
         },
         nameFilter: {
           removeDiscBracket: true
-        }
-      }
-    },
+        },
+        players: [
+          {
+            type: "RetroArch",
+            retroArchCore: "pcsx_rearmed_libretro"
+          }
+        ]
+      },
 
 
-   
-    "Sony - PlayStation Portable": {
-      shortName: "psp",
-      romsPath: "F:\\roms\\Sony - PlayStation Portable\\cso",
-      thumbnailDB: "Sony - PlayStation Portable",
-      dllName: "ppsspp_libretro.dll",
-      options: {
+
+      {
+        name: "Sony - PlayStation (中文)",
+        thumbnailDir: "Sony - PlayStation",
+        shortName: "ps1",
+        romsPath: "F:\\roms\\Sony - PlayStation\\chinese",
+        romFilter: {
+          excludeNonFirstDisc: true,
+        },
+        nameFilter: {
+          removeDiscBracket: true
+        },
+        players: [
+          {
+            type: "RetroArch",
+            retroArchCore: "pcsx_rearmed_libretro"
+          }
+        ]
+      },
+
+
+
+      {
+        name: "Sony - PlayStation Portable",
+        thumbnailDir: "Sony - PlayStation Portable",
+        shortName: "psp",
+        romsPath: "F:\\roms\\Sony - PlayStation Portable\\cso",
         romFilter: {
           excludeNonFirstDisc: true
         },
         nameFilter: {
           removeDiscBracket: true,
           removePspIdBracket: true
-        }
-      }
-    },
+        },
+        players: [
+          {
+            type: "RetroArch",
+            retroArchCore: "ppsspp_libretro"
+          }
+        ]
+      },
 
-    "Sony - PlayStation Portable (中文遊戲)": {
-      shortName: "psp",
-      romsPath: "F:\\roms\\Sony - PlayStation Portable\\chinese",
-      thumbnailDB: "Sony - PlayStation Portable",
-      dllName: "ppsspp_libretro.dll",
-      options: {
+
+      {
+        name: "Sony - PlayStation Portable (中文)",
+        thumbnailDir: "Sony - PlayStation Portable",
+        shortName: "psp",
+        romsPath: "F:\\roms\\Sony - PlayStation Portable\\chinese",
         romFilter: {
           excludeNonFirstDisc: true
         },
         nameFilter: {
           removeDiscBracket: true,
           removePspIdBracket: true
-        }
-      }
-    },
+        },
+        players: [
+          {
+            type: "RetroArch",
+            retroArchCore: "ppsspp_libretro"
+          }
+        ]
+      },
 
-    "Sony - PlayStation Portable (Minis)": {
-      shortName: "psp-minis",
-      romsPath: "F:\\roms\\Sony - PlayStation Portable\\minis",
-      thumbnailDB: "Sony - PlayStation Portable",
-      dllName: "ppsspp_libretro.dll",
-      options: {
+
+      {
+        name: "Sony - PlayStation Portable (Minis)",
+        thumbnailDir: "Sony - PlayStation Portable",
+        shortName: "psp",
+        romsPath: "F:\\roms\\Sony - PlayStation Portable\\minis",
+        romFilter: {
+          excludeNonFirstDisc: true
+        },
         nameFilter: {
+          removeDiscBracket: true,
           removePspIdBracket: true
-        }
-      }
-    },
+        },
+        players: [
+          {
+            type: "RetroArch",
+            retroArchCore: "ppsspp_libretro"
+          }
+        ]
+      },
 
 
 
-    "Sony - PlayStation Vita": {
-      shortName: "psv",
-      romsPath: "F:\\roms\\Sony - PlayStation Vita",
-      thumbnailDB: "Sony - PlayStation Vita",
-      dllName: "",
-      options: {
-        datPath: "F:\\dats\\noPayStation\\TSV\\GAMES\\PSV_GAMES.tsv",
+      {
+        name: "Sony - PlayStation Vita",
+        thumbnailDir: "Sony - PlayStation Vita",
+        shortName: "psv",
+        romsPath: "F:\\roms\\Sony - PlayStation Vita",
+        datPath: "D:\\dats\\noPayStation\\TSV\\GAMES\\PSV_GAMES.tsv",
         datParser: "noPayStationPsvTsv"
-      }
-    },
-
-    
-
-
-    "The 3DO Company - 3DO": {
-      shortName: "3do",
-      romsPath: "F:\\roms\\The 3DO Company - 3DO\\redump",
-      thumbnailDB: "The 3DO Company - 3DO",
-      dllName: "4do_libretro.dll"
-    }
+      },
 
 
 
 
-  }
+
+      {
+        name: "The 3DO Company - 3DO",
+        thumbnailDir: "The 3DO Company - 3DO",
+        shortName: "3do",
+        romsPath: "F:\\roms\\The 3DO Company - 3DO\\redump",
+        players: [
+          {
+            type: "RetroArch",
+            retroArchCore: "opera_libretro"
+          }
+        ]
+      },
+
+
+
+
+
+
+  ]
 };

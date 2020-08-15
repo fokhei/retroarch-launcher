@@ -7,6 +7,8 @@ export interface RomFilter {
   excludeProto?: boolean;
   excludeSample?: boolean;
   excludeDemo?: boolean;
+  excludeDlc?: boolean;
+  excludeUpdate?: boolean;
   includeStatus?: Array<string>;
   includeExts?: Array<string>;
 }

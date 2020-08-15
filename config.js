@@ -199,7 +199,7 @@
         name: "Nintendo - GameCube",
         thumbnailDir: "Nintendo - GameCube",
         shortName: "gba",
-        romsPath: "F:\\roms\\Nintendo - GameCube\\redump-gcz",
+        romsPath: "F:\\roms\\Nintendo - GameCube\\redump",
         players: [{
             type: "RetroArch",
             retroArchCore: "dolphin_libretro"
@@ -212,6 +212,26 @@
           excludeNonFirstDisc: true
         }
       },
+
+
+      {
+        name: "Nintendo - GameCube (中文)",
+        thumbnailDir: "Nintendo - GameCube",
+        shortName: "gba",
+        romsPath: "F:\\roms\\Nintendo - GameCube\\chinese",
+        players: [{
+            type: "RetroArch",
+            retroArchCore: "dolphin_libretro"
+        }],
+        nameFilter: {
+          removeLangBracket: true,
+          removeDiscBracket: true
+        },
+        romFilter: {
+          excludeNonFirstDisc: true
+        }
+      },
+
 
 
 
@@ -276,6 +296,78 @@
         nameFilter: {
           removeLangBracket: true
         }
+      },
+
+
+
+      {
+        name: "Nintendo - Wii U",
+        thumbnailDir: "Nintendo - Wii U",
+        shortName: "wiiu",
+        romsPath: "D:\\roms\\Nintendo - Wii U\\roms",
+        romFilter: {
+          excludeUpdate: true,
+          excludeDlc: true
+        },
+        nameFilter: {
+          removeTitleId: true
+        }
+      },
+
+
+      {
+        name: "Nintendo - Wii U  (中文)",
+        thumbnailDir: "Nintendo - Wii U",
+        shortName: "wiiu",
+        romsPath: "D:\\roms\\Nintendo - Wii U\\chinese",
+        romFilter: {
+          excludeUpdate: true,
+          excludeDlc: true
+        },
+        nameFilter: {
+          removeTitleId: true
+        }
+      },
+
+
+       {
+        name: "Nintendo - Wii U  (中文 Patch)",
+        thumbnailDir: "Nintendo - Wii U",
+        shortName: "wiiu",
+        romsPath: "D:\\roms\\Nintendo - Wii U\\chinese-patch",
+        romFilter: {
+          excludeUpdate: true,
+          excludeDlc: true
+        },
+        nameFilter: {
+          removeTitleId: true
+        }
+      },
+
+
+
+
+      {
+        name: "Sega - Dreamcast",
+        thumbnailDir: "Sega - Dreamcast",
+        shortName: "dc",
+        romsPath: "D:\\roms\\Sega - Dreamcast\\redump",
+        players: [{
+            type: "RetroArch",
+            retroArchCore: "flycast_libretro"
+        }]
+      },
+
+
+      {
+        name: "Sega - Dreamcast (中文)",
+        thumbnailDir: "Sega - Dreamcast",
+        shortName: "dc",
+        romsPath: "D:\\roms\\Sega - Dreamcast\\chinese",
+        players: [{
+            type: "RetroArch",
+            retroArchCore: "flycast_libretro"
+        }]
       },
 
 
@@ -442,6 +534,48 @@
           }
         ]
       },
+
+
+
+       {
+        name: "Sony - PlayStation 2",
+        thumbnailDir: "Sony - PlayStation 2",
+        shortName: "ps2",
+        romsPath: "D:\\roms\\Sony - PlayStation 2\\redump",
+        romFilter: {
+          excludeNonFirstDisc: true,
+        },
+        nameFilter: {
+          removeDiscBracket: true
+        },
+        players: [
+          {
+            type: "RetroArch",
+            retroArchCore: "play_libretro"
+          }
+        ]
+      },
+
+
+      {
+        name: "Sony - PlayStation 2 (中文)",
+        thumbnailDir: "Sony - PlayStation 2",
+        shortName: "ps2",
+        romsPath: "D:\\roms\\Sony - PlayStation 2\\chinese",
+        romFilter: {
+          excludeNonFirstDisc: true,
+        },
+        nameFilter: {
+          removeDiscBracket: true
+        },
+        players: [
+          {
+            type: "RetroArch",
+            retroArchCore: "play_libretro"
+          }
+        ]
+      },
+
 
 
 

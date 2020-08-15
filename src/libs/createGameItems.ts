@@ -112,6 +112,29 @@ export const createGameItems = (
     }
 
     if (!skip) {
+      if (getRomFilter(category, "excludeDlc")) {
+        const matchs = gameName.match(/\[DLC\]/gi);
+        if (matchs) {
+          skip = true;
+        }
+      }
+    }
+
+
+    if (!skip) {
+      if (getRomFilter(category, "excludeUpdate")) {
+        const matchs = gameName.match(/\[UPDATE\sv(\d.+)\]/gi);
+        if (matchs) {
+          skip = true;
+        }
+      }
+    }
+
+
+
+
+
+    if (!skip) {
       if (getNameFilter(category, "removeLangBracket")) {
         gameName = removeLangBracket(gameName);
       }

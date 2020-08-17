@@ -21,7 +21,7 @@ export const searchHandler = (
     }
   }
   if (keyword.trim() != "") {
-    seq = seq.filter((item) => item.gameName.includes(keyword.trim()));
+    seq = seq.filter((item) => item.gameName.toLowerCase().includes(keyword.toLowerCase().trim()));
   }
   seq.sortBy((item) => item.gameName);
 

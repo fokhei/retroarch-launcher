@@ -54,10 +54,10 @@
 
 
       {
-        name: "DOS",
-        thumbnailDir: "DOS",
+        name: "Microsoft - DOS",
+        thumbnailDir: "Microsoft - DOS",
         shortName: "dos",
-        romsPath: "F:\\roms\\DOS\\games\\dosCenter",
+        romsPath: "F:\\roms\\Microsoft - DOS\\games\\dosCenter",
         nameFilter: {
           removeAllBrackets: true,
           removeVersion: true
@@ -74,10 +74,10 @@
 
 
       {
-        name: "DOS (中文)",
-        thumbnailDir: "DOS",
+        name: "Microsoft - DOS (中文)",
+        thumbnailDir: "Microsoft - DOS",
         shortName: "dos",
-        romsPath: "F:\\roms\\DOS\\games\\中文遊戲",
+        romsPath: "F:\\roms\\Microsoft - DOS\\games\\中文遊戲",
         nameFilter: {
           removeAllBrackets: true
         },
@@ -343,6 +343,15 @@
           removeTitleId: true
         }
       },
+
+
+       {
+        name: "OpenDingux",
+        thumbnailDir: "OpenDingux",
+        shortName: "openDingux",
+        romsPath: "D:\\downloads\\rg350\\games"
+      },
+
 
 
 

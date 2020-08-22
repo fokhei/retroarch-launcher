@@ -5,9 +5,10 @@ import { AutoSizer, Grid, GridCellProps } from "react-virtualized";
 import { ComputedGameItem } from "../interfaces/ComputedGameItem";
 import { ContextMenuId } from "../contextMenus/ContextMenuId";
 import { ContextMenuTrigger } from "react-contextmenu";
-import { ThumbnailType } from "../interfaces/ThumbnailType";
 import { toBackgroundUrl } from "../libs/toBackgroundUrl";
 import { GameItemTriggerProps } from "../contextMenus/GameItemContextMenu";
+import { ResultLayout } from "../interfaces/ResultLayout";
+import { ThumbnailType } from "../interfaces/ThumbnailType";
 
 const _ResultGrid = (props: ResultGridProps) => {
   const {
@@ -18,10 +19,16 @@ const _ResultGrid = (props: ResultGridProps) => {
     setItemId,
     playHandler,
     gridSize,
-    thumbnailType,
+    layout,
   } = props;
   const gridRef: RefObject<any> = createRef();
   const [columnCount, setColumnCount] = useState(1);
+  let thumbnailType = ThumbnailType.SNAP;
+  if (layout == ResultLayout.BOXART) {
+    thumbnailType = ThumbnailType.BOX;
+  } else if (layout == ResultLayout.TITLE_SCREEN) {
+    thumbnailType = ThumbnailType.TITLE;
+  }
 
   const onItemClick = (evt: any) => {
     const itemId = Number(evt.currentTarget.getAttribute("data-item-id"));
@@ -177,7 +184,7 @@ interface ResultGridProps {
   setItemId: (itemId: number) => void;
   playHandler: () => void;
   gridSize: number;
-  thumbnailType: ThumbnailType;
+  layout: ResultLayout;
 }
 
 export default ResultGrid;

@@ -1,6 +1,5 @@
 import { CategoryAll } from "../libs/CategoryAll";
 import { ResultLayout } from "../interfaces/ResultLayout";
-import { ThumbnailType } from "../interfaces/ThumbnailType";
 
 export interface ExplorerState {
   categoryName: string;
@@ -9,7 +8,6 @@ export interface ExplorerState {
   selectedItemId: number;
   layout: ResultLayout;
   gridSize: number;
-  thumbnailType: ThumbnailType;
   showPlayerPicker: boolean;
 }
 
@@ -19,9 +17,8 @@ export const createExplorerState = (): ExplorerState => {
     subCategoryName: "",
     keyword: "",
     selectedItemId: 0,
-    layout: ResultLayout.GRID,
+    layout: ResultLayout.SNAPSHOT,
     gridSize: 160,
-    thumbnailType: ThumbnailType.SNAP,
     showPlayerPicker: false,
   };
 };

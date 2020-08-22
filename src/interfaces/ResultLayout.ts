@@ -1,4 +1,6 @@
 export enum ResultLayout {
-  LIST = "list",
-  GRID = "grid",
+  SNAPSHOT = "SNAPSHOT",
+  TITLE_SCREEN = "TITLE_SCREEN",
+  BOXART = "BOXART",
+  NAMES = "NAMES",
 }

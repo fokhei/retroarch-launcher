@@ -5,10 +5,8 @@ import { ResultLayout } from "../interfaces/ResultLayout";
 import { ContextMenuId } from "../contextMenus/ContextMenuId";
 import { ExplorerState } from "../states/explorerState";
 import { GameItemState } from "../states/gameItemState";
-import { ThumbnailType } from "../interfaces/ThumbnailType";
 import { Dispatch } from "redux";
 import { setLayout } from "../actions/setLayout";
-import { setThumbnailType } from "../actions/setThumbnailType";
 import { setGridSize } from "../actions/setGridSize";
 import { setItemId } from "../actions/setItemId";
 import { getComputedItem } from "../libs/getComputedItem";
@@ -20,29 +18,18 @@ import { setPlayerPicker } from "../actions/setPlayerPicker";
 import { clipboard } from "electron";
 import { getCategory } from "../libs/getCategory";
 import { AppConfigState } from "../states/appConfigState";
-import { play } from '../externalApps/play';
+import { play } from "../externalApps/play";
 
 const _ResultView = (props: ResultViewProps) => {
   const { className, dispatch, explorer, gameItem, appConfig } = props;
 
-  const {
-    categoryName,
-    layout,
-    gridSize,
-    thumbnailType,
-    selectedItemId,
-  } = explorer;
+  const { categoryName, layout, gridSize, selectedItemId } = explorer;
   const { itemsMap, searchResults } = gameItem;
   const item = getComputedItem(itemsMap, selectedItemId);
 
   const onLayoutChange = (evt: any) => {
     const layout = evt.target.value as ResultLayout;
     dispatch(setLayout(layout));
-  };
-
-  const onThumbnailTypeChange = (evt: any) => {
-    const thumbnailType = evt.target.value as ThumbnailType;
-    dispatch(setThumbnailType(thumbnailType));
   };
 
   const onSliderChange = (evt: any) => {
@@ -101,36 +88,29 @@ const _ResultView = (props: ResultViewProps) => {
     return (
       <div className="options">
         <select value={layout} onChange={onLayoutChange}>
-          <option value={ResultLayout.GRID}>Grid</option>
-          <option value={ResultLayout.LIST}>List</option>
+          <option value={ResultLayout.BOXART}>BoxArt</option>
+          <option value={ResultLayout.SNAPSHOT}>Snapshot</option>
+          <option value={ResultLayout.TITLE_SCREEN}>Title Screen</option>
+          <option value={ResultLayout.NAMES}>Name</option>
         </select>
       </div>
     );
   };
 
-  const renderThumbnailSwitch = () => {
-    if (layout == ResultLayout.GRID) {
-      return (
-        <div className="options">
-          <select value={thumbnailType} onChange={onThumbnailTypeChange}>
-            <option value={ThumbnailType.BOX}>Box</option>
-            <option value={ThumbnailType.TITLE}>Title</option>
-            <option value={ThumbnailType.SNAP}>Snap</option>
-          </select>
-        </div>
-      );
-    }
-    return null;
-  };
-
   const renderSlider = () => {
-    if (layout == ResultLayout.GRID) {
+    if (
+      [
+        ResultLayout.BOXART,
+        ResultLayout.TITLE_SCREEN,
+        ResultLayout.SNAPSHOT,
+      ].includes(layout)
+    ) {
       return (
         <div>
           <input
             className="slider"
             type="range"
-            min="60"
+            min="160"
             max="640"
             value={gridSize}
             onChange={onSliderChange}
@@ -142,7 +122,7 @@ const _ResultView = (props: ResultViewProps) => {
   };
 
   const renderContent = () => {
-    if (layout == ResultLayout.LIST) {
+    if (layout == ResultLayout.NAMES) {
       return (
         <ResultList
           categoryName={categoryName}
@@ -152,7 +132,13 @@ const _ResultView = (props: ResultViewProps) => {
           playHandler={onPlay}
         />
       );
-    } else if (layout == ResultLayout.GRID) {
+    } else if (
+      [
+        ResultLayout.BOXART,
+        ResultLayout.TITLE_SCREEN,
+        ResultLayout.SNAPSHOT,
+      ].includes(layout)
+    ) {
       return (
         <ResultGrid
           categoryName={categoryName}
@@ -161,7 +147,7 @@ const _ResultView = (props: ResultViewProps) => {
           setItemId={onItemIdChange}
           playHandler={onPlay}
           gridSize={gridSize}
-          thumbnailType={thumbnailType}
+          layout={layout}
         />
       );
     }
@@ -174,18 +160,16 @@ const _ResultView = (props: ResultViewProps) => {
 
   return (
     <div className={className}>
-      <div className="head">{renderGameName()}</div>
-      <div className="body">{renderContent()}</div>
-
-      <div className="foot">
+      <div className="head">
         {renderResultLength()}
         {renderThumbnailDownloader()}
         <div className="right">
           {renderSlider()}
-          {renderThumbnailSwitch()}
           {renderLayoutSwitch()}
         </div>
       </div>
+      <div className="subHead">{renderGameName()}</div>
+      <div className="body">{renderContent()}</div>
     </div>
   );
 };
@@ -195,32 +179,8 @@ const ResultView = styled(_ResultView)`
   overflow: hidden;
   display: flex;
   flex-direction: column;
+
   > .head {
-    height: 32px;
-    background-color: rgba(0, 0, 0, 0.3);
-    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    user-select: none;
-
-    .gameName {
-      display: inline-block;
-      line-height: 32px;
-      padding: 0 10px;
-      width: 100%;
-      font-size: 15px;
-      color: #17bbaf;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-  }
-
-  > .body {
-    flex: 1;
-    overflow: hidden;
-    padding: 10px;
-  }
-  > .foot {
     height: 32px;
     font-size: 12px;
     display: flex;
@@ -229,6 +189,7 @@ const ResultView = styled(_ResultView)`
     padding: 10px;
     color: #555;
     background-color: rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
     .right {
       display: flex;
     }
@@ -255,6 +216,32 @@ const ResultView = styled(_ResultView)`
         }
       }
     }
+  }
+
+  > .subHead {
+    height: 32px;
+    background-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    user-select: none;
+
+    .gameName {
+      display: inline-block;
+      line-height: 32px;
+      padding: 0 10px;
+      width: 100%;
+      font-size: 15px;
+      color: #17bbaf;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  > .body {
+    flex: 1;
+    overflow: hidden;
+    padding: 10px;
   }
 
   select {

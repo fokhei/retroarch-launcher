@@ -1,6 +1,6 @@
 import { ComputedGameItem } from "../interfaces/ComputedGameItem";
 import { ThumbnailInfo } from "../interfaces/ThumbnailInfo";
-import { CategoryAll } from "../libs/categoryAll2";
+import { CategoryAll } from "../libs/categoryAll";
 import { ItemFilter } from "../interfaces/itemFilter";
 
 export interface SubCategories {

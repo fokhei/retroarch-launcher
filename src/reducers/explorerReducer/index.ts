@@ -19,6 +19,9 @@ import { setPlayerPickerHandler } from "./playerPickerHandler";
 import { SEARCH } from "../../actions/search";
 import { searchHandler } from "./searchHandler";
 
+import { SHOW_ES_EXPORTER } from "../../actions/showESExporter";
+import { esExporterHandler } from "./esExporterHandler";
+
 const explorerReducer = (
   state: ExplorerState | any = createExplorerState(),
   action: AnyAction
@@ -36,6 +39,8 @@ const explorerReducer = (
       return setPlayerPickerHandler(state, action);
     case SEARCH:
       return searchHandler(state, action);
+    case SHOW_ES_EXPORTER:
+      return esExporterHandler(state, action);
 
     default:
       return state;

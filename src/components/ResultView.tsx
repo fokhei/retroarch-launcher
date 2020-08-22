@@ -20,8 +20,9 @@ import { getCategory } from "../libs/getCategory";
 import { AppConfigState } from "../states/appConfigState";
 import { play } from "../externalApps/play";
 import { FavourState } from "../states/favourState";
-import { ItemFilter } from '../interfaces/itemFilter';
-import { search } from '../actions/search';
+import { ItemFilter } from "../interfaces/itemFilter";
+import { search } from "../actions/search";
+import { SearchResultTriggerProps } from "../contextMenus/SearchResultContextMenu";
 
 const _ResultView = (props: ResultViewProps) => {
   const { className, dispatch, explorer, gameItem, appConfig, favour } = props;
@@ -88,11 +89,19 @@ const _ResultView = (props: ResultViewProps) => {
 
   const renderResultLength = () => {
     const { length } = searchResults;
+    const collect = (): SearchResultTriggerProps => {
+      return {
+        categoryName,
+        searchResults,
+      };
+    };
     return (
-      <div className="length">
-        <span>{length}</span>
-        <span> item(s)</span>
-      </div>
+      <ContextMenuTrigger id={ContextMenuId.SEARCH_RESULT} collect={collect}>
+        <div className="length">
+          <span>{length}</span>
+          <span> item(s)</span>
+        </div>
+      </ContextMenuTrigger>
     );
   };
 
@@ -217,6 +226,9 @@ const ResultView = styled(_ResultView)`
     color: #555;
     background-color: rgba(0, 0, 0, 0.3);
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    .length {
+      user-select: none;
+    }
     .right {
       display: flex;
     }

@@ -3,7 +3,7 @@ import update from "immutability-helper";
 import { GameItemState, createGameItemState } from "../../states/gameItemState";
 import { ComputedGameItem } from "../../interfaces/ComputedGameItem";
 import lazy from "lazy.js";
-import { CategoryAll } from "../../libs/categoryAll2";
+import { CategoryAll } from "../../libs/categoryAll";
 import { ItemFilter } from "../../interfaces/itemFilter";
 import { FavourState } from "../../states/favourState";
 

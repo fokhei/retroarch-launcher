@@ -10,7 +10,7 @@ import {
 } from "react-virtualized";
 import { ContextMenuId } from "../contextMenus/ContextMenuId";
 import { ContextMenuTrigger } from "react-contextmenu";
-import { CategoryAll } from "../libs/categoryAll2";
+import { CategoryAll } from "../libs/categoryAll";
 import { CategoryTriggerProps } from "../contextMenus/CategoryContextMenu";
 import { GameItemState } from "../states/gameItemState";
 import { ItemFilter } from "../interfaces/itemFilter";

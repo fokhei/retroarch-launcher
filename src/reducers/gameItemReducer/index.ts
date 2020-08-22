@@ -30,6 +30,8 @@ import { REMOVE_THUMBNAIL } from "../../actions/removeThumbnail";
 import { removeThumbnailHandler } from "./removeThumbnailHandler";
 import { SCAN_ROMS_SUCCESS } from "../../actions/scanRoms";
 import { scanRomsSuccessHandler } from "./scanRomsHandler";
+import { EXPORT_TO_EMULATION_STATION } from "../../actions/exportToEmulationStation";
+import { exportToEmulationStationHandler } from "./exportToEmulationStationHandler";
 
 const gameItemReducer = (
   state: GameItemState | any = createGameItemState(),
@@ -67,6 +69,9 @@ const gameItemReducer = (
 
     case SCAN_ROMS_SUCCESS:
       return scanRomsSuccessHandler(state, action);
+
+    case EXPORT_TO_EMULATION_STATION:
+      return exportToEmulationStationHandler(state, action);
 
     default:
       return state;

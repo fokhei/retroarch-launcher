@@ -24,6 +24,8 @@ import { setPlayerPicker } from "../actions/setPlayerPicker";
 import { NotificationContainer } from "react-notifications";
 import { FavourState } from "../states/favourState";
 import { fetchFavour } from "../actions/fetchFavour";
+import SearchResultContextMenu from "../contextMenus/SearchResultContextMenu";
+import ESExporter from "./ESExporter";
 
 enum WaitingFor {
   NONE,
@@ -88,6 +90,18 @@ const _App = (props: AppProps) => {
     return null;
   };
 
+  const renderESExporter = () => {
+    const { showESExporter } = explorer;
+    if (showESExporter) {
+      return (
+        <Modal>
+          <ESExporter />
+        </Modal>
+      );
+    }
+    return null;
+  };
+
   const renderContextMenus = () => {
     return (
       <>
@@ -95,6 +109,7 @@ const _App = (props: AppProps) => {
         <GameItemContextMenu dispatch={dispatch} appConfig={appConfig} />
         <GameNameContextMenu />
         <RomNameContextMenu />
+        <SearchResultContextMenu dispatch={dispatch} />
         <ThumbnailContextMenu dispatch={dispatch} />
         <ThumbnailDropZoneContextMenu
           dispatch={dispatch}
@@ -156,6 +171,7 @@ const _App = (props: AppProps) => {
       {renderExplorer()}
       {renderScanner()}
       {renderPlayerPicker()}
+      {renderESExporter()}
       {renderContextMenus()}
       <NotificationContainer />
     </div>

@@ -32,6 +32,7 @@
   "dependencies": {
     "csv-parse": "^4.8.5",
     "debounce": "^1.2.0",
+    "fs-extra": "^9.0.1",
     "immutability-helper": "^3.0.2",
     "jimp": "^0.9.3",
     "lazy.js": "^0.5.1",

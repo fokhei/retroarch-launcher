@@ -5,6 +5,7 @@ export interface ExplorerState {
   layout: ResultLayout;
   gridSize: number;
   showPlayerPicker: boolean;
+  showESExporter: boolean;
 }
 
 export const createExplorerState = (): ExplorerState => {
@@ -13,5 +14,6 @@ export const createExplorerState = (): ExplorerState => {
     layout: ResultLayout.SNAPSHOT,
     gridSize: 160,
     showPlayerPicker: false,
+    showESExporter: false,
   };
 };

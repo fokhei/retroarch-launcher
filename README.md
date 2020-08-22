@@ -1,6 +1,7 @@
-# RetroArch Launcher
+# RetroBarrel
 
-a alternative launcher for RetroArch, using same playlist architecture for download thumnail and includes some custom features by context menu. Build by Electron + Typescript + React
+a frontend for retro game and emulator
+Build by Electron + Typescript + React
 
 
 # install dependencies

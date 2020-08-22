@@ -1,5 +1,5 @@
 {
-  "name": "retroarch-launcher",
+  "name": "retrobarrel",
   "version": "0.1.0",
   "scripts": {
     "tsc": "tsc",

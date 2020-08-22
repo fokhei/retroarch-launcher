@@ -1,6 +1,6 @@
 {
 
-  playlistPath: "D:\\playlists",
+  gamelistPath: "D:\\retrobarrel\\gamelist",
   thumbnailPath: "D:\\thumbnails",
 
   externalApps: [

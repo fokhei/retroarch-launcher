@@ -115,9 +115,7 @@ const _App = (props: AppProps) => {
   };
 
   const gameItemChangeEffect = () => {
-    
     if (waiting == WaitingFor.FETCH_ITEMS) {
-      
       const { success, error } = gameItem.fetch;
       if (error) throw error;
       if (success) {

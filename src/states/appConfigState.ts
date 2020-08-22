@@ -2,7 +2,7 @@ import { Category } from "../interfaces/Category";
 import { ExternalApp } from '../externalApps/ExternalApp';
 
 export interface AppConfigState {
-  playlistPath: string;
+  gamelistPath: string;
   thumbnailPath: string;
   externalApps: Array<ExternalApp>;
   categories: Array<Category>;
@@ -14,7 +14,7 @@ export interface AppConfigState {
 
 export const createAppConfigState = (): AppConfigState => {
   return {
-    playlistPath: "./playlists",
+    gamelistPath: "./playlists",
     thumbnailPath: "./thumbnails",
     externalApps: [],
     categories: [],

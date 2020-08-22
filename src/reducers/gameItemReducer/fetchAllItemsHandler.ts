@@ -23,12 +23,12 @@ export const fetchAllItemsHandler = (
   let subCategories = {};
 
   const { appConfig } = action;
-  const { playlistPath } = appConfig;
-  const files = fs.readdirSync(playlistPath);
+  const { gamelistPath } = appConfig;
+  const files = fs.readdirSync(gamelistPath);
   files.map((file: string) => {
     const ext = path.extname(file);
     if (ext == ".json") {
-      const text: any = fs.readFileSync(path.resolve(playlistPath, file));
+      const text: any = fs.readFileSync(path.resolve(gamelistPath, file));
       const playlist = JSON.parse(text) as Playlist;
       const categoryName = file.replace(ext, "");
       const category = getCategory(appConfig, categoryName);

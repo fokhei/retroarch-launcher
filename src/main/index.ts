@@ -3,8 +3,6 @@ import createMainWindow from "../libs/createMainWindow";
 import { AppEvent } from "../interfaces/AppEvent";
 import Jimp from "Jimp";
 
-
-
 let mainWindow: BrowserWindow;
 let devTools: BrowserWindow;
 
@@ -12,21 +10,19 @@ let devTools: BrowserWindow;
 app.whenReady().then(() => {
   mainWindow = createMainWindow();
 
-
-
   app.on("window-all-closed", () => {
     if (process.platform !== "darwin") {
       mainWindow = null;
       app.quit();
     }
   });
-  
+
   // app.on("activate", () => {
   //   if (BrowserWindow.getAllWindows().length === 0) {
   //     mainWindow = createMainWindow();
   //   }
   // });
-  
+
   ipcMain.on(AppEvent.OPEN_DEV_TOOLS, (_event: any) => {
     if (!devTools) {
       devTools = new BrowserWindow();
@@ -35,7 +31,10 @@ app.whenReady().then(() => {
       mainWindow.webContents.openDevTools({ mode: "detach" });
       mainWindow.webContents.once("did-finish-load", function () {
         const windowBounds = mainWindow.getBounds();
-        devTools.setPosition(windowBounds.x + windowBounds.width, windowBounds.y);
+        devTools.setPosition(
+          windowBounds.x + windowBounds.width,
+          windowBounds.y
+        );
         devTools.setSize(windowBounds.width / 2, windowBounds.height);
       });
     } else {
@@ -45,7 +44,7 @@ app.whenReady().then(() => {
   ipcMain.on(AppEvent.RELOAD, (_event: any) => {
     mainWindow.reload();
   });
-  
+
   ipcMain.on(
     AppEvent.WRITE_JIMP_IMAGE,
     (event: any, filePath: string, outPath: string) => {
@@ -60,7 +59,4 @@ app.whenReady().then(() => {
       });
     }
   );
-
-
 });
-

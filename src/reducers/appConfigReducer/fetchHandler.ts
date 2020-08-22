@@ -10,6 +10,7 @@ export const fetchHandler = (
   _action: AnyAction
 ): AppConfigState => {
   const configPath = "./config.js";
+
   let config: any;
   let fetch: any = {
     success: false,

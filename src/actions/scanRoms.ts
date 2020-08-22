@@ -25,7 +25,7 @@ export const scanRoms = (appConfig: AppConfigState, categoryName: string) => {
       return getFiles(category.romsPath)
         .then((files: Array<string>) => {
           const items = createGameItemsFBA(category, files, datIndexes);
-          exportGeneralPlaylist(category, items, appConfig.playlistPath);
+          exportGeneralPlaylist(category, items, appConfig.gamelistPath);
           dispatch(scanRomsSuccess(categoryName, datIndexes, items, appConfig));
         })
         .catch((err: any) => {
@@ -35,7 +35,7 @@ export const scanRoms = (appConfig: AppConfigState, categoryName: string) => {
       return getFiles(category.romsPath)
         .then((files: Array<string>) => {
           const items = createGameItemsMAME(category, files, datIndexes);
-          exportGeneralPlaylist(category, items, appConfig.playlistPath);
+          exportGeneralPlaylist(category, items, appConfig.gamelistPath);
           dispatch(scanRomsSuccess(categoryName, datIndexes, items, appConfig));
         })
         .catch((err: any) => {
@@ -47,7 +47,7 @@ export const scanRoms = (appConfig: AppConfigState, categoryName: string) => {
         return getFiles(category.romsPath)
           .then((files: Array<string>) => {
             const items = createGameItems(category, "", files, datIndexes);
-            exportGeneralPlaylist(category, items, appConfig.playlistPath);
+            exportGeneralPlaylist(category, items, appConfig.gamelistPath);
             dispatch(
               scanRomsSuccess(categoryName, datIndexes, items, appConfig)
             );
@@ -58,7 +58,7 @@ export const scanRoms = (appConfig: AppConfigState, categoryName: string) => {
       } else if (scanType == ScanType.FOLDER) {
         const dirs = getDirectoriesSync(category.romsPath);
         const items = createGameItems(category, "", dirs, datIndexes);
-        exportGeneralPlaylist(category, items, appConfig.playlistPath);
+        exportGeneralPlaylist(category, items, appConfig.gamelistPath);
         dispatch(scanRomsSuccess(categoryName, datIndexes, items, appConfig));
       }
     }

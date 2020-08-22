@@ -11,12 +11,14 @@ import { ContextMenuTrigger } from "react-contextmenu";
 import { ContextMenuId } from "../contextMenus/ContextMenuId";
 import { ComputedGameItem } from "../interfaces/ComputedGameItem";
 import { GameItemTriggerProps } from "../contextMenus/GameItemContextMenu";
+import { FavourState } from '../states/favourState';
 
 const _ResultList = (props: ResultListProps) => {
   const {
     className,
     categoryName,
     results,
+    favour,
     itemId,
     setItemId,
     playHandler,
@@ -83,7 +85,8 @@ const _ResultList = (props: ResultListProps) => {
             onDoubleClick={onDoubleClick}
             onContextMenu={onRightClick}
           >
-            {item.gameName}
+            {renderFavour(item)}
+            <span className="name">{item.gameName}</span>
           </div>
         </ContextMenuTrigger>
       );
@@ -93,6 +96,13 @@ const _ResultList = (props: ResultListProps) => {
         {child}
       </div>
     );
+  };
+
+  const renderFavour = (data: ComputedGameItem) => {
+    if (favour.list.includes(data.romPath)) {
+      return <span className="favour">⭐</span>;
+    }
+    return <span className="favour" />;
   };
 
   return (
@@ -137,6 +147,10 @@ const ResultList = styled(_ResultList)`
         color: #888;
         user-select: none;
         cursor: pointer;
+        .favour {
+          display: inline-block;
+          width: 1.5em;
+        }
         &:hover {
           color: #ccc;
         }
@@ -153,6 +167,7 @@ interface ResultListProps {
   className?: string;
   categoryName: string;
   results: Array<ComputedGameItem>;
+  favour: FavourState;
   itemId: number;
   setItemId: (itemId: number) => void;
   playHandler: () => void;

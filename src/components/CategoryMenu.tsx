@@ -10,27 +10,28 @@ import {
 } from "react-virtualized";
 import { ContextMenuId } from "../contextMenus/ContextMenuId";
 import { ContextMenuTrigger } from "react-contextmenu";
-import { CategoryAll } from "../libs/CategoryAll";
+import { CategoryAll } from "../libs/categoryAll2";
 import { CategoryTriggerProps } from "../contextMenus/CategoryContextMenu";
-import { SubCategories } from "../states/gameItemState";
+import { GameItemState } from "../states/gameItemState";
+import { ItemFilter } from "../interfaces/itemFilter";
+import lazy from "lazy.js";
+import { AppConfigState } from "../states/appConfigState";
 
 let _keywordHandler: any;
 
 const _CategoryMenu = (props: CategoryMenuProps) => {
-  const {
-    className,
-    categoryNames,
-    categoryName,
-    categoryNameHandler,
-    keyword,
-    keywordHandler,
-    subCategories,
-    subCategoryName,
-  } = props;
+  const { className, appConfig, gameItem, searchHandler } = props;
 
+  const { subCategories, itemFilter } = gameItem;
+  const categoryNames = lazy(appConfig.categories)
+    .sort()
+    .pluck("name")
+    .toArray();
+
+  const { categoryName, subCategoryName, keyword } = itemFilter;
 
   const listRef: RefObject<any> = createRef();
-  _keywordHandler = debounce(keywordHandler, 300, false);
+  _keywordHandler = debounce(searchHandler, 300, false);
 
   const labels: Array<string> = [CategoryAll, ...categoryNames.sort()];
 
@@ -41,14 +42,24 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
   });
 
   const onCategoryClick = (evt: any) => {
-    const category = evt.currentTarget.getAttribute("data-category");
-    const subCategory = evt.target.getAttribute("data-subcategory");
-    categoryNameHandler(category, subCategory);
+    const categoryName = evt.currentTarget.getAttribute("data-category");
+    const subCategoryName = evt.target.getAttribute("data-subcategory");
+
+    const filter: ItemFilter = {
+      ...itemFilter,
+      categoryName,
+      subCategoryName,
+    };
+    searchHandler(filter);
   };
 
   const onRightClick = (evt: any) => {
-    const category = evt.currentTarget.getAttribute("data-category");
-    categoryNameHandler(category);
+    const categoryName = evt.currentTarget.getAttribute("data-category");
+    const filter: ItemFilter = {
+      ...itemFilter,
+      categoryName,
+    };
+    searchHandler(filter);
   };
 
   const onKeywordChange = (evt: any) => {
@@ -203,7 +214,6 @@ const CategoryMenu = styled(_CategoryMenu)`
             }
           }
           .subCategories {
-            
             margin-top: 5px;
             .subCategory {
               padding: 5px 0;
@@ -224,13 +234,9 @@ const CategoryMenu = styled(_CategoryMenu)`
 
 interface CategoryMenuProps {
   className?: string;
-  categoryNames: Array<string>;
-  categoryName: string;
-  categoryNameHandler: (categoryName: string, subCategoryName?: string) => void;
-  keyword: string;
-  keywordHandler: (keyword: string) => void;
-  subCategories: SubCategories;
-  subCategoryName: string;
+  appConfig: AppConfigState;
+  gameItem: GameItemState;
+  searchHandler: (itemFilter: ItemFilter) => void;
 }
 
 export default CategoryMenu;

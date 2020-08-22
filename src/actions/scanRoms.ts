@@ -12,6 +12,7 @@ import { ScanType } from "../interfaces/ScanType";
 import { getDirectoriesSync } from "../libs/getDirectoriesSync";
 import { createGameItemsFBA } from "../libs/createGameItemsFBA";
 import { createGameItemsMAME } from "../libs/createGameItemsMAME";
+import { GAME_LIST_DIR_NAME } from '../libs/constants';
 
 export const SCAN_ROMS_START = "SCAN_ROMS_START";
 export const SCAN_ROMS_SUCCESS = "SCAN_ROMS_SUCCESS";
@@ -24,14 +25,14 @@ export const scanRoms = (appConfig: AppConfigState, categoryName: string) => {
     const category = getCategory(appConfig, categoryName);
     const datIndexes = createDatIndexes(category);
     const { appDataDir } = appConfig;
-    const gamelistDir = path.resolve(appDataDir, "gamelist")
+    const gamelistPath = path.resolve(appDataDir, GAME_LIST_DIR_NAME)
 
 
     if (categoryName == "FBA") {
       return getFiles(category.romsPath)
         .then((files: Array<string>) => {
           const items = createGameItemsFBA(category, files, datIndexes);
-          exportGeneralPlaylist(category, items, gamelistDir);
+          exportGeneralPlaylist(category, items, gamelistPath);
           dispatch(scanRomsSuccess(categoryName, datIndexes, items, appConfig));
         })
         .catch((err: any) => {
@@ -41,7 +42,7 @@ export const scanRoms = (appConfig: AppConfigState, categoryName: string) => {
       return getFiles(category.romsPath)
         .then((files: Array<string>) => {
           const items = createGameItemsMAME(category, files, datIndexes);
-          exportGeneralPlaylist(category, items, gamelistDir);
+          exportGeneralPlaylist(category, items, gamelistPath);
           dispatch(scanRomsSuccess(categoryName, datIndexes, items, appConfig));
         })
         .catch((err: any) => {
@@ -53,7 +54,7 @@ export const scanRoms = (appConfig: AppConfigState, categoryName: string) => {
         return getFiles(category.romsPath)
           .then((files: Array<string>) => {
             const items = createGameItems(category, "", files, datIndexes);
-            exportGeneralPlaylist(category, items, gamelistDir);
+            exportGeneralPlaylist(category, items, gamelistPath);
             dispatch(
               scanRomsSuccess(categoryName, datIndexes, items, appConfig)
             );
@@ -64,7 +65,7 @@ export const scanRoms = (appConfig: AppConfigState, categoryName: string) => {
       } else if (scanType == ScanType.FOLDER) {
         const dirs = getDirectoriesSync(category.romsPath);
         const items = createGameItems(category, "", dirs, datIndexes);
-        exportGeneralPlaylist(category, items, gamelistDir);
+        exportGeneralPlaylist(category, items, gamelistPath);
         dispatch(scanRomsSuccess(categoryName, datIndexes, items, appConfig));
       }
     }

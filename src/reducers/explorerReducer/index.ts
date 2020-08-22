@@ -1,9 +1,5 @@
 import { AnyAction } from "redux";
 import { ExplorerState, createExplorerState } from "../../states/explorerState";
-import { SET_KEYWORD } from "../../actions/setKeyword";
-import { setKeywordHandler } from "./keywordHandler";
-import { SET_CATEGORY_NAME } from "../../actions/setCategoryName";
-import { setCategoryNameHandler } from "./categoryNameHandler";
 
 import { SET_LAYOUT } from "../../actions/setLayout";
 import { setLayoutHandler } from "./layoutHandler";
@@ -25,10 +21,6 @@ const explorerReducer = (
   action: AnyAction
 ): ExplorerState => {
   switch (action.type) {
-    case SET_KEYWORD:
-      return setKeywordHandler(state, action);
-    case SET_CATEGORY_NAME:
-      return setCategoryNameHandler(state, action);
     case SET_LAYOUT:
       return setLayoutHandler(state, action);
     case SET_THUMBNAIL_TYPE:

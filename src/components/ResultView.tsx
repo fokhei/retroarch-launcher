@@ -19,12 +19,15 @@ import { clipboard } from "electron";
 import { getCategory } from "../libs/getCategory";
 import { AppConfigState } from "../states/appConfigState";
 import { play } from "../externalApps/play";
+import { FavourState } from "../states/favourState";
+import { ItemFilter } from '../interfaces/itemFilter';
+import { search } from '../actions/search';
 
 const _ResultView = (props: ResultViewProps) => {
-  const { className, dispatch, explorer, gameItem, appConfig } = props;
-
-  const { categoryName, layout, gridSize, selectedItemId } = explorer;
-  const { itemsMap, searchResults } = gameItem;
+  const { className, dispatch, explorer, gameItem, appConfig, favour } = props;
+  const { layout, gridSize, selectedItemId } = explorer;
+  const { itemsMap, itemFilter, searchResults } = gameItem;
+  const { categoryName, favourOnly } = itemFilter;
   const item = getComputedItem(itemsMap, selectedItemId);
 
   const onLayoutChange = (evt: any) => {
@@ -39,6 +42,15 @@ const _ResultView = (props: ResultViewProps) => {
 
   const onItemIdChange = (itemId: number) => {
     dispatch(setItemId(itemId));
+  };
+
+  const onFavourOnlyChange = (evt: any) => {
+    const favourOnly = evt.target.value == 1;
+    const filter: ItemFilter = {
+      ...itemFilter,
+      favourOnly,
+    };
+    dispatch(search(filter, favour));
   };
 
   const onPlay = () => {
@@ -97,6 +109,18 @@ const _ResultView = (props: ResultViewProps) => {
     );
   };
 
+  const renderFavourSwitch = () => {
+    const value = favourOnly ? 1 : 0;
+    return (
+      <div className="options">
+        <select value={value} onChange={onFavourOnlyChange}>
+          <option value={0}>All</option>
+          <option value={1}>Favour Only</option>
+        </select>
+      </div>
+    );
+  };
+
   const renderSlider = () => {
     if (
       [
@@ -127,6 +151,7 @@ const _ResultView = (props: ResultViewProps) => {
         <ResultList
           categoryName={categoryName}
           results={searchResults}
+          favour={favour}
           itemId={selectedItemId}
           setItemId={onItemIdChange}
           playHandler={onPlay}
@@ -143,6 +168,7 @@ const _ResultView = (props: ResultViewProps) => {
         <ResultGrid
           categoryName={categoryName}
           results={searchResults}
+          favour={favour}
           itemId={selectedItemId}
           setItemId={onItemIdChange}
           playHandler={onPlay}
@@ -166,6 +192,7 @@ const _ResultView = (props: ResultViewProps) => {
         <div className="right">
           {renderSlider()}
           {renderLayoutSwitch()}
+          {renderFavourSwitch()}
         </div>
       </div>
       <div className="subHead">{renderGameName()}</div>
@@ -260,6 +287,7 @@ interface ResultViewProps {
   explorer: ExplorerState;
   gameItem: GameItemState;
   appConfig: AppConfigState;
+  favour: FavourState;
 }
 
 export default ResultView;

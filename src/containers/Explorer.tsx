@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import CategoryMenu from "../components/CategoryMenu";
-import lazy from "lazy.js";
 import { ExplorerState } from "../states/explorerState";
 import { Dispatch } from "redux";
 import { AppConfigState } from "../states/appConfigState";
@@ -9,41 +8,25 @@ import { RootState } from "../states";
 import { connect } from "react-redux";
 import { GameItemState } from "../states/gameItemState";
 import { search } from "../actions/search";
-import { setCategoryName } from "../actions/setCategoryName";
-import { setKeyword } from "../actions/setKeyword";
 import ResultView from "../components/ResultView";
 import RightBar from "../components/RightBar";
+import { FavourState } from "../states/favourState";
+import { ItemFilter } from "../interfaces/itemFilter";
 
 const _Explorer = (props: ExplorerProps) => {
-  const { className, dispatch, appConfig, gameItem, explorer } = props;
+  const { className, dispatch, appConfig, gameItem, explorer, favour } = props;
+  const { itemFilter } = gameItem;
 
-  const categoryNameHandler = (
-    categoryName: string,
-    subCategoryName?: string
-  ) => {
-    dispatch(setCategoryName(categoryName, subCategoryName));
-    dispatch(search(categoryName, subCategoryName, explorer.keyword));
-  };
-
-  const keywordHandler = (keyword: string) => {
-    dispatch(setKeyword(keyword));
-    dispatch(search(explorer.categoryName, explorer.subCategoryName, keyword));
+  const onSearch = (itemFilter: ItemFilter) => {
+    dispatch(search(itemFilter, favour));
   };
 
   const renderCategoryMenu = () => {
-    const categoryNames = lazy(appConfig.categories)
-      .sort()
-      .pluck("name")
-      .toArray();
     return (
       <CategoryMenu
-        categoryNames={categoryNames}
-        categoryName={explorer.categoryName}
-        categoryNameHandler={categoryNameHandler}
-        keyword={explorer.keyword}
-        keywordHandler={keywordHandler}
-        subCategories={gameItem.subCategories}
-        subCategoryName={explorer.subCategoryName}
+        appConfig={appConfig}
+        gameItem={gameItem}
+        searchHandler={onSearch}
       />
     );
   };
@@ -55,6 +38,7 @@ const _Explorer = (props: ExplorerProps) => {
         explorer={explorer}
         gameItem={gameItem}
         appConfig={appConfig}
+        favour={favour}
       />
     );
   };
@@ -71,9 +55,7 @@ const _Explorer = (props: ExplorerProps) => {
   };
 
   const mountEffect = () => {
-    dispatch(
-      search(explorer.categoryName, explorer.subCategoryName, explorer.keyword)
-    );
+    dispatch(search(itemFilter, favour));
   };
 
   useEffect(mountEffect, []);
@@ -101,6 +83,7 @@ interface ExplorerProps {
   appConfig: AppConfigState;
   gameItem: GameItemState;
   explorer: ExplorerState;
+  favour: FavourState;
 }
 
 const mapStateToProps = (state: RootState) => {
@@ -108,6 +91,7 @@ const mapStateToProps = (state: RootState) => {
     appConfig: state.appConfig,
     gameItem: state.gameItem,
     explorer: state.explorer,
+    favour: state.favour,
   };
 };
 

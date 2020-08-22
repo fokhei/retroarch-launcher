@@ -1,9 +1,8 @@
 import { Category } from "../interfaces/Category";
-import { ExternalApp } from '../externalApps/ExternalApp';
+import { ExternalApp } from "../externalApps/ExternalApp";
 
 export interface AppConfigState {
   appDataDir: string;
-  gamelistDir: string;
   thumbnailPath: string;
   externalApps: Array<ExternalApp>;
   categories: Array<Category>;
@@ -16,7 +15,6 @@ export interface AppConfigState {
 export const createAppConfigState = (): AppConfigState => {
   return {
     appDataDir: "./",
-    gamelistDir: "./gamelists",
     thumbnailPath: "./thumbnails",
     externalApps: [],
     categories: [],

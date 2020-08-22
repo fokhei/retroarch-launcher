@@ -8,7 +8,9 @@ import { RootState } from "../states";
 import { ScannerState } from "../states/scannerState";
 import { getCategory } from "../libs/getCategory";
 import { hideScanner } from "../actions/hideScanner";
-import { search } from '../actions/search';
+import { search } from "../actions/search";
+import { ItemFilter } from "../interfaces/itemFilter";
+import { FavourState } from "../states/favourState";
 
 enum WaitingFor {
   NONE,
@@ -16,7 +18,7 @@ enum WaitingFor {
 }
 
 const _Scanner = (props: ScannerProps) => {
-  const { className, dispatch, appConfig, scanner } = props;
+  const { className, dispatch, appConfig, scanner, favour } = props;
   const [waiting, setWaiting] = useState<WaitingFor>(WaitingFor.NONE);
   const [result, setResult] = useState("");
   const { categoryName } = scanner;
@@ -72,7 +74,14 @@ const _Scanner = (props: ScannerProps) => {
         setWaiting(WaitingFor.NONE);
         const { length } = scanner.items;
         setResult(`${length} item(s) is scanned.`);
-        dispatch(search(scanner.categoryName, "", ""));
+
+        const filter: ItemFilter = {
+          categoryName: scanner.categoryName,
+          subCategoryName: "",
+          keyword: "",
+          favourOnly: false,
+        };
+        dispatch(search(filter, favour));
       }
     }
   };
@@ -135,12 +144,14 @@ interface ScannerProps {
   dispatch: Dispatch<any>;
   appConfig: AppConfigState;
   scanner: ScannerState;
+  favour: FavourState;
 }
 
 const mapStateToProps = (state: RootState) => {
   return {
     appConfig: state.appConfig,
     scanner: state.scanner,
+    favour: state.favour,
   };
 };
 

@@ -1,12 +1,11 @@
 import { ComputedGameItem } from "../interfaces/ComputedGameItem";
 import { ThumbnailInfo } from "../interfaces/ThumbnailInfo";
-
+import { CategoryAll } from "../libs/categoryAll2";
+import { ItemFilter } from "../interfaces/itemFilter";
 
 export interface SubCategories {
-  [categoryName: string]: Array<string>
+  [categoryName: string]: Array<string>;
 }
-
-
 
 export interface GameItemState {
   _id: number;
@@ -17,6 +16,7 @@ export interface GameItemState {
   searchResults: Array<ComputedGameItem>;
   pendingToDownload: Array<ThumbnailInfo>;
   subCategories: SubCategories;
+  itemFilter: ItemFilter;
   fetch: {
     success: boolean;
     error: any;
@@ -40,6 +40,12 @@ export const createGameItemState = (): GameItemState => {
     searchResults: [],
     pendingToDownload: [],
     subCategories: {},
+    itemFilter: {
+      categoryName: CategoryAll,
+      subCategoryName: "",
+      keyword: "",
+      favourOnly: false,
+    },
     fetch: {
       success: false,
       error: null,

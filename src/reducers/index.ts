@@ -3,12 +3,14 @@ import appConfigReducer from "./appConfigReducer";
 import gameItemReducer from "./gameItemReducer";
 import explorerReducer from "./explorerReducer";
 import scannerReducer from "./scannerReducer";
+import favourReducer from "./favourReducer";
 
 const rootReducer = combineReducers({
   appConfig: appConfigReducer,
   gameItem: gameItemReducer,
   explorer: explorerReducer,
   scanner: scannerReducer,
+  favour: favourReducer,
 });
 
 export default rootReducer;

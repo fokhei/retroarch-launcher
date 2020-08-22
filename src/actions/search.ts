@@ -1,10 +1,12 @@
+import { ItemFliter } from "../states/gameItemState";
+import { FavourState } from '../states/favourState';
+
 export const SEARCH = "SEARCH";
 
-export const search = (categoryName: string, subCategoryName: string, keyword: string) => {
+export const search = (itemFilter: ItemFliter, favour: FavourState) => {
   return {
     type: SEARCH,
-    categoryName,
-    subCategoryName,
-    keyword,
+    itemFilter,
+    favour
   };
 };

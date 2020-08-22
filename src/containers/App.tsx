@@ -21,17 +21,27 @@ import ThumbnailContextMenu from "../contextMenus/ThumbnailContextMenu";
 import ThumbnailDropZoneContextMenu from "../contextMenus/ThumbnailDropZoneContextMenu";
 import PlayerPicker from "../components/PlayerPicker";
 import { setPlayerPicker } from "../actions/setPlayerPicker";
-import {NotificationContainer} from 'react-notifications';
-
+import { NotificationContainer } from "react-notifications";
+import { FavourState } from "../states/favourState";
+import { fetchFavour } from "../actions/fetchFavour";
 
 enum WaitingFor {
   NONE,
   FETCH_APP_COFIG,
   FETCH_ITEMS,
+  FETCH_FAVOUR,
 }
 
 const _App = (props: AppProps) => {
-  const { className, dispatch, appConfig, gameItem, explorer, scanner } = props;
+  const {
+    className,
+    dispatch,
+    appConfig,
+    gameItem,
+    explorer,
+    scanner,
+    favour,
+  } = props;
   const [waiting, setWaiting] = useState<WaitingFor>(
     WaitingFor.FETCH_APP_COFIG
   );
@@ -119,6 +129,18 @@ const _App = (props: AppProps) => {
       const { success, error } = gameItem.fetch;
       if (error) throw error;
       if (success) {
+        setWaiting(WaitingFor.FETCH_FAVOUR);
+        dispatch(fetchFavour(appConfig.appDataDir));
+        setWaiting(WaitingFor.NONE);
+      }
+    }
+  };
+
+  const favourChangeEffect = () => {
+    if (waiting == WaitingFor.FETCH_FAVOUR) {
+      const { error, success } = favour.fetch;
+      if (error) throw error;
+      if (success) {
         setWaiting(WaitingFor.NONE);
       }
     }
@@ -127,6 +149,7 @@ const _App = (props: AppProps) => {
   useEffect(mountEffect, []);
   useEffect(appConfigChangeEffect, [appConfig]);
   useEffect(gameItemChangeEffect, [gameItem]);
+  useEffect(favourChangeEffect, [favour]);
 
   return (
     <div className={className}>
@@ -134,7 +157,7 @@ const _App = (props: AppProps) => {
       {renderScanner()}
       {renderPlayerPicker()}
       {renderContextMenus()}
-      <NotificationContainer/>
+      <NotificationContainer />
     </div>
   );
 };
@@ -160,6 +183,7 @@ interface AppProps {
   gameItem: GameItemState;
   explorer: ExplorerState;
   scanner: ScannerState;
+  favour: FavourState;
 }
 const mapStateToProps = (state: RootState) => {
   return {
@@ -167,6 +191,7 @@ const mapStateToProps = (state: RootState) => {
     gameItem: state.gameItem,
     explorer: state.explorer,
     scanner: state.scanner,
+    favour: state.favour,
   };
 };
 export default connect(mapStateToProps)(App);

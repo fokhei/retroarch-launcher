@@ -8,6 +8,7 @@ import { createComputedGameItem } from "../../libs/createComputedItem";
 import { ComputedGameItem } from "../../interfaces/ComputedGameItem";
 import { getCategory } from "../../libs/getCategory";
 import lazy from "lazy.js";
+import { GAME_LIST_DIR_NAME } from '../../libs/constants';
 
 let _id = 0;
 
@@ -27,7 +28,7 @@ export const fetchAllItemsHandler = (
   }
 
 
-  const gamelistPath = path.resolve(appDataDir, "gamelist");
+  const gamelistPath = path.resolve(appDataDir, GAME_LIST_DIR_NAME);
   if (!fs.existsSync(gamelistPath)) {
     fs.mkdirSync(gamelistPath);
   }

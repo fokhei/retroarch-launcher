@@ -9,12 +9,14 @@ import { toBackgroundUrl } from "../libs/toBackgroundUrl";
 import { GameItemTriggerProps } from "../contextMenus/GameItemContextMenu";
 import { ResultLayout } from "../interfaces/ResultLayout";
 import { ThumbnailType } from "../interfaces/ThumbnailType";
+import { FavourState } from "../states/favourState";
 
 const _ResultGrid = (props: ResultGridProps) => {
   const {
     className,
     categoryName,
     results,
+    favour,
     itemId,
     setItemId,
     playHandler,
@@ -85,6 +87,7 @@ const _ResultGrid = (props: ResultGridProps) => {
             >
               <div className="thumbnail" style={style}></div>
               <div className="label">{gameName}</div>
+              {renderFavour(data)}
             </div>
           </ContextMenuTrigger>
         );
@@ -95,6 +98,13 @@ const _ResultGrid = (props: ResultGridProps) => {
         {item}
       </div>
     );
+  };
+
+  const renderFavour = (data: ComputedGameItem) => {
+    if (favour.list.includes(data.romPath)) {
+      return <div className="favour">⭐</div>;
+    }
+    return null;
   };
 
   return (
@@ -144,6 +154,7 @@ const ResultGrid = styled(_ResultGrid)`
           flex-direction: column;
           color: #888;
           border: 1px solid #222;
+          position: relative;
           cursor: pointer;
 
           .thumbnail {
@@ -161,6 +172,16 @@ const ResultGrid = styled(_ResultGrid)`
             font-size: 12px;
             text-align: center;
           }
+
+          .favour {
+            position: absolute;
+            left: 4px;
+            right: 4px;
+            width: 1em;
+            height: 1em;
+            font-size: 1em;
+          }
+
           &:hover {
             background-color: rgba(100, 100, 100, 0.1);
             color: #ccc;
@@ -180,6 +201,7 @@ interface ResultGridProps {
   className?: string;
   categoryName: string;
   results: Array<ComputedGameItem>;
+  favour: FavourState;
   itemId: number;
   setItemId: (itemId: number) => void;
   playHandler: () => void;

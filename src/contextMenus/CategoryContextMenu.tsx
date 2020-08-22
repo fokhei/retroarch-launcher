@@ -3,7 +3,7 @@ import { ContextMenu, connectMenu } from "react-contextmenu";
 import { ContextMenuId } from "./ContextMenuId";
 import { Dispatch } from "redux";
 import { showScanner } from "../actions/showScanner";
-import { CategoryAll } from "../libs/CategoryAll";
+import { CategoryAll } from "../libs/categoryAll2";
 import { AppConfigState } from "../states/appConfigState";
 import { getCategory } from "../libs/getCategory";
 import { remote } from "electron";

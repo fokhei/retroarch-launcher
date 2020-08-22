@@ -4,32 +4,42 @@ import { AppEvent } from "../interfaces/AppEvent";
 import Jimp from "Jimp";
 import childProcess from "child_process";
 import psTree from "ps-tree";
+import { FavourState } from "../states/favourState";
+import { AppConfigState } from "../states/appConfigState";
+import fs from "fs";
+import * as path from "path";
+import { FAVOUR_FILE_NAME } from '../libs/constants';
 
 let mainWindow: BrowserWindow;
 let devTools: BrowserWindow;
+let appConfig: AppConfigState;
+let favour: FavourState;
 
-// app.commandLine.appendSwitch("--disable-http-cache");
+const saveBeforeQuit = () => {
+  if (appConfig) {
+    if (favour) {
+      const favourPath = path.resolve(appConfig.appDataDir, FAVOUR_FILE_NAME);
+      fs.writeFileSync(favourPath, JSON.stringify({ list: favour.list }));
+    }
+  }
+};
+
 app.whenReady().then(() => {
   mainWindow = createMainWindow();
+  mainWindow.on("close", (e) => {
+    saveBeforeQuit();
+  });
 
   app.on("window-all-closed", () => {
     if (process.platform !== "darwin") {
       mainWindow = null;
-
       const child = childProcess.exec("node -e 'while (true);'", () => {});
       psTree(child.pid, (_err: any, children: Array<any>) => {
         childProcess.spawn("kill", ["-9"].concat(children.map((p) => p.PID)));
       });
-
       app.quit();
     }
   });
-
-  // app.on("activate", () => {
-  //   if (BrowserWindow.getAllWindows().length === 0) {
-  //     mainWindow = createMainWindow();
-  //   }
-  // });
 
   ipcMain.on(AppEvent.OPEN_DEV_TOOLS, (_event: any) => {
     if (!devTools) {
@@ -65,6 +75,22 @@ app.whenReady().then(() => {
           });
         }
       });
+    }
+  );
+
+  ipcMain.on(
+    AppEvent.SET_APP_CONFIG,
+    (event: any, appConfigState: AppConfigState) => {
+      appConfig = appConfigState;
+      event.returnValue = true;
+    }
+  );
+
+  ipcMain.on(
+    AppEvent.SET_FAVOUR_STATE,
+    (event: any, favourState: FavourState) => {
+      favour = favourState;
+      event.returnValue = true;
     }
   );
 });

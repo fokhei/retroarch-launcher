@@ -33,6 +33,12 @@
         
       },
 
+      {
+        name: "TIC-80",
+        execPath: "D:\\emu\\tic80\\tic80.exe",
+        params: ["%romPath%"]
+      },
+
   ],
 
 
@@ -670,7 +676,10 @@
         name: "TIC-80",
         thumbnailDir: "TIC-80",
         shortName: "tic80",
-        romsPath: "D:\\roms\\TIC-80\\games"
+        romsPath: "D:\\roms\\TIC-80\\games",
+        players: [
+          {name:"TIC-80"}
+        ]
       },
 
 

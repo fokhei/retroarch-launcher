@@ -1,6 +1,6 @@
 {
 
-  gamelistPath: "D:\\retrobarrel\\gamelist",
+  appDataDir: "D:\\retrobarrel",
   thumbnailPath: "D:\\thumbnails",
 
   externalApps: [

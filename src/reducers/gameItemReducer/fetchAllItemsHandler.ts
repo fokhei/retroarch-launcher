@@ -15,15 +15,23 @@ export const fetchAllItemsHandler = (
   state: GameItemState | any = createGameItemState(),
   action: AnyAction
 ): GameItemState => {
-
- 
-
   let items: Array<ComputedGameItem> = [];
   let itemsMap = {};
   let subCategories = {};
 
   const { appConfig } = action;
-  const { gamelistPath } = appConfig;
+  const { appDataDir } = appConfig;
+
+  if (!fs.existsSync(appDataDir)) {
+    fs.mkdirSync(appDataDir);
+  }
+
+
+  const gamelistPath = path.resolve(appDataDir, "gamelist");
+  if (!fs.existsSync(gamelistPath)) {
+    fs.mkdirSync(gamelistPath);
+  }
+
   const files = fs.readdirSync(gamelistPath);
   files.map((file: string) => {
     const ext = path.extname(file);
@@ -43,11 +51,9 @@ export const fetchAllItemsHandler = (
         items.push(computedItem);
         itemsMap[computedItem.id.toString()] = computedItem;
 
-
-        
-        if (item.subCategoryName!="") {
-          if (subCategories.hasOwnProperty(categoryName)){
-            const subCat= subCategories[categoryName];
+        if (item.subCategoryName != "") {
+          if (subCategories.hasOwnProperty(categoryName)) {
+            const subCat = subCategories[categoryName];
             if (!subCat.includes(item.subCategoryName)) {
               subCat.push(item.subCategoryName);
             }
@@ -59,13 +65,11 @@ export const fetchAllItemsHandler = (
     }
   });
 
-  Object.keys(subCategories).map(key=>{
-    const subCat= subCategories[key]; 
+  Object.keys(subCategories).map((key) => {
+    const subCat = subCategories[key];
     subCategories[key] = lazy(subCat).sort().toArray();
-  })
-  
-  
-  
+  });
+
   return update(state, {
     _id: { $set: _id },
     items: { $set: items },

@@ -234,9 +234,6 @@
 
 
 
-
-     
-
       {
         name: "Nintendo - Nintendo 3DS",
         thumbnailDir: "Nintendo - Nintendo 3DS",
@@ -346,10 +343,10 @@
 
 
        {
-        name: "OpenDingux",
-        thumbnailDir: "OpenDingux",
+        name: "OpenDingux - Games",
+        thumbnailDir: "OpenDingux - Games",
         shortName: "openDingux",
-        romsPath: "D:\\downloads\\rg350\\games"
+        romsPath: "D:\\roms\\OpenDingux - Games"
       },
 
 
@@ -663,6 +660,18 @@
 
 
 
+      {
+        name: "TIC-80",
+        thumbnailDir: "TIC-80",
+        shortName: "tic80",
+        romsPath: "D:\\roms\\TIC-80\\games",
+        players: [
+          {
+            type: "RetroArch",
+            retroArchCore: "opera_libretro"
+          }
+        ]
+      },
 
 
       {

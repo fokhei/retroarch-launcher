@@ -17,6 +17,7 @@ import ResultGrid from "./ResultGrid";
 import ThumbnailDownloader from "./ThumbnailDownloader";
 import { GameNameTriggerProps } from "../contextMenus/GameNameContextMenu";
 import { setPlayerPicker } from "../actions/setPlayerPicker";
+import { clipboard } from 'electron';
 
 const _ResultView = (props: ResultViewProps) => {
   const { className, dispatch, explorer, gameItem } = props;
@@ -54,6 +55,10 @@ const _ResultView = (props: ResultViewProps) => {
     dispatch(setPlayerPicker(true));
   };
 
+  const onGameNameClick = () => {
+    clipboard.writeText(item.gameName, "selection");
+  }
+
   const renderGameName = () => {
     if (item) {
       const collect = (): GameNameTriggerProps => {
@@ -63,7 +68,7 @@ const _ResultView = (props: ResultViewProps) => {
       };
       return (
         <ContextMenuTrigger id={ContextMenuId.GAME_NAME} collect={collect}>
-          <div className="gameName">{item.gameName}</div>
+          <div className="gameName" onClick={onGameNameClick}>{item.gameName}</div>
         </ContextMenuTrigger>
       );
     }

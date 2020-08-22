@@ -37,7 +37,7 @@ export const setThumbnail = (
       });
 
       return inStr.pipe(outStr);
-    } else if (ext == ".jpg" || ext == ".jpeg" || ext == ".bmp") {
+    } else if (ext == ".jpg" || ext == ".jpeg" || ext == ".bmp" || ext == ".gif") {
       ipcRenderer.removeAllListeners(AppEvent.WRITE_JIMP_IMAGE_SUCCESS);
       ipcRenderer.removeAllListeners(AppEvent.WRITE_JIMP_IMAGE_ERROR);
 

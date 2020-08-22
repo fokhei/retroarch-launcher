@@ -25,7 +25,7 @@ export const searchHandler = (
       seq = seq.filter((item) => item.subCategoryName == subCategoryName);
     }
   }
-  if (keyword.trim() != "") {
+  if (keyword && keyword.trim() != "") {
     seq = seq.filter((item) =>
       item.gameName.toLowerCase().includes(keyword.toLowerCase().trim())
     );

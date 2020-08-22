@@ -64,7 +64,11 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
 
   const onKeywordChange = (evt: any) => {
     const keyword = evt.currentTarget.value;
-    _keywordHandler(keyword);
+    const filter: ItemFilter = {
+      ...itemFilter,
+      keyword,
+    };
+    _keywordHandler(filter);
   };
 
   const renderRow = (props: ListRowProps) => {

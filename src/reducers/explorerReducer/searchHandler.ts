@@ -4,7 +4,7 @@ import { ExplorerState, createExplorerState } from "../../states/explorerState";
 
 export const searchHandler = (
   state: ExplorerState | any = createExplorerState(),
-  action: AnyAction
+  _action: AnyAction
 ): ExplorerState => {
   return update(state, {
     selectedItemId: { $set: 0 },

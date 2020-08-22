@@ -80,8 +80,9 @@
           },
           {
             name: "RetroArch",
-          retroArchCore: "dosbox_svn_libretro"
-        }]
+            retroArchCore: "D:\\emu\\RetroArch\\cores\\dosbox_svn_libretro.dll"
+          }
+        ]
       },
 
 
@@ -97,7 +98,7 @@
           name: "D-Fend Reloaded"
         },{
           name: "RetroArch",
-          retroArchCore: "dosbox_svn_libretro"
+          retroArchCore: "D:\\emu\\RetroArch\\cores\\dosbox_svn_libretro.dll"
         }]
       },
 
@@ -133,7 +134,7 @@
         },
         players: [{
           name: "RetroArch",
-          retroArchCore: "mame_libretro"
+          retroArchCore: "D:\\emu\\RetroArch\\cores\\mame_libretro.dll"
         }]
       },
 
@@ -145,7 +146,7 @@
         romsPath: "F:\\roms\\NEC - PC Engine CD - TurboGrafx-CD\\redump",
         players: [{
           name: "RetroArch",
-            retroArchCore: "mednafen_pce_fast_libretro"
+            retroArchCore: "D:\\emu\\RetroArch\\cores\\mednafen_pce_fast_libretro.dll"
         }],
       },
 
@@ -157,7 +158,7 @@
         romsPath: "F:\\roms\\Nintendo - Family Computer Disk System",
         players: [{
           name: "RetroArch",
-            retroArchCore: "nestopia_libretro"
+            retroArchCore: "D:\\emu\\RetroArch\\cores\\nestopia_libretro.dll"
         }],
       },
 
@@ -174,7 +175,7 @@
           },
           players: [{
             name: "RetroArch",
-              retroArchCore: "gambatte_libretro"
+              retroArchCore: "D:\\emu\\RetroArch\\cores\\gambatte_libretro.dll"
           }],
       },
 
@@ -186,7 +187,7 @@
         romsPath: "F:\\roms\\Nintendo - Game Boy Advance",
         players: [{
           name: "RetroArch",
-            retroArchCore: "mednafen_gba_libretro"
+            retroArchCore: "D:\\emu\\RetroArch\\cores\\mednafen_gba_libretro.dll"
         }],
       },
 
@@ -202,7 +203,7 @@
           },
           players: [{
             name: "RetroArch",
-              retroArchCore: "gambatte_libretro"
+              retroArchCore: "D:\\emu\\RetroArch\\cores\\gambatte_libretro.dll"
           }]
       },
 
@@ -214,7 +215,7 @@
         romsPath: "F:\\roms\\Nintendo - GameCube\\redump",
         players: [{
           name: "RetroArch",
-            retroArchCore: "dolphin_libretro"
+            retroArchCore: "D:\\emu\\RetroArch\\cores\\dolphin_libretro.dll"
         }],
         nameFilter: {
           removeLangBracket: true,
@@ -233,7 +234,7 @@
         romsPath: "F:\\roms\\Nintendo - GameCube\\chinese",
         players: [{
           name: "RetroArch",
-            retroArchCore: "dolphin_libretro"
+            retroArchCore: "D:\\emu\\RetroArch\\cores\\dolphin_libretro.dll"
         }],
         nameFilter: {
           removeLangBracket: true,
@@ -276,7 +277,7 @@
         romsPath: "F:\\roms\\Nintendo - Nintendo Entertainment System",
         players: [{
           name: "RetroArch",
-            retroArchCore: "nestopia_libretro"
+            retroArchCore: "D:\\emu\\RetroArch\\cores\\nestopia_libretro.dll"
         }],
       },
 
@@ -300,7 +301,7 @@
         romsPath: "F:\\roms\\Nintendo - Wii",
         players: [{
           name: "RetroArch",
-            retroArchCore: "dolphin_libretro"
+            retroArchCore: "D:\\emu\\RetroArch\\cores\\dolphin_libretro.dll"
         }],
         nameFilter: {
           removeLangBracket: true
@@ -372,7 +373,7 @@
         romsPath: "D:\\roms\\Sega - Dreamcast\\redump",
         players: [{
           name: "RetroArch",
-            retroArchCore: "flycast_libretro"
+            retroArchCore: "D:\\emu\\RetroArch\\cores\\flycast_libretro.dll"
         }]
       },
 
@@ -384,7 +385,7 @@
         romsPath: "D:\\roms\\Sega - Dreamcast\\chinese",
         players: [{
           name: "RetroArch",
-            retroArchCore: "flycast_libretro"
+            retroArchCore: "D:\\emu\\RetroArch\\cores\\flycast_libretro.dll"
         }]
       },
 
@@ -397,7 +398,7 @@
         romsPath: "F:\\roms\\Sega - Mega Drive - Genesis",
         players: [{
           name: "RetroArch",
-            retroArchCore: "genesis_plus_gx_libretro"
+            retroArchCore: "genesis_plus_gx_libretro.dll"
         }],
         romFilter: {
           excludeBios: true,
@@ -415,7 +416,7 @@
         romsPath: "F:\\roms\\Sega - Mega-CD - Sega CD\\games",
         players: [{
           name: "RetroArch",
-            retroArchCore: "genesis_plus_gx_libretro"
+            retroArchCore: "D:\\emu\\RetroArch\\cores\\genesis_plus_gx_libretro.dll"
         }]
       },
 
@@ -467,7 +468,7 @@
         players: [
           {
             name: "RetroArch",
-            retroArchCore: "flycast_libretro"
+            retroArchCore: "D:\\emu\\RetroArch\\cores\\flycast_libretro.dll"
           }
         ]
       },
@@ -490,7 +491,7 @@
         players: [
           {
             name: "RetroArch",
-            retroArchCore: "yabasanshiro_libretro"
+            retroArchCore: "D:\\emu\\RetroArch\\cores\\yabasanshiro_libretro.dll"
           }
         ]
       },
@@ -505,7 +506,7 @@
         players: [
           {
             name: "RetroArch",
-            retroArchCore: "yabasanshiro_libretro"
+            retroArchCore: "D:\\emu\\RetroArch\\cores\\yabasanshiro_libretro.dll"
           }
         ]
       },
@@ -527,7 +528,7 @@
         players: [
           {
             name: "RetroArch",
-            retroArchCore: "pcsx_rearmed_libretro"
+            retroArchCore: "D:\\emu\\RetroArch\\cores\\pcsx_rearmed_libretro.dll"
           }
         ]
       },
@@ -548,7 +549,7 @@
         players: [
           {
             name: "RetroArch",
-            retroArchCore: "pcsx_rearmed_libretro"
+            retroArchCore: "D:\\emu\\RetroArch\\cores\\pcsx_rearmed_libretro.dll"
           }
         ]
       },
@@ -569,7 +570,7 @@
         players: [
           {
             name: "RetroArch",
-            retroArchCore: "play_libretro"
+            retroArchCore: "D:\\emu\\RetroArch\\cores\\play_libretro.dll"
           }
         ]
       },
@@ -589,7 +590,7 @@
         players: [
           {
             name: "RetroArch",
-            retroArchCore: "play_libretro"
+            retroArchCore: "D:\\emu\\RetroArch\\cores\\play_libretro.dll"
           }
         ]
       },
@@ -612,7 +613,7 @@
         players: [
           {
             name: "RetroArch",
-            retroArchCore: "ppsspp_libretro"
+            retroArchCore: "D:\\emu\\RetroArch\\cores\\ppsspp_libretro.dll"
           }
         ]
       },
@@ -633,7 +634,7 @@
         players: [
           {
             name: "RetroArch",
-            retroArchCore: "ppsspp_libretro"
+            retroArchCore: "D:\\emu\\RetroArch\\cores\\ppsspp_libretro.dll"
           }
         ]
       },
@@ -654,7 +655,7 @@
         players: [
           {
             name: "RetroArch",
-            retroArchCore: "ppsspp_libretro"
+            retroArchCore: "D:\\emu\\RetroArch\\cores\\ppsspp_libretro.dll"
           }
         ]
       },
@@ -691,7 +692,7 @@
         players: [
           {
             name: "RetroArch",
-            retroArchCore: "opera_libretro"
+            retroArchCore: "D:\\emu\\RetroArch\\cores\\opera_libretro.dll"
           }
         ]
       },

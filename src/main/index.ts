@@ -2,6 +2,8 @@ import { app, BrowserWindow, ipcMain } from "electron";
 import createMainWindow from "../libs/createMainWindow";
 import { AppEvent } from "../interfaces/AppEvent";
 import Jimp from "Jimp";
+import childProcess from "child_process";
+import psTree from "ps-tree";
 
 let mainWindow: BrowserWindow;
 let devTools: BrowserWindow;
@@ -13,6 +15,12 @@ app.whenReady().then(() => {
   app.on("window-all-closed", () => {
     if (process.platform !== "darwin") {
       mainWindow = null;
+
+      const child = childProcess.exec("node -e 'while (true);'", () => {});
+      psTree(child.pid, (_err: any, children: Array<any>) => {
+        childProcess.spawn("kill", ["-9"].concat(children.map((p) => p.PID)));
+      });
+
       app.quit();
     }
   });

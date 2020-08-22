@@ -35,6 +35,7 @@
     "immutability-helper": "^3.0.2",
     "jimp": "^0.9.3",
     "lazy.js": "^0.5.1",
+    "ps-tree": "^1.2.0",
     "react": "^16.12.0",
     "react-contextmenu": "^2.13.0",
     "react-dom": "^16.12.0",

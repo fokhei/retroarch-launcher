@@ -50,7 +50,12 @@ const _Explorer = (props: ExplorerProps) => {
 
   const renderSearchResult = () => {
     return (
-      <ResultView dispatch={dispatch} explorer={explorer} gameItem={gameItem} />
+      <ResultView
+        dispatch={dispatch}
+        explorer={explorer}
+        gameItem={gameItem}
+        appConfig={appConfig}
+      />
     );
   };
 

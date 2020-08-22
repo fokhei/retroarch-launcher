@@ -4,7 +4,7 @@ import { AppConfigState } from "../states/appConfigState";
 
 export const getExternalApp = (
   appConfig: AppConfigState,
-  type: string
+  name: string
 ): ExternalApp => {
-  return lazy(appConfig.externalApps).findWhere({ type: type });
+  return lazy(appConfig.externalApps).findWhere({ name: name });
 };

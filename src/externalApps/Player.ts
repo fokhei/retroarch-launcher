@@ -1,6 +1,4 @@
-import { ExternalAppType } from "./ExternalAppType";
-
 export interface Player {
-  type: ExternalAppType;
+  name: string;
   retroArchCore?: string;
 }

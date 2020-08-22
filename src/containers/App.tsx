@@ -21,6 +21,8 @@ import ThumbnailContextMenu from "../contextMenus/ThumbnailContextMenu";
 import ThumbnailDropZoneContextMenu from "../contextMenus/ThumbnailDropZoneContextMenu";
 import PlayerPicker from "../components/PlayerPicker";
 import { setPlayerPicker } from "../actions/setPlayerPicker";
+import {NotificationContainer} from 'react-notifications';
+
 
 enum WaitingFor {
   NONE,
@@ -134,6 +136,7 @@ const _App = (props: AppProps) => {
       {renderScanner()}
       {renderPlayerPicker()}
       {renderContextMenus()}
+      <NotificationContainer/>
     </div>
   );
 };

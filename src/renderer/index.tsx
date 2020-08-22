@@ -7,6 +7,7 @@ import rootReducer from "../reducers";
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import "react-virtualized/styles.css";
+import 'react-notifications/lib/notifications.css';
 import ErrorBoundary from "../components/ErrorBoundary";
 import thunkMiddleware from "redux-thunk";
 

@@ -1,7 +1,5 @@
-import { ExternalAppType } from "./ExternalAppType";
-
 export interface ExternalApp {
-  type: ExternalAppType;
+  name: string;
   execPath: string;
-  coreDir?: string;
+  params?: Array<string>;
 }

@@ -7,7 +7,6 @@ import { AppConfigState } from "../states/appConfigState";
 import { getPlayers } from "../libs/getPlayers";
 import { Player } from "../externalApps/Player";
 import { play } from "../externalApps/play";
-import { getPlayerInfo } from "../libs/getPlayerInfo";
 
 const _PlayerPicker = (props: PlayerPickerProps) => {
   const { className, hideHandler, appConfig, explorer, gameItem } = props;
@@ -27,14 +26,13 @@ const _PlayerPicker = (props: PlayerPickerProps) => {
   };
 
   const renderPlayer = (player: Player, index: number) => {
-    const info = getPlayerInfo(player);
     const onClick = () => {
       onPlay(player);
       hideHandler();
     };
     return (
       <a className="player" key={index} onClick={onClick}>
-        {info.name}
+        {player.name}
       </a>
     );
   };
@@ -78,7 +76,7 @@ const PlayerPicker = styled(_PlayerPicker)`
       color: #17bbaf;
       display: block;
       border-bottom: 1px solid rgba(100, 100, 100, 0.1);
-      padding:5px 0;
+      padding: 5px 0;
       font-size: 16px;
       &:hover {
         color: orange;

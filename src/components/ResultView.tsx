@@ -17,10 +17,13 @@ import ResultGrid from "./ResultGrid";
 import ThumbnailDownloader from "./ThumbnailDownloader";
 import { GameNameTriggerProps } from "../contextMenus/GameNameContextMenu";
 import { setPlayerPicker } from "../actions/setPlayerPicker";
-import { clipboard } from 'electron';
+import { clipboard } from "electron";
+import { getCategory } from "../libs/getCategory";
+import { AppConfigState } from "../states/appConfigState";
+import { play } from '../externalApps/play';
 
 const _ResultView = (props: ResultViewProps) => {
-  const { className, dispatch, explorer, gameItem } = props;
+  const { className, dispatch, explorer, gameItem, appConfig } = props;
 
   const {
     categoryName,
@@ -52,12 +55,19 @@ const _ResultView = (props: ResultViewProps) => {
   };
 
   const onPlay = () => {
+    const category = getCategory(appConfig, categoryName);
+    if (category.hasOwnProperty("players")) {
+      if (category.players.length == 1) {
+        play(appConfig, item, category.players[0]);
+        return;
+      }
+    }
     dispatch(setPlayerPicker(true));
   };
 
   const onGameNameClick = () => {
     clipboard.writeText(item.gameName, "selection");
-  }
+  };
 
   const renderGameName = () => {
     if (item) {
@@ -68,7 +78,9 @@ const _ResultView = (props: ResultViewProps) => {
       };
       return (
         <ContextMenuTrigger id={ContextMenuId.GAME_NAME} collect={collect}>
-          <div className="gameName" onClick={onGameNameClick}>{item.gameName}</div>
+          <div className="gameName" onClick={onGameNameClick}>
+            {item.gameName}
+          </div>
         </ContextMenuTrigger>
       );
     }
@@ -260,6 +272,7 @@ interface ResultViewProps {
   dispatch: Dispatch<any>;
   explorer: ExplorerState;
   gameItem: GameItemState;
+  appConfig: AppConfigState;
 }
 
 export default ResultView;

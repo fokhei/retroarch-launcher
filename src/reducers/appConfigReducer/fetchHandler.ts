@@ -21,7 +21,7 @@ export const fetchHandler = (
     eval("config=" + text);
     fetch.success = true;
   } catch (error) {
-    fetch.error = error;
+    fetch.error = "Error on parse appConfig";
   }
 
   return Object.assign(state, config, { fetch });

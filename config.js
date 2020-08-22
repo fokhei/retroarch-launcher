@@ -5,26 +5,32 @@
 
   externalApps: [
       {
-          type: "RetroArch",
-          execPath: "D:\\emu\\RetroArch\\retroarch.exe",
-          coreDir: "D:\\emu\\RetroArch\\cores"
+        name: "RetroArch",
+        execPath: "D:\\emu\\RetroArch\\retroarch.exe",
+        params: ["-L", "%retroArchCore%", "%romPath%"]
       },
       {
-          type: "TeknoParrot",
-          execPath: "D:\\emu\\TeknoParrot\\TeknoParrotUi.exe",
+        name: "TeknoParrot",
+        execPath: "D:\\emu\\TeknoParrot\\TeknoParrotUi.exe",
+        
       },
       {
-        type: "D-Fend Reloaded",
+        name: "D-Fend Reloaded",
         execPath: "D:\\emu\\D-Fend Reloaded\\DFend.exe",
+        
       },
       {
-        type: "M2 Emulator",
+        name: "M2 Emulator",
         execPath: "D:\\emu\\m2emulator\\emulator_multicpu.exe",
+        params: ["%romBasenameNoExt%"],
+       
       },
 
       {
-        type: "SuperModel",
+        name: "SuperModel",
         execPath: "D:\\emu\\Supermodel\\Supermodel.exe",
+        params: ["%romBasename%"],
+        
       },
 
   ],
@@ -48,7 +54,7 @@
           romsPath: "D:\\roms\\Arcade PC\\TeknoParrot",
           scanType: "folder",
           players: [{
-              type: "TeknoParrot"
+              name: "TeknoParrot"
           }]
       },
 
@@ -64,10 +70,10 @@
         },
         players: [
           {
-            type: "D-Fend Reloaded"
+            name: "D-Fend Reloaded"
           },
           {
-          type: "RetroArch",
+            name: "RetroArch",
           retroArchCore: "dosbox_svn_libretro"
         }]
       },
@@ -82,9 +88,9 @@
           removeAllBrackets: true
         },
         players: [ {
-          type: "D-Fend Reloaded"
+          name: "D-Fend Reloaded"
         },{
-          type: "RetroArch",
+          name: "RetroArch",
           retroArchCore: "dosbox_svn_libretro"
         }]
       },
@@ -102,8 +108,8 @@
           includeStatus: ["good", "imperfect"],
         },
         players: [{
-          type: "RetroArch",
-          retroArchCore: "fbneo_libretro"
+          name: "RetroArch",
+          retroArchCore: "D:\\emu\\RetroArch\\cores\\fbneo_libretro.dll"
         }]
       },
 
@@ -120,7 +126,7 @@
           includeStatus: ["good", "imperfect"],
         },
         players: [{
-          type: "RetroArch",
+          name: "RetroArch",
           retroArchCore: "mame_libretro"
         }]
       },
@@ -132,7 +138,7 @@
         shortName: "pce",
         romsPath: "F:\\roms\\NEC - PC Engine CD - TurboGrafx-CD\\redump",
         players: [{
-            type: "RetroArch",
+          name: "RetroArch",
             retroArchCore: "mednafen_pce_fast_libretro"
         }],
       },
@@ -144,7 +150,7 @@
         shortName: "fds",
         romsPath: "F:\\roms\\Nintendo - Family Computer Disk System",
         players: [{
-            type: "RetroArch",
+          name: "RetroArch",
             retroArchCore: "nestopia_libretro"
         }],
       },
@@ -161,7 +167,7 @@
               excludeBios: true
           },
           players: [{
-              type: "RetroArch",
+            name: "RetroArch",
               retroArchCore: "gambatte_libretro"
           }],
       },
@@ -173,7 +179,7 @@
         shortName: "gba",
         romsPath: "F:\\roms\\Nintendo - Game Boy Advance",
         players: [{
-            type: "RetroArch",
+          name: "RetroArch",
             retroArchCore: "mednafen_gba_libretro"
         }],
       },
@@ -189,7 +195,7 @@
               excludeBios: true
           },
           players: [{
-              type: "RetroArch",
+            name: "RetroArch",
               retroArchCore: "gambatte_libretro"
           }]
       },
@@ -201,7 +207,7 @@
         shortName: "gba",
         romsPath: "F:\\roms\\Nintendo - GameCube\\redump",
         players: [{
-            type: "RetroArch",
+          name: "RetroArch",
             retroArchCore: "dolphin_libretro"
         }],
         nameFilter: {
@@ -220,7 +226,7 @@
         shortName: "gba",
         romsPath: "F:\\roms\\Nintendo - GameCube\\chinese",
         players: [{
-            type: "RetroArch",
+          name: "RetroArch",
             retroArchCore: "dolphin_libretro"
         }],
         nameFilter: {
@@ -263,7 +269,7 @@
         shortName: "nes",
         romsPath: "F:\\roms\\Nintendo - Nintendo Entertainment System",
         players: [{
-            type: "RetroArch",
+          name: "RetroArch",
             retroArchCore: "nestopia_libretro"
         }],
       },
@@ -287,7 +293,7 @@
         shortName: "wii",
         romsPath: "F:\\roms\\Nintendo - Wii",
         players: [{
-            type: "RetroArch",
+          name: "RetroArch",
             retroArchCore: "dolphin_libretro"
         }],
         nameFilter: {
@@ -359,7 +365,7 @@
         shortName: "dc",
         romsPath: "D:\\roms\\Sega - Dreamcast\\redump",
         players: [{
-            type: "RetroArch",
+          name: "RetroArch",
             retroArchCore: "flycast_libretro"
         }]
       },
@@ -371,7 +377,7 @@
         shortName: "dc",
         romsPath: "D:\\roms\\Sega - Dreamcast\\chinese",
         players: [{
-            type: "RetroArch",
+          name: "RetroArch",
             retroArchCore: "flycast_libretro"
         }]
       },
@@ -384,7 +390,7 @@
         shortName: "md",
         romsPath: "F:\\roms\\Sega - Mega Drive - Genesis",
         players: [{
-            type: "RetroArch",
+          name: "RetroArch",
             retroArchCore: "genesis_plus_gx_libretro"
         }],
         romFilter: {
@@ -402,7 +408,7 @@
         shortName: "sega-cd",
         romsPath: "F:\\roms\\Sega - Mega-CD - Sega CD\\games",
         players: [{
-            type: "RetroArch",
+          name: "RetroArch",
             retroArchCore: "genesis_plus_gx_libretro"
         }]
       },
@@ -417,7 +423,7 @@
         datPath: "D:\\dats\\SEGA Model 2 Emulator v0.9-mod.dat",
         datParser: "m2emulator",
         players: [{
-          type: "M2 Emulator"
+          name: "M2 Emulator"
         }]
       },
 
@@ -435,7 +441,7 @@
         },
         players: [
           {
-            type: "SuperModel"
+            name: "SuperModel"
           }
         ]
       },
@@ -454,7 +460,7 @@
         },
         players: [
           {
-            type: "RetroArch",
+            name: "RetroArch",
             retroArchCore: "flycast_libretro"
           }
         ]
@@ -477,7 +483,7 @@
         },
         players: [
           {
-            type: "RetroArch",
+            name: "RetroArch",
             retroArchCore: "yabasanshiro_libretro"
           }
         ]
@@ -492,7 +498,7 @@
         romsPath: "F:\\roms\\Sega - Saturn\\chinese",
         players: [
           {
-            type: "RetroArch",
+            name: "RetroArch",
             retroArchCore: "yabasanshiro_libretro"
           }
         ]
@@ -514,7 +520,7 @@
         },
         players: [
           {
-            type: "RetroArch",
+            name: "RetroArch",
             retroArchCore: "pcsx_rearmed_libretro"
           }
         ]
@@ -535,7 +541,7 @@
         },
         players: [
           {
-            type: "RetroArch",
+            name: "RetroArch",
             retroArchCore: "pcsx_rearmed_libretro"
           }
         ]
@@ -556,7 +562,7 @@
         },
         players: [
           {
-            type: "RetroArch",
+            name: "RetroArch",
             retroArchCore: "play_libretro"
           }
         ]
@@ -576,7 +582,7 @@
         },
         players: [
           {
-            type: "RetroArch",
+            name: "RetroArch",
             retroArchCore: "play_libretro"
           }
         ]
@@ -599,7 +605,7 @@
         },
         players: [
           {
-            type: "RetroArch",
+            name: "RetroArch",
             retroArchCore: "ppsspp_libretro"
           }
         ]
@@ -620,7 +626,7 @@
         },
         players: [
           {
-            type: "RetroArch",
+            name: "RetroArch",
             retroArchCore: "ppsspp_libretro"
           }
         ]
@@ -641,7 +647,7 @@
         },
         players: [
           {
-            type: "RetroArch",
+            name: "RetroArch",
             retroArchCore: "ppsspp_libretro"
           }
         ]
@@ -664,13 +670,7 @@
         name: "TIC-80",
         thumbnailDir: "TIC-80",
         shortName: "tic80",
-        romsPath: "D:\\roms\\TIC-80\\games",
-        players: [
-          {
-            type: "RetroArch",
-            retroArchCore: "opera_libretro"
-          }
-        ]
+        romsPath: "D:\\roms\\TIC-80\\games"
       },
 
 
@@ -681,7 +681,7 @@
         romsPath: "F:\\roms\\The 3DO Company - 3DO\\redump",
         players: [
           {
-            type: "RetroArch",
+            name: "RetroArch",
             retroArchCore: "opera_libretro"
           }
         ]

@@ -18,7 +18,6 @@ const GameItemContextMenu = (props: GameItemContextMenuProps) => {
   const enabled = Boolean(trigger && trigger.item);
 
   const onPlay = () => {
-   
     dispatch(setPlayerPicker(true));
   };
   const onOpen = () => {

@@ -7,6 +7,8 @@ import { AppConfigState } from "../states/appConfigState";
 import { getExternalApp } from "../libs/getExternalApp";
 import { NotificationManager } from "react-notifications";
 
+const { dialog } = require("electron").remote;
+
 export const play = (
   appConfig: AppConfigState,
   item: ComputedGameItem,
@@ -21,7 +23,27 @@ export const play = (
     }
 
     const app = getExternalApp(appConfig, player.name);
+    let execPath = app.execPath;
+
+    if (app.hasOwnProperty("pickerFilters")) {
+      const dialogOptions: any = {
+        title: "Select executable",
+        properties: ["openFile"],
+        defaultPath: item.romPath,
+        filters: [{ name: "Executable", extensions: app.pickerFilters }],
+      };
+      const results = dialog.showOpenDialog(null, dialogOptions);
+      if (!results) {
+        return;
+      }
+
+      if (execPath == "%pickPath%") {
+        execPath = results[0];
+      }
+    }
+
     let args: Array<string> = [];
+
     if (app.hasOwnProperty("params")) {
       app.params.map((param) => {
         if (param == "%retroArchCore%") {
@@ -41,69 +63,13 @@ export const play = (
       });
     }
 
-    const basename = path.basename(app.execPath);
-    const cwd = app.execPath.replace(basename, "");
+    const basename = path.basename(execPath);
+    const cwd = execPath.replace(basename, "");
     const options: any = { cwd };
-    execFile(app.execPath, args, options, (err: any) => {
+    execFile(execPath, args, options, (err: any) => {
       if (err) {
         NotificationManager.error(err.toString());
       }
     });
-
-    /*
-    if (app) {
-      switch (app.name) {
-        case "RetroArch": {
-          const corePath = path.resolve(
-            app.retroArchCoreDir,
-            player.retroArchCore + ".dll"
-          );
-          const params = ["-L", corePath, item.romPath];
-          execFile(app.execPath, params, execErrorHandler);
-          break;
-        }
-
-        case "TeknoParrot": {
-          const params = [];
-          const basename = path.basename(app.execPath);
-          const cwd = app.execPath.replace(basename, "");
-          const options = { cwd };
-          execFile(app.execPath, params, options, execErrorHandler);
-          break;
-        }
-
-        case "D-Fend Reloaded":
-          execFile(app.execPath, execErrorHandler);
-          break;
-
-        case "M2 Emulator": {
-          const romBasename = path.basename(item.romPath);
-          const ext = path.extname(romBasename);
-          const romName = romBasename.replace(ext, "");
-          const params = [romName];
-          const appBasename = path.basename(app.execPath);
-          const cwd = app.execPath.replace(appBasename, "");
-          const options = { cwd };
-          execFile(app.execPath, params, options, execErrorHandler);
-          break;
-        }
-
-        case "SuperModel": {
-          const romBasename = path.basename(item.romPath);
-          const params = [romBasename];
-          const appBasename = path.basename(app.execPath);
-          const cwd = app.execPath.replace(appBasename, "");
-          const options = { cwd };
-          execFile(app.execPath, params, options, execErrorHandler);
-          break;
-        }
-
-        default:
-          NotificationManager.error(app.name, "Unhandled externalApp type!");
-          break;
-      }
-      
-    }
-    */
   }
 };

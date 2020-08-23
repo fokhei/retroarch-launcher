@@ -55,7 +55,8 @@ const _ResultView = (props: ResultViewProps) => {
   };
 
   const onPlay = () => {
-    const category = getCategory(appConfig, categoryName);
+    
+    const category = getCategory(appConfig, item.categoryName);
     if (category.hasOwnProperty("players")) {
       if (category.players.length == 1) {
         play(appConfig, item, category.players[0]);

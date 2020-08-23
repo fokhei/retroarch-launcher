@@ -39,6 +39,13 @@
         params: ["%romPath%"]
       },
 
+
+      {
+        name: "Standalone",
+        execPath: "%pickPath%",
+        pickerFilters: ["exe", "bat"]
+      }
+
   ],
 
 
@@ -50,7 +57,10 @@
           thumbnailDir: "Arcade PC",
           shortName: "arcade",
           romsPath: "D:\\roms\\Arcade PC\\Standalone",
-          scanType: "folder"
+          scanType: "folder",
+          players: [
+            {name: "Standalone"}
+          ]
       },
 
       {
@@ -63,6 +73,75 @@
               name: "TeknoParrot"
           }]
       },
+
+
+      {
+          name: "Atari - 2600",
+          thumbnailDir: "Atari - 2600",
+          shortName: "atari2600",
+          romsPath: "F:\\roms\\Atari - 2600\\no-intro",
+         
+      },
+
+
+      {
+          name: "Atari - 5200",
+          thumbnailDir: "Atari - 5200",
+          shortName: "atari5200",
+          romsPath: "F:\\roms\\Atari - 5200\\no-intro",
+         
+      },
+
+
+      {
+          name: "Atari - 7800",
+          thumbnailDir: "Atari - 7800",
+          shortName: "atari7800",
+          romsPath: "F:\\roms\\Atari - 7800\\no-intro",
+      },
+
+
+      {
+          name: "Atari - Jaguar",
+          thumbnailDir: "Atari - Jaguar",
+          shortName: "jaguar",
+          romsPath: "F:\\roms\\Atari - Jaguar\\no-intro",
+      },
+
+
+      {
+          name: "Atari - Lynx",
+          thumbnailDir: "Atari - Lynx",
+          shortName: "lynx",
+          romsPath: "F:\\roms\\Atari - Lynx\\no-intro",
+      },
+
+
+       {
+          name: "Atari - ST",
+          thumbnailDir: "Atari - ST",
+          shortName: "atari st",
+          romsPath: "F:\\roms\\Atari - ST\\no-intro",
+      },
+
+
+
+       {
+          name: "Bandai - WonderSwan",
+          thumbnailDir: "Bandai - WonderSwan",
+          shortName: "wonderSwan",
+          romsPath: "F:\\roms\\Bandai - WonderSwan\\no-intro",
+      },
+
+
+
+       {
+          name: "Bandai - WonderSwan Color",
+          thumbnailDir: "Bandai - WonderSwan Color",
+          shortName: "wonderSwan",
+          romsPath: "F:\\roms\\Bandai - WonderSwan Color\\no-intro",
+      },
+
 
 
       {

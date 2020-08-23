@@ -12,7 +12,7 @@
       {
         name: "TeknoParrot",
         execPath: "D:\\emu\\TeknoParrot\\TeknoParrotUi.exe",
-        
+        params: ["--profile=%teknoParrotProfile%"]
       },
      
 

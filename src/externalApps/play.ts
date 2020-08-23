@@ -6,6 +6,7 @@ import { execFile } from "child_process";
 import { AppConfigState } from "../states/appConfigState";
 import { getExternalApp } from "../libs/getExternalApp";
 import { NotificationManager } from "react-notifications";
+import { getTeknoParrotProfile } from "../libs/teknoParrotProfile";
 
 const { dialog } = require("electron").remote;
 
@@ -58,6 +59,9 @@ export const play = (
           param = romBasename.replace(ext, "");
         } else if (param == "%pickPath%") {
           param = pickPath;
+        } else if (param == "--profile=%teknoParrotProfile%") {
+          const profile = getTeknoParrotProfile(item.gameName);
+          param = param.replace("%teknoParrotProfile%", profile);
         }
         args.push(param);
       });

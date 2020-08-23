@@ -1,3 +1,4 @@
+// TODO : make this mapping to dynamic 
 const TeknoParrotProfile = {
     "Too Spicy" : "2Spicy.xml",
     "3D Cosplay Mahjong" : "3DCosplayMahjong.xml",

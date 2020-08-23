@@ -14,11 +14,9 @@
         execPath: "D:\\emu\\TeknoParrot\\TeknoParrotUi.exe",
         
       },
-      {
-        name: "D-Fend Reloaded",
-        execPath: "D:\\emu\\D-Fend Reloaded\\DFend.exe",
-        
-      },
+     
+
+      
       {
         name: "M2 Emulator",
         execPath: "D:\\emu\\m2emulator\\emulator_multicpu.exe",
@@ -44,7 +42,17 @@
         name: "Standalone",
         execPath: "%pickPath%",
         pickerFilters: ["exe", "bat"]
-      }
+      },
+
+
+
+      {
+        name: "DOSBox",
+        execPath: "D:\\emu\\DOSBox-0.72\\dosbox.exe",
+        pickerFilters: ["exe", "bat", "com"],
+        params: ["%pickPath%"]
+        
+      },
 
   ],
 
@@ -153,15 +161,9 @@
           removeAllBrackets: true,
           removeVersion: true
         },
-        players: [
-          {
-            name: "D-Fend Reloaded"
-          },
-          {
-            name: "RetroArch",
-            retroArchCore: "D:\\emu\\RetroArch\\cores\\dosbox_svn_libretro.dll"
-          }
-        ]
+        players: [ {
+          name: "DOSBox"
+        }]
       },
 
 
@@ -174,10 +176,7 @@
           removeAllBrackets: true
         },
         players: [ {
-          name: "D-Fend Reloaded"
-        },{
-          name: "RetroArch",
-          retroArchCore: "D:\\emu\\RetroArch\\cores\\dosbox_svn_libretro.dll"
+          name: "DOSBox"
         }]
       },
 

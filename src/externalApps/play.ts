@@ -24,6 +24,7 @@ export const play = (
 
     const app = getExternalApp(appConfig, player.name);
     let execPath = app.execPath;
+    let pickPath = "";
 
     if (app.hasOwnProperty("pickerFilters")) {
       const dialogOptions: any = {
@@ -36,10 +37,7 @@ export const play = (
       if (!results) {
         return;
       }
-
-      if (execPath == "%pickPath%") {
-        execPath = results[0];
-      }
+      pickPath = results[0];
     }
 
     let args: Array<string> = [];
@@ -58,9 +56,15 @@ export const play = (
           const romBasename = path.basename(item.romPath);
           const ext = path.extname(romBasename);
           param = romBasename.replace(ext, "");
+        } else if (param == "%pickPath%") {
+          param = pickPath;
         }
         args.push(param);
       });
+    }
+
+    if (execPath == "%pickPath%") {
+      execPath = pickPath;
     }
 
     const basename = path.basename(execPath);

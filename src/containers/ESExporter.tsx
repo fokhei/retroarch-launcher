@@ -1,60 +1,57 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { RootState } from "../states";
 import { connect } from "react-redux";
 import { Dispatch } from "redux";
-import { exportToEmulationStation } from "../actions/exportToEmulationStation";
+import {
+  exportToEmulationStation,
+  exportToEmulationStationReset,
+} from "../actions/exportToEmulationStation";
 import { showESExporer } from "../actions/showESExporter";
 import { ThumbnailType } from "../interfaces/ThumbnailType";
+import { AppConfigState } from "../states/appConfigState";
+import { GameItemState } from "../states/gameItemState";
+import { NotificationManager } from "react-notifications";
 
 const { dialog } = require("electron").remote;
 
 const EMPTY_PATH = "...";
 
-let lastRomDist = EMPTY_PATH;
-let lastImgDist = EMPTY_PATH;
+enum WaitingFor {
+  NONE,
+  EXPORT,
+}
 
 const _ESExporter = (props: ESExporterProps) => {
-  const { className, dispatch, appConfig } = props;
-  const [romDist, setRomDist] = useState(lastRomDist);
-  const [imgDist, setImgDist] = useState(lastImgDist);
+  const { className, dispatch, appConfig, gameItem } = props;
+  const [romDist, setRomDist] = useState(EMPTY_PATH);
+  const [thumbnailType, setThumbnailType] = useState<ThumbnailType>(
+    ThumbnailType.SNAP
+  );
+  const [waiting, setWaiting] = useState<WaitingFor>(WaitingFor.NONE);
 
   const selectRomDist = () => {
     const options: any = {
       title: "location to save the roms: ",
       properties: ["openDirectory"],
     };
-    if (romDist != EMPTY_PATH) {
-      options.defaultPath = romDist;
-    }
-
     const results = dialog.showOpenDialog(null, options);
-    lastRomDist = EMPTY_PATH;
     if (results && results.length) {
-      lastRomDist = results[0];
+      setRomDist(results[0]);
+    } else {
+      setRomDist(EMPTY_PATH);
     }
-    setRomDist(lastRomDist);
   };
 
-  const selectImgDist = () => {
-    const options: any = {
-      title: "location to save the images: ",
-      properties: ["openDirectory"],
-    };
-    if (imgDist != EMPTY_PATH) {
-      options.defaultPath = imgDist;
-    }
-    const results = dialog.showOpenDialog(null, options);
-    lastImgDist = EMPTY_PATH;
-    if (results && results.length) {
-      lastImgDist = results[0];
-    }
-    setImgDist(lastImgDist);
+  const onThumbnailTypeChange = (evt: any) => {
+    const type = evt.target.value as ThumbnailType;
+    setThumbnailType(type);
   };
 
   const onExport = () => {
+    setWaiting(WaitingFor.EXPORT);
     dispatch(
-      exportToEmulationStation(romDist, imgDist, ThumbnailType.SNAP, appConfig)
+      exportToEmulationStation(romDist, thumbnailType, appConfig, gameItem)
     );
   };
 
@@ -62,32 +59,66 @@ const _ESExporter = (props: ESExporterProps) => {
     dispatch(showESExporer(false));
   };
 
-  const renderExportButton = () => {
-    const exportEnable = romDist != EMPTY_PATH && imgDist != EMPTY_PATH;
+  const renderActions = () => {
+    if (waiting != WaitingFor.NONE) {
+      return <div className="busy">Please wait ...</div>;
+    }
+    const exportEnable = romDist != EMPTY_PATH;
     return (
-      <button disabled={!exportEnable} onClick={onExport}>
-        Export
-      </button>
+      <div className="actions">
+        <button disabled={!exportEnable} onClick={onExport}>
+          Export
+        </button>
+        <button onClick={onClose}>Close</button>
+      </div>
     );
   };
 
+  const gameItemChangeEffect = () => {
+    if (waiting == WaitingFor.EXPORT) {
+      const { error, success } = gameItem.exportToES;
+
+      if (error || success) {
+        setWaiting(WaitingFor.NONE);
+        if (error) {
+          NotificationManager.error(
+            error.toString(),
+            "Fail to export",
+            86400000 * 3
+          );
+        } else if (success) {
+          NotificationManager.success("Export success!");
+          onClose();
+        }
+        dispatch(exportToEmulationStationReset());
+      }
+    }
+  };
+
+  useEffect(gameItemChangeEffect, [gameItem.exportToES]);
+
+  const { length } = gameItem.searchResults;
   return (
     <div className={className}>
-      <div>Export to EmulationStation</div>
-      <div onClick={selectRomDist}>
-        <div>Roms distination</div>
-        <div>{romDist}</div>
+      <div className="head">Export {length} game(s) to EmulationStation</div>
+
+      <div className="item" onClick={selectRomDist}>
+        <div className="key">Roms distination : </div>
+        <div className="value selector">{romDist}</div>
       </div>
 
-      <div>
-        <div onClick={selectImgDist}>Images distination</div>
-        <div>{imgDist}</div>
+      <div className="item">
+        <div className="key">Thumbnail type: </div>
+        <div className="value">
+          <select value={thumbnailType} onChange={onThumbnailTypeChange}>
+            <option value={ThumbnailType.BOX}>BoxArt</option>
+            <option value={ThumbnailType.SNAP}>Snapshot</option>
+            <option value={ThumbnailType.TITLE}>Title Screen</option>
+          </select>
+        </div>
       </div>
 
-      <div className="actions">
-        {renderExportButton()}
-        <button onClick={onClose}>Close</button>
-      </div>
+      {renderActions()}
     </div>
   );
 };
@@ -98,11 +129,51 @@ const ESExporter = styled(_ESExporter)`
   padding: 20px;
   border-radius: 10px;
   background-color: #000;
+  .head {
+    color: #666;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid rgba(100, 100, 100, 0.1);
+  }
+  .item {
+    margin-top: 10px;
+    .selector {
+      margin-top: 5px;
+      padding: 5px;
+      color: orange;
+      border-radius: 5px;
+      cursor: pointer;
+      border: 1px solid orange;
+      font-size: 11px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    select {
+      margin-top: 5px;
+    }
+  }
+  .actions,
+  .busy {
+    border-top: 1px solid rgba(100, 100, 100, 0.1);
+    margin-top: 20px;
+    padding-top: 10px;
+    text-align: center;
+    button + button {
+      margin-left: 5px;
+    }
+  }
+
+  .busy {
+    color: #666;
+  }
 `;
 
 interface ESExporterProps {
   className?: string;
   dispatch: Dispatch<any>;
+  appConfig: AppConfigState;
+  gameItem: GameItemState;
 }
 
 const mapStateToProps = (state: RootState) => {

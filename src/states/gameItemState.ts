@@ -30,6 +30,10 @@ export interface GameItemState {
     success: boolean;
     error: any;
   };
+  exportToES: {
+    success: boolean;
+    error: any;
+  };
 }
 
 export const createGameItemState = (): GameItemState => {
@@ -56,6 +60,10 @@ export const createGameItemState = (): GameItemState => {
       error: null,
     },
     setThumbnail: {
+      success: false,
+      error: null,
+    },
+    exportToES: {
       success: false,
       error: null,
     },

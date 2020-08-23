@@ -30,8 +30,18 @@ import { REMOVE_THUMBNAIL } from "../../actions/removeThumbnail";
 import { removeThumbnailHandler } from "./removeThumbnailHandler";
 import { SCAN_ROMS_SUCCESS } from "../../actions/scanRoms";
 import { scanRomsSuccessHandler } from "./scanRomsHandler";
-import { EXPORT_TO_EMULATION_STATION } from "../../actions/exportToEmulationStation";
-import { exportToEmulationStationHandler } from "./exportToEmulationStationHandler";
+import {
+  EXPORT_TO_EMULATION_STATION_START,
+  EXPORT_TO_EMULATION_STATION_SUCCESS,
+  EXPORT_TO_EMULATION_STATION_ERROR,
+  EXPORT_TO_EMULATION_STATION_RESET,
+} from "../../actions/exportToEmulationStation";
+import {
+  exportToEmulationStationStartHandler,
+  exportToEmulationStationSuccessHandler,
+  exportToEmulationStationErrorHandler,
+  exportToEmulationStationResetHandler,
+} from "./exportToEmulationStationHandler";
 
 const gameItemReducer = (
   state: GameItemState | any = createGameItemState(),
@@ -70,8 +80,17 @@ const gameItemReducer = (
     case SCAN_ROMS_SUCCESS:
       return scanRomsSuccessHandler(state, action);
 
-    case EXPORT_TO_EMULATION_STATION:
-      return exportToEmulationStationHandler(state, action);
+    case EXPORT_TO_EMULATION_STATION_START:
+      return exportToEmulationStationStartHandler(state, action);
+
+    case EXPORT_TO_EMULATION_STATION_SUCCESS:
+      return exportToEmulationStationSuccessHandler(state, action);
+
+    case EXPORT_TO_EMULATION_STATION_ERROR:
+      return exportToEmulationStationErrorHandler(state, action);
+
+    case EXPORT_TO_EMULATION_STATION_RESET:
+      return exportToEmulationStationResetHandler(state, action);
 
     default:
       return state;

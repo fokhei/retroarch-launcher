@@ -33,7 +33,7 @@ export const searchHandler = (
   }
 
   if (favourOnly) {
-    seq = seq.filter((item) => favour.list.includes(item.romPath));
+    seq = seq.filter((item) => favour.list.includes(item.key));
   }
 
   if (orderBy == OrderBy.RANDOM) {

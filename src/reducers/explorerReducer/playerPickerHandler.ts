@@ -3,7 +3,7 @@ import update from "immutability-helper";
 import { ExplorerState, createExplorerState } from "../../states/explorerState";
 
 export const setPlayerPickerHandler = (
-  state: ExplorerState | any = createExplorerState(),
+  state: ExplorerState = createExplorerState(),
   action: AnyAction
 ): ExplorerState => {
   

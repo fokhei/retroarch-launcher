@@ -4,7 +4,7 @@ import update from "immutability-helper";
 import { ThumbnailInfo } from "../../interfaces/ThumbnailInfo";
 
 export const downloadThumbnailStartHandler = (
-  state: GameItemState | any = createGameItemState(),
+  state: GameItemState = createGameItemState(),
   action: AnyAction
 ): GameItemState => {
   // console.log("downloadThumbnailStartHandler", action.info);
@@ -18,7 +18,7 @@ export const downloadThumbnailStartHandler = (
 };
 
 export const downloadThumbnailSuccessHandler = (
-  state: GameItemState | any = createGameItemState(),
+  state: GameItemState = createGameItemState(),
   action: AnyAction
 ): GameItemState => {
   const info = action.info as ThumbnailInfo;
@@ -40,7 +40,7 @@ export const downloadThumbnailSuccessHandler = (
 };
 
 export const downloadThumbnailErrorHandler = (
-  state: GameItemState | any = createGameItemState(),
+  state: GameItemState = createGameItemState(),
   action: AnyAction
 ): GameItemState => {
   // console.log("downloadThumbnailErrorHandler");

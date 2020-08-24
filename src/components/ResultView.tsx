@@ -20,15 +20,13 @@ import { getCategory } from "../libs/getCategory";
 import { AppConfigState } from "../states/appConfigState";
 import { play } from "../externalApps/play";
 import { FavourState } from "../states/favourState";
-import { ItemFilter } from "../interfaces/itemFilter";
-import { search } from "../actions/search";
 import { SearchResultTriggerProps } from "../contextMenus/SearchResultContextMenu";
 
 const _ResultView = (props: ResultViewProps) => {
   const { className, dispatch, explorer, gameItem, appConfig, favour } = props;
   const { layout, gridSize, selectedItemId } = explorer;
   const { itemsMap, itemFilter, searchResults } = gameItem;
-  const { categoryName, favourOnly } = itemFilter;
+  const { categoryName } = itemFilter;
   const item = getComputedItem(itemsMap, selectedItemId);
 
   const onLayoutChange = (evt: any) => {

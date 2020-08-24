@@ -8,7 +8,7 @@ import { ipcRenderer } from 'electron';
 import { AppEvent } from '../../interfaces/AppEvent';
 
 export const fetchHandler = (
-  state: AppConfigState | any = createAppConfigState(),
+  state: AppConfigState = createAppConfigState(),
   _action: AnyAction
 ): AppConfigState => {
   const configPath = "./config.js";

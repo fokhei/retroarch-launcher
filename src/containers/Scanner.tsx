@@ -9,7 +9,7 @@ import { ScannerState } from "../states/scannerState";
 import { getCategory } from "../libs/getCategory";
 import { hideScanner } from "../actions/hideScanner";
 import { search } from "../actions/search";
-import { ItemFilter } from "../interfaces/itemFilter";
+import { ItemFilter, OrderBy } from "../interfaces/itemFilter";
 import { FavourState } from "../states/favourState";
 
 enum WaitingFor {
@@ -80,6 +80,7 @@ const _Scanner = (props: ScannerProps) => {
           subCategoryName: "",
           keyword: "",
           favourOnly: false,
+          orderBy: OrderBy.NAME
         };
         dispatch(search(filter, favour));
       }

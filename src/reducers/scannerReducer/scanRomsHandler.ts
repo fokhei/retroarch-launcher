@@ -3,7 +3,7 @@ import { AnyAction } from "redux";
 import update from "immutability-helper";
 
 export const scanRomsStartHandler = (
-  state: ScannerState | any = createScannerState(),
+  state: ScannerState = createScannerState(),
   action: AnyAction
 ): ScannerState => {
   // console.log("scanRomsStartHandler", action);
@@ -17,7 +17,7 @@ export const scanRomsStartHandler = (
 };
 
 export const scanRomsSuccessHandler = (
-  state: ScannerState | any = createScannerState(),
+  state: ScannerState = createScannerState(),
   action: AnyAction
 ): ScannerState => {
   // console.log("scanRomsSuccessHandler", action);
@@ -29,7 +29,7 @@ export const scanRomsSuccessHandler = (
 };
 
 export const scanRomsErrorHandler = (
-  state: ScannerState | any = createScannerState(),
+  state: ScannerState = createScannerState(),
   action: AnyAction
 ): ScannerState => {
   // console.log("scanRomsErrorHandler", action);

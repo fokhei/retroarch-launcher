@@ -6,7 +6,7 @@ import { FETCH_FAVOUR } from "../../actions/fetchFavour";
 import { fetchHandler } from "./fetchHandler";
 
 const explorerReducer = (
-  state: FavourState | any = createFavourState(),
+  state: FavourState = createFavourState(),
   action: AnyAction
 ): FavourState => {
   switch (action.type) {

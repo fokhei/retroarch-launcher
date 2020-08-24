@@ -4,9 +4,6 @@ import { ExplorerState, createExplorerState } from "../../states/explorerState";
 import { SET_LAYOUT } from "../../actions/setLayout";
 import { setLayoutHandler } from "./layoutHandler";
 
-import { SET_THUMBNAIL_TYPE } from "../../actions/setThumbnailType";
-import { setThumbnailTypeHandler } from "./thumbnailTypeHandler";
-
 import { SET_GRID_SIZE } from "../../actions/setGridSize";
 import { setGridSizeHandler } from "./gridSizeHandler";
 
@@ -23,14 +20,13 @@ import { SHOW_ES_EXPORTER } from "../../actions/showESExporter";
 import { esExporterHandler } from "./esExporterHandler";
 
 const explorerReducer = (
-  state: ExplorerState | any = createExplorerState(),
+  state: ExplorerState = createExplorerState(),
   action: AnyAction
 ): ExplorerState => {
   switch (action.type) {
     case SET_LAYOUT:
       return setLayoutHandler(state, action);
-    case SET_THUMBNAIL_TYPE:
-      return setThumbnailTypeHandler(state, action);
+
     case SET_GRID_SIZE:
       return setGridSizeHandler(state, action);
     case SET_ITEM_ID:

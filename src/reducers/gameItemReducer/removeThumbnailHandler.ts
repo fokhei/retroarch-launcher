@@ -5,7 +5,7 @@ import { shell } from "electron";
 import { ComputedGameItem } from "../../interfaces/ComputedGameItem";
 
 export const removeThumbnailHandler = (
-  state: GameItemState | any = createGameItemState(),
+  state: GameItemState = createGameItemState(),
   action: AnyAction
 ): GameItemState => {
   const item = action.item as ComputedGameItem;

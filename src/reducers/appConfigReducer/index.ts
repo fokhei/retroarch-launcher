@@ -7,7 +7,7 @@ import { FETCH_APP_CONFIG } from "../../actions/fetchAppConfig";
 import { fetchHandler } from "./fetchHandler";
 
 const appConfigReducer = (
-  state: AppConfigState | any = createAppConfigState(),
+  state: AppConfigState = createAppConfigState(),
   action: AnyAction
 ): AppConfigState => {
   switch (action.type) {

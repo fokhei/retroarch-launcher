@@ -4,7 +4,7 @@ import { GameItemState, createGameItemState } from "../../states/gameItemState";
 import { ComputedGameItem } from "../../interfaces/ComputedGameItem";
 
 export const setThumbnailStartHandler = (
-  state: GameItemState | any = createGameItemState(),
+  state: GameItemState = createGameItemState(),
   action: AnyAction
 ): GameItemState => {
   // console.log("setThumbnailStartHandler", action);
@@ -17,7 +17,7 @@ export const setThumbnailStartHandler = (
 };
 
 export const setThumbnailSuccessHandler = (
-  state: GameItemState | any = createGameItemState(),
+  state: GameItemState = createGameItemState(),
   action: AnyAction
 ): GameItemState => {
   // console.log("setThumbnailSuccessHandler", action);
@@ -35,7 +35,7 @@ export const setThumbnailSuccessHandler = (
 };
 
 export const setThumbnailErrorHandler = (
-  state: GameItemState | any = createGameItemState(),
+  state: GameItemState = createGameItemState(),
   action: AnyAction
 ): GameItemState => {
   // console.log("setThumbnailErrorHandler", action);

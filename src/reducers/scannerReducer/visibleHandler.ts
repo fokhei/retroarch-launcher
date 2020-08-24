@@ -3,7 +3,7 @@ import { AnyAction } from "redux";
 import update from "immutability-helper";
 
 export const showScannerHandler = (
-  state: ScannerState | any = createScannerState(),
+  state: ScannerState = createScannerState(),
   action: AnyAction
 ): ScannerState => {
   return update(state, {
@@ -13,7 +13,7 @@ export const showScannerHandler = (
 };
 
 export const hideScannerHandler = (
-  state: ScannerState | any = createScannerState(),
+  state: ScannerState = createScannerState(),
   _action: AnyAction
 ): ScannerState => {
   return update(state, {

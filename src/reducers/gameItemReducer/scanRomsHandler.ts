@@ -8,7 +8,7 @@ import { createComputedGameItem } from "../../libs/createComputedItem";
 import { getCategory } from "../../libs/getCategory";
 
 export const scanRomsSuccessHandler = (
-  state: GameItemState | any = createGameItemState(),
+  state: GameItemState = createGameItemState(),
   action: AnyAction
 ): GameItemState => {
   const { categoryName, appConfig } = action;

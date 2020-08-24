@@ -5,7 +5,7 @@ import { FavourState, createFavourState } from "../../states/favourState";
 import { FAVOUR_FILE_NAME } from "../../libs/constants";
 
 export const fetchHandler = (
-  state: FavourState | any = createFavourState(),
+  state: FavourState = createFavourState(),
   action: AnyAction
 ): FavourState => {
   const favourPath = path.resolve(action.appDataDir, FAVOUR_FILE_NAME);

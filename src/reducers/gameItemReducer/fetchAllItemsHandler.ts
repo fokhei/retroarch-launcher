@@ -13,7 +13,7 @@ import { GAME_LIST_DIR_NAME } from '../../libs/constants';
 let _id = 0;
 
 export const fetchAllItemsHandler = (
-  state: GameItemState | any = createGameItemState(),
+  state: GameItemState = createGameItemState(),
   action: AnyAction
 ): GameItemState => {
   let items: Array<ComputedGameItem> = [];

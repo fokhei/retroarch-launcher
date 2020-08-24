@@ -8,7 +8,7 @@ import { ItemFilter, OrderBy } from "../../interfaces/itemFilter";
 import { FavourState } from "../../states/favourState";
 
 export const searchHandler = (
-  state: GameItemState | any = createGameItemState(),
+  state: GameItemState = createGameItemState(),
   action: AnyAction
 ): GameItemState => {
   const itemFilter = action.itemFilter as ItemFilter;

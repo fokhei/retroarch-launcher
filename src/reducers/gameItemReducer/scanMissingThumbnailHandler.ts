@@ -4,7 +4,7 @@ import { getMissingThumbnailInfos } from "../../libs/getMissingThumbnailInfos";
 import { GameItemState, createGameItemState } from "../../states/gameItemState";
 
 export const scanMissingThumbnailHandler = (
-  state: GameItemState | any = createGameItemState(),
+  state: GameItemState = createGameItemState(),
   action: AnyAction
 ): GameItemState => {
   const infos = getMissingThumbnailInfos(action.item, action.appCOnfig);

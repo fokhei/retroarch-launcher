@@ -16,7 +16,7 @@ import {
 } from "./scanRomsHandler";
 
 const scannerReducer = (
-  state: ScannerState | any = createScannerState(),
+  state: ScannerState = createScannerState(),
   action: AnyAction
 ): ScannerState => {
   switch (action.type) {

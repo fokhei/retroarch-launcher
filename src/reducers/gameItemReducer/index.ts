@@ -44,7 +44,7 @@ import {
 } from "./exportToEmulationStationHandler";
 
 const gameItemReducer = (
-  state: GameItemState | any = createGameItemState(),
+  state: GameItemState = createGameItemState(),
   action: AnyAction
 ): GameItemState => {
   switch (action.type) {

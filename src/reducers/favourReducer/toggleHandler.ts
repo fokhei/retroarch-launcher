@@ -6,7 +6,7 @@ import { AppEvent } from "../../interfaces/AppEvent";
 import { ComputedGameItem } from "../../interfaces/ComputedGameItem";
 
 export const toggleHandler = (
-  state: FavourState | any = createFavourState(),
+  state: FavourState = createFavourState(),
   action: AnyAction
 ): FavourState => {
   const gameItem = action.item as ComputedGameItem;

@@ -45,17 +45,7 @@ const _ResultView = (props: ResultViewProps) => {
     dispatch(setItemId(itemId));
   };
 
-  const onFavourOnlyChange = (evt: any) => {
-    const favourOnly = evt.target.value == 1;
-    const filter: ItemFilter = {
-      ...itemFilter,
-      favourOnly,
-    };
-    dispatch(search(filter, favour));
-  };
-
   const onPlay = () => {
-    
     const category = getCategory(appConfig, item.categoryName);
     if (category.hasOwnProperty("players")) {
       if (category.players.length == 1) {
@@ -114,18 +104,6 @@ const _ResultView = (props: ResultViewProps) => {
           <option value={ResultLayout.SNAPSHOT}>Snapshot</option>
           <option value={ResultLayout.TITLE_SCREEN}>Title Screen</option>
           <option value={ResultLayout.NAMES}>Name</option>
-        </select>
-      </div>
-    );
-  };
-
-  const renderFavourSwitch = () => {
-    const value = favourOnly ? 1 : 0;
-    return (
-      <div className="options">
-        <select value={value} onChange={onFavourOnlyChange}>
-          <option value={0}>All</option>
-          <option value={1}>Favour Only</option>
         </select>
       </div>
     );
@@ -202,7 +180,6 @@ const _ResultView = (props: ResultViewProps) => {
         <div className="right">
           {renderSlider()}
           {renderLayoutSwitch()}
-          {renderFavourSwitch()}
         </div>
       </div>
       <div className="subHead">{renderGameName()}</div>

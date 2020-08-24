@@ -1,7 +1,7 @@
 import { ComputedGameItem } from "../interfaces/ComputedGameItem";
 import { ThumbnailInfo } from "../interfaces/ThumbnailInfo";
 import { CategoryAll } from "../libs/categoryAll";
-import { ItemFilter } from "../interfaces/itemFilter";
+import { ItemFilter, OrderBy } from "../interfaces/itemFilter";
 
 export interface SubCategories {
   [categoryName: string]: Array<string>;
@@ -49,6 +49,7 @@ export const createGameItemState = (): GameItemState => {
       subCategoryName: "",
       keyword: "",
       favourOnly: false,
+      orderBy: OrderBy.NAME,
     },
     fetch: {
       success: false,

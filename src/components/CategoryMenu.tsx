@@ -13,7 +13,7 @@ import { ContextMenuTrigger } from "react-contextmenu";
 import { CategoryAll } from "../libs/categoryAll";
 import { CategoryTriggerProps } from "../contextMenus/CategoryContextMenu";
 import { GameItemState } from "../states/gameItemState";
-import { ItemFilter } from "../interfaces/itemFilter";
+import { ItemFilter, OrderBy } from "../interfaces/itemFilter";
 import lazy from "lazy.js";
 import { AppConfigState } from "../states/appConfigState";
 
@@ -28,7 +28,13 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
     .pluck("name")
     .toArray();
 
-  const { categoryName, subCategoryName, keyword } = itemFilter;
+  const {
+    categoryName,
+    subCategoryName,
+    keyword,
+    favourOnly,
+    orderBy,
+  } = itemFilter;
 
   const listRef: RefObject<any> = createRef();
   _keywordHandler = debounce(searchHandler, 300, false);
@@ -69,6 +75,60 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
       keyword,
     };
     _keywordHandler(filter);
+  };
+
+  const onFavourOnlyChange = (evt: any) => {
+    const favourOnly = evt.target.value == 1;
+    const filter: ItemFilter = {
+      ...itemFilter,
+      favourOnly,
+    };
+    searchHandler(filter);
+  };
+
+  const onOrderByChange = (evt: any) => {
+    const orderBy = evt.target.value as OrderBy;
+    const filter: ItemFilter = {
+      ...itemFilter,
+      orderBy,
+    };
+    searchHandler(filter);
+  };
+
+  const rednerKeyWord = () => {
+    return (
+      <div className="keyword">
+        <input
+          type="search"
+          defaultValue={keyword}
+          placeholder="search"
+          onChange={onKeywordChange}
+        />
+      </div>
+    );
+  };
+
+  const renderFavourOptions = () => {
+    const value = favourOnly ? 1 : 0;
+    return (
+      <div className="favourOnly">
+        <select value={value} onChange={onFavourOnlyChange}>
+          <option value={0}>Show All</option>
+          <option value={1}>Favour Only</option>
+        </select>
+      </div>
+    );
+  };
+
+  const renderOrderOptions = () => {
+    return (
+      <div className="orderBy">
+        <select value={orderBy} onChange={onOrderByChange}>
+          <option value={OrderBy.NAME}>Order by Name</option>
+          <option value={OrderBy.RANDOM}>Random</option>
+        </select>
+      </div>
+    );
   };
 
   const renderRow = (props: ListRowProps) => {
@@ -147,14 +207,12 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
 
   return (
     <div className={className}>
-      <div className="head">
-        <input
-          type="search"
-          defaultValue={keyword}
-          placeholder="search"
-          onChange={onKeywordChange}
-        />
+      <div className="head">{rednerKeyWord()}</div>
+      <div className="subHead">
+        {renderFavourOptions()}
+        {renderOrderOptions()}
       </div>
+
       <div className="body">
         <AutoSizer>
           {({ width, height }: any) => (
@@ -183,6 +241,7 @@ const CategoryMenu = styled(_CategoryMenu)`
   border-right: 1px solid rgba(100, 100, 100, 0.1);
   display: flex;
   flex-direction: column;
+
   > .head {
     height: 32px;
     padding: 5px;
@@ -192,9 +251,29 @@ const CategoryMenu = styled(_CategoryMenu)`
       background-color: transparent;
       border: none;
       color: orange;
-      padding: 2px 5px;
+      padding: 2px 3px;
+      text-align: center;
     }
   }
+
+  > .subHead {
+    height: 32px;
+    padding: 5px;
+    background-color: rgba(100, 100, 100, 0.1);
+    border-top: 1px solid rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: space-between;
+
+    select {
+      border: none;
+      background-color: transparent;
+      color: #555;
+      padding: 5px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+  }
+
   > .body {
     flex: 1;
     .item {

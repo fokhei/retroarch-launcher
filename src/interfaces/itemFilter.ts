@@ -3,4 +3,10 @@ export interface ItemFilter {
   subCategoryName: string;
   keyword: string;
   favourOnly: boolean;
+  orderBy: OrderBy;
+}
+
+export enum OrderBy {
+  NAME,
+  RANDOM,
 }

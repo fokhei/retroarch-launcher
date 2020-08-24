@@ -23,7 +23,7 @@ const GameItemContextMenu = (props: GameItemContextMenuProps) => {
   };
 
   const onToggleFavour = () => {
-    dispatch(toggleFavour(trigger.item.romPath));
+    dispatch(toggleFavour(trigger.item));
   };
 
   const onOpen = () => {

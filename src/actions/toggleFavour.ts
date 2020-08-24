@@ -1,10 +1,12 @@
+import { ComputedGameItem } from '../interfaces/ComputedGameItem';
+
 export const TOGGLE_FAVOUR = "TOGGLE_FAVOUR";
 
 export const toggleFavour = (
-  romPath: string
+  item: ComputedGameItem
 ) => {
   return {
     type: TOGGLE_FAVOUR,
-    romPath,
+    item,
   };
 };

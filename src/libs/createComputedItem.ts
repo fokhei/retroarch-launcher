@@ -30,6 +30,11 @@ export const createComputedGameItem = (
     img
   );
 
+  const basename = path.basename(item.romPath);
+  const ext = path.extname(basename);
+  const noExt = basename.replace(ext, "");
+  const key = category.name + " | " + noExt;
+
   return {
     ...item,
     id,
@@ -40,6 +45,7 @@ export const createComputedGameItem = (
       [ThumbnailType.TITLE]: title,
       [ThumbnailType.SNAP]: snap,
     },
+    key,
     updateAt: new Date().getTime(),
   };
 };

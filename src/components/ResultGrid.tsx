@@ -101,7 +101,7 @@ const _ResultGrid = (props: ResultGridProps) => {
   };
 
   const renderFavour = (data: ComputedGameItem) => {
-    if (favour.list.includes(data.romPath)) {
+    if (favour.list.includes(data.key)) {
       return <div className="favour">⭐</div>;
     }
     return null;

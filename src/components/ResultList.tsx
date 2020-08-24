@@ -11,7 +11,7 @@ import { ContextMenuTrigger } from "react-contextmenu";
 import { ContextMenuId } from "../contextMenus/ContextMenuId";
 import { ComputedGameItem } from "../interfaces/ComputedGameItem";
 import { GameItemTriggerProps } from "../contextMenus/GameItemContextMenu";
-import { FavourState } from '../states/favourState';
+import { FavourState } from "../states/favourState";
 
 const _ResultList = (props: ResultListProps) => {
   const {
@@ -99,7 +99,7 @@ const _ResultList = (props: ResultListProps) => {
   };
 
   const renderFavour = (data: ComputedGameItem) => {
-    if (favour.list.includes(data.romPath)) {
+    if (favour.list.includes(data.key)) {
       return <span className="favour">⭐</span>;
     }
     return <span className="favour" />;

@@ -26,12 +26,16 @@ import { FavourState } from "../states/favourState";
 import { fetchFavour } from "../actions/fetchFavour";
 import SearchResultContextMenu from "../contextMenus/SearchResultContextMenu";
 import ESExporter from "./ESExporter";
+import { fetchUIConfig } from "../actions/fetchUI";
+import { ipcRenderer } from "electron";
+import { AppEvent } from "../interfaces/AppEvent";
 
 enum WaitingFor {
   NONE,
   FETCH_APP_COFIG,
   FETCH_ITEMS,
   FETCH_FAVOUR,
+  FECTH_UI_CONFIG,
 }
 
 const _App = (props: AppProps) => {
@@ -47,6 +51,9 @@ const _App = (props: AppProps) => {
   const [waiting, setWaiting] = useState<WaitingFor>(
     WaitingFor.FETCH_APP_COFIG
   );
+
+  const { explorerConfig, showPlayerPicker, showESExporter } = explorer;
+  const { selectedItemId } = explorerConfig;
 
   const renderExplorer = () => {
     if (waiting != WaitingFor.NONE) {
@@ -71,7 +78,6 @@ const _App = (props: AppProps) => {
   };
 
   const renderPlayerPicker = () => {
-    const { showPlayerPicker, selectedItemId } = explorer;
     if (showPlayerPicker && selectedItemId) {
       const hideHandler = () => {
         dispatch(setPlayerPicker(false));
@@ -91,7 +97,6 @@ const _App = (props: AppProps) => {
   };
 
   const renderESExporter = () => {
-    const { showESExporter } = explorer;
     if (showESExporter) {
       return (
         <Modal>
@@ -146,7 +151,6 @@ const _App = (props: AppProps) => {
       if (success) {
         setWaiting(WaitingFor.FETCH_FAVOUR);
         dispatch(fetchFavour(appConfig.appDataDir));
-        setWaiting(WaitingFor.NONE);
       }
     }
   };
@@ -156,6 +160,20 @@ const _App = (props: AppProps) => {
       const { error, success } = favour.fetch;
       if (error) throw error;
       if (success) {
+        setWaiting(WaitingFor.FECTH_UI_CONFIG);
+        dispatch(fetchUIConfig(appConfig.appDataDir));
+      }
+    }
+  };
+
+  const explorerChangeEffect = () => {
+    if (waiting == WaitingFor.FECTH_UI_CONFIG) {
+      if (explorer.fetched) {
+        ipcRenderer.sendSync(
+          AppEvent.SET_EXPLORER_CONFIG,
+          explorer.explorerConfig
+        );
+        ipcRenderer.sendSync(AppEvent.SET_ITEM_FILTER, gameItem.itemFilter);
         setWaiting(WaitingFor.NONE);
       }
     }
@@ -165,6 +183,7 @@ const _App = (props: AppProps) => {
   useEffect(appConfigChangeEffect, [appConfig]);
   useEffect(gameItemChangeEffect, [gameItem]);
   useEffect(favourChangeEffect, [favour]);
+  useEffect(explorerChangeEffect, [explorer]);
 
   return (
     <div className={className}>

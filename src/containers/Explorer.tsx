@@ -18,7 +18,7 @@ const _Explorer = (props: ExplorerProps) => {
   const { itemFilter } = gameItem;
 
   const onSearch = (itemFilter: ItemFilter) => {
-    dispatch(search(itemFilter, favour));
+    dispatch(search(itemFilter, gameItem, favour));
   };
 
   const renderCategoryMenu = () => {
@@ -55,7 +55,7 @@ const _Explorer = (props: ExplorerProps) => {
   };
 
   const mountEffect = () => {
-    dispatch(search(itemFilter, favour));
+    dispatch(search(itemFilter, gameItem, favour));
   };
 
   useEffect(mountEffect, []);

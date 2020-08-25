@@ -19,7 +19,8 @@ import { ThumbnailDropZoneTriggerProps } from "../contextMenus/ThumbnailDropzone
 
 const _RightBar = (props: RightBarProps) => {
   const { className, dispatch, explorer, gameItem, appConfig } = props;
-  const { selectedItemId } = explorer;
+  const { explorerConfig } = explorer
+  const { selectedItemId } = explorerConfig;
   const { itemsMap } = gameItem;
   const item = getComputedItem(itemsMap, selectedItemId);
 

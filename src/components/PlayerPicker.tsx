@@ -10,7 +10,8 @@ import { play } from "../externalApps/play";
 
 const _PlayerPicker = (props: PlayerPickerProps) => {
   const { className, hideHandler, appConfig, explorer, gameItem } = props;
-  const { selectedItemId } = explorer;
+  const { explorerConfig } = explorer;
+  const { selectedItemId } = explorerConfig;
   const item = gameItem.itemsMap[selectedItemId.toString()];
   const category = getCategory(appConfig, item.categoryName);
   const players = getPlayers(category);

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-const svg = require("../assets/busy.svg");
+const svg = require("../assets/busy.svg").default;
 
 const _BusyIcon = (props: BusyIconProps) => {
   let className = `BusyIcon ${props.className}`;

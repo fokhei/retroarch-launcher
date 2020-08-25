@@ -4,6 +4,7 @@
     "jsx": "react",
     "target": "es5",
     "types": ["react"],
+    "esModuleInterop": true,
     "strict": false
   },
   "include": ["src/**/*"],

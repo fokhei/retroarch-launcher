@@ -6,9 +6,7 @@ import { ContextMenuId } from "../contextMenus/ContextMenuId";
 import { ExplorerState } from "../states/explorerState";
 import { GameItemState } from "../states/gameItemState";
 import { Dispatch } from "redux";
-import { setLayout } from "../actions/setLayout";
-import { setGridSize } from "../actions/setGridSize";
-import { setItemId } from "../actions/setItemId";
+import { setExplorerConfig } from "../actions/setExplorerConfig";
 import { getComputedItem } from "../libs/getComputedItem";
 import ResultList from "./ResultList";
 import ResultGrid from "./ResultGrid";
@@ -24,23 +22,37 @@ import { SearchResultTriggerProps } from "../contextMenus/SearchResultContextMen
 
 const _ResultView = (props: ResultViewProps) => {
   const { className, dispatch, explorer, gameItem, appConfig, favour } = props;
-  const { layout, gridSize, selectedItemId } = explorer;
+  const { explorerConfig } = explorer;
+  const { layout, gridSize, selectedItemId } = explorerConfig;
+
   const { itemsMap, itemFilter, searchResults } = gameItem;
   const { categoryName } = itemFilter;
   const item = getComputedItem(itemsMap, selectedItemId);
 
   const onLayoutChange = (evt: any) => {
     const layout = evt.target.value as ResultLayout;
-    dispatch(setLayout(layout));
+    const config = {
+      ...explorerConfig,
+      layout,
+    };
+    dispatch(setExplorerConfig(config));
   };
 
   const onSliderChange = (evt: any) => {
     const gridSize = Number(evt.target.value);
-    dispatch(setGridSize(gridSize));
+    const config = {
+      ...explorerConfig,
+      gridSize,
+    };
+    dispatch(setExplorerConfig(config));
   };
 
-  const onItemIdChange = (itemId: number) => {
-    dispatch(setItemId(itemId));
+  const onItemIdChange = (selectedItemId: number) => {
+    const config = {
+      ...explorerConfig,
+      selectedItemId,
+    };
+    dispatch(setExplorerConfig(config));
   };
 
   const onPlay = () => {

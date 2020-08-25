@@ -1,3 +1,10 @@
+import { CategoryAll } from "../libs/categoryAll";
+
+export enum OrderBy {
+  NAME,
+  RANDOM,
+}
+
 export interface ItemFilter {
   categoryName: string;
   subCategoryName: string;
@@ -6,7 +13,12 @@ export interface ItemFilter {
   orderBy: OrderBy;
 }
 
-export enum OrderBy {
-  NAME,
-  RANDOM,
-}
+export const createItemFilter = (): ItemFilter => {
+  return {
+    categoryName: CategoryAll,
+    subCategoryName: "",
+    keyword: "",
+    favourOnly: false,
+    orderBy: OrderBy.NAME,
+  };
+};

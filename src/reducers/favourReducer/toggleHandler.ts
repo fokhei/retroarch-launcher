@@ -25,6 +25,6 @@ export const toggleHandler = (
     list: { $set: list },
     updateAt: { $set: new Date().getTime() },
   });
-  ipcRenderer.sendSync(AppEvent.SET_FAVOUR_STATE, next);
+  ipcRenderer.sendSync(AppEvent.SET_FAVOUR_LIST, list);
   return next;
 };

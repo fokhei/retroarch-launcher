@@ -4,29 +4,43 @@ import { AppEvent } from "../interfaces/AppEvent";
 import Jimp from "Jimp";
 import childProcess from "child_process";
 import psTree from "ps-tree";
-import { FavourState } from "../states/favourState";
 import { AppConfigState } from "../states/appConfigState";
 import fs from "fs";
 import * as path from "path";
-import { FAVOUR_FILE_NAME } from '../libs/constants';
+import { FAVOUR_FILE_NAME, UI_FILE_NAME } from "../libs/constants";
+import { ExplorerConfig } from "../states/explorerState";
+import { ItemFilter } from "../interfaces/itemFilter";
 
 let mainWindow: BrowserWindow;
 let devTools: BrowserWindow;
 let appConfig: AppConfigState;
-let favour: FavourState;
+let favourList: Array<string>;
+let explorerConfig: ExplorerConfig;
+let itemFilter: ItemFilter;
 
 const saveBeforeQuit = () => {
   if (appConfig) {
-    if (favour) {
+    if (explorerConfig && itemFilter) {
+      const uiPath = path.resolve(appConfig.appDataDir, UI_FILE_NAME);
+      fs.writeFileSync(
+        uiPath,
+        JSON.stringify({
+          explorerConfig,
+          itemFilter,
+        })
+      );
+    }
+
+    if (favourList) {
       const favourPath = path.resolve(appConfig.appDataDir, FAVOUR_FILE_NAME);
-      fs.writeFileSync(favourPath, JSON.stringify({ list: favour.list }));
+      fs.writeFileSync(favourPath, JSON.stringify({ list: favourList }));
     }
   }
 };
 
 app.whenReady().then(() => {
   mainWindow = createMainWindow();
-  mainWindow.on("close", (e) => {
+  mainWindow.on("close", () => {
     saveBeforeQuit();
   });
 
@@ -86,11 +100,21 @@ app.whenReady().then(() => {
     }
   );
 
+  ipcMain.on(AppEvent.SET_FAVOUR_LIST, (event: any, list: Array<string>) => {
+    favourList = list;
+    event.returnValue = true;
+  });
+
   ipcMain.on(
-    AppEvent.SET_FAVOUR_STATE,
-    (event: any, favourState: FavourState) => {
-      favour = favourState;
+    AppEvent.SET_EXPLORER_CONFIG,
+    (event: any, config: ExplorerConfig) => {
+      explorerConfig = config;
       event.returnValue = true;
     }
   );
+
+  ipcMain.on(AppEvent.SET_ITEM_FILTER, (event: any, filter: ItemFilter) => {
+    itemFilter = filter;
+    event.returnValue = true;
+  });
 });

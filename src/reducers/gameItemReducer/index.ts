@@ -42,6 +42,8 @@ import {
   exportToEmulationStationErrorHandler,
   exportToEmulationStationResetHandler,
 } from "./exportToEmulationStationHandler";
+import { FETCH_UI_CONFIG } from "../../actions/fetchUI";
+import { uiConfigHandler } from "./uiConfigHandler";
 
 const gameItemReducer = (
   state: GameItemState = createGameItemState(),
@@ -91,6 +93,9 @@ const gameItemReducer = (
 
     case EXPORT_TO_EMULATION_STATION_RESET:
       return exportToEmulationStationResetHandler(state, action);
+
+    case FETCH_UI_CONFIG:
+      return uiConfigHandler(state, action);
 
     default:
       return state;

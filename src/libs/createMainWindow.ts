@@ -8,8 +8,12 @@ const createMainWindow = () => {
   const isDevelopment = process.env.NODE_ENV !== "production";
 
   let windowOption: Electron.BrowserWindowConstructorOptions = {
-    width: 1100,
+    width: 1120,
     height: 560,
+    minWidth: 800,
+    minHeight: 480,
+    
+
     darkTheme: true,
     webPreferences: { nodeIntegration: true, webSecurity: false },
   };

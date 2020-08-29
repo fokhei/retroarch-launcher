@@ -4,6 +4,7 @@ export interface ExplorerConfig {
   selectedItemId: number;
   layout: ResultLayout;
   gridSize: number;
+  showCategory: boolean;
 }
 
 export interface ExplorerState {
@@ -18,6 +19,7 @@ export const createExplorerConfig = (): ExplorerConfig => {
     selectedItemId: 0,
     layout: ResultLayout.SNAPSHOT,
     gridSize: 160,
+    showCategory: true
   };
 };
 

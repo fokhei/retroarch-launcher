@@ -12,6 +12,7 @@ import ResultView from "../components/ResultView";
 import RightBar from "../components/RightBar";
 import { FavourState } from "../states/favourState";
 import { ItemFilter } from "../interfaces/itemFilter";
+import SlideBar from "../components/SlideBar";
 
 const _Explorer = (props: ExplorerProps) => {
   const { className, dispatch, appConfig, gameItem, explorer, favour } = props;
@@ -21,14 +22,21 @@ const _Explorer = (props: ExplorerProps) => {
     dispatch(search(itemFilter, gameItem, favour));
   };
 
+  const renderSlideBar = () => {
+    return <SlideBar dispatch={dispatch} explorer={explorer} />;
+  };
+
   const renderCategoryMenu = () => {
-    return (
-      <CategoryMenu
-        appConfig={appConfig}
-        gameItem={gameItem}
-        searchHandler={onSearch}
-      />
-    );
+    if (explorer.explorerConfig.showCategory) {
+      return (
+        <CategoryMenu
+          appConfig={appConfig}
+          gameItem={gameItem}
+          searchHandler={onSearch}
+        />
+      );
+    }
+    return null;
   };
 
   const renderSearchResult = () => {
@@ -62,6 +70,7 @@ const _Explorer = (props: ExplorerProps) => {
 
   return (
     <div className={className}>
+      {renderSlideBar()}
       {renderCategoryMenu()}
       {renderSearchResult()}
       {renderRightBar()}

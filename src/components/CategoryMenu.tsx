@@ -207,7 +207,9 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
 
   return (
     <div className={className}>
-      <div className="head">{rednerKeyWord()}</div>
+      <div className="head">
+        {rednerKeyWord()}
+      </div>
       <div className="subHead">
         {renderFavourOptions()}
         {renderOrderOptions()}
@@ -235,7 +237,7 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
 };
 
 const CategoryMenu = styled(_CategoryMenu)`
-  width: 300px;
+  width: 260px;
   font-size: 12px;
   background-color: rgba(0, 0, 0, 0.5);
   border-right: 1px solid rgba(100, 100, 100, 0.1);
@@ -284,6 +286,8 @@ const CategoryMenu = styled(_CategoryMenu)`
           padding: 5px 10px;
           color: #999;
           border-bottom: 1px solid rgba(100, 100, 100, 0.1);
+          font-size: 11px;
+          font-family: Tahoma, Verdana, Geneva, sans-serif;
           cursor: pointer;
           &:hover {
             .label {

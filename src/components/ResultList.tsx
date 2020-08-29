@@ -147,6 +147,9 @@ const ResultList = styled(_ResultList)`
         color: #888;
         user-select: none;
         cursor: pointer;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         .favour {
           display: inline-block;
           width: 1.5em;

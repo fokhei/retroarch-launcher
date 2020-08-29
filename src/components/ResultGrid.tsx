@@ -86,8 +86,10 @@ const _ResultGrid = (props: ResultGridProps) => {
               onContextMenu={onRightClick}
             >
               <div className="thumbnail" style={style}></div>
-              <div className="label">{gameName}</div>
-              {renderFavour(data)}
+              <div className="label">
+                {renderFavour(data)}
+                {gameName}
+              </div>
             </div>
           </ContextMenuTrigger>
         );
@@ -102,7 +104,7 @@ const _ResultGrid = (props: ResultGridProps) => {
 
   const renderFavour = (data: ComputedGameItem) => {
     if (favour.list.includes(data.key)) {
-      return <div className="favour">⭐</div>;
+      return <span className="favour">⭐</span>;
     }
     return null;
   };
@@ -141,7 +143,7 @@ const ResultGrid = styled(_ResultGrid)`
   overflow: hidden;
   .grid {
     .cell {
-      padding: 1px;
+      position: relative;
       user-select: none;
       .react-contextmenu-wrapper {
         width: 100%;
@@ -149,37 +151,34 @@ const ResultGrid = styled(_ResultGrid)`
         .item {
           width: 100%;
           height: 100%;
-          padding: 5px;
-          display: flex;
-          flex-direction: column;
-          color: #888;
           border: 1px solid #222;
           position: relative;
           cursor: pointer;
 
           .thumbnail {
-            flex: 1;
+            width: 100%;
+            height: 100%;
             background-position: center center;
             background-repeat: no-repeat;
-            background-size: contain;
+            background-size: cover;
             border: 1px solid transparent;
           }
+
           .label {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 22px;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: #888;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            width: 100%;
-            font-size: 12px;
+            font-size: 11px;
             text-align: center;
-          }
-
-          .favour {
-            position: absolute;
-            left: 4px;
-            right: 4px;
-            width: 1em;
-            height: 1em;
-            font-size: 1em;
+            padding: 2px 5px;
+            z-index: 2;
           }
 
           &:hover {
@@ -189,7 +188,10 @@ const ResultGrid = styled(_ResultGrid)`
           &.actived {
             background-color: rgba(0, 0, 0, 0.5);
             border: 1px solid #17bbaf;
-            color: #17bbaf;
+
+            .label {
+              color: #17bbaf;
+            }
           }
         }
       }

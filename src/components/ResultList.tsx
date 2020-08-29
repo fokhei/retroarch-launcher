@@ -12,6 +12,8 @@ import { ContextMenuId } from "../contextMenus/ContextMenuId";
 import { ComputedGameItem } from "../interfaces/ComputedGameItem";
 import { GameItemTriggerProps } from "../contextMenus/GameItemContextMenu";
 import { FavourState } from "../states/favourState";
+import { ResultLayout } from "../interfaces/ResultLayout";
+import * as path from "path";
 
 const _ResultList = (props: ResultListProps) => {
   const {
@@ -22,6 +24,7 @@ const _ResultList = (props: ResultListProps) => {
     itemId,
     setItemId,
     playHandler,
+    layout,
   } = props;
   const listRef: RefObject<any> = createRef();
 
@@ -86,7 +89,7 @@ const _ResultList = (props: ResultListProps) => {
             onContextMenu={onRightClick}
           >
             {renderFavour(item)}
-            <span className="name">{item.gameName}</span>
+            {renderText(item)}
           </div>
         </ContextMenuTrigger>
       );
@@ -103,6 +106,16 @@ const _ResultList = (props: ResultListProps) => {
       return <span className="favour">⭐</span>;
     }
     return <span className="favour" />;
+  };
+
+  const renderText = (data: ComputedGameItem) => {
+    if (layout == ResultLayout.GAME_TITLE) {
+      return <span className="name">{data.gameName}</span>;
+    } else if (layout == ResultLayout.FILE_NAME) {
+      const basename = path.basename(data.romPath);
+      return <span className="name">{basename}</span>;
+    }
+    return null;
   };
 
   return (
@@ -174,6 +187,7 @@ interface ResultListProps {
   itemId: number;
   setItemId: (itemId: number) => void;
   playHandler: () => void;
+  layout: ResultLayout;
 }
 
 export default ResultList;

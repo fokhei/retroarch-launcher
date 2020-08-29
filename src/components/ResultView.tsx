@@ -113,7 +113,8 @@ const _ResultView = (props: ResultViewProps) => {
           <option value={ResultLayout.BOXART}>BoxArt</option>
           <option value={ResultLayout.SNAPSHOT}>Snapshot</option>
           <option value={ResultLayout.TITLE_SCREEN}>Title Screen</option>
-          <option value={ResultLayout.NAMES}>Name</option>
+          <option value={ResultLayout.GAME_TITLE}>Game Title</option>
+          <option value={ResultLayout.FILE_NAME}>File Name</option>
         </select>
       </div>
     );
@@ -144,7 +145,7 @@ const _ResultView = (props: ResultViewProps) => {
   };
 
   const renderContent = () => {
-    if (layout == ResultLayout.NAMES) {
+    if ([ResultLayout.GAME_TITLE, ResultLayout.FILE_NAME].includes(layout)) {
       return (
         <ResultList
           categoryName={categoryName}
@@ -153,6 +154,7 @@ const _ResultView = (props: ResultViewProps) => {
           itemId={selectedItemId}
           setItemId={onItemIdChange}
           playHandler={onPlay}
+          layout={layout}
         />
       );
     } else if (

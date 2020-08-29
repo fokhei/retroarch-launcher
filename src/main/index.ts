@@ -18,7 +18,7 @@ let favourList: Array<string>;
 let explorerConfig: ExplorerConfig;
 let itemFilter: ItemFilter;
 
-const saveBeforeQuit = () => {
+const saveSetting = () => {
   if (appConfig) {
     if (explorerConfig && itemFilter) {
       const uiPath = path.resolve(appConfig.appDataDir, UI_FILE_NAME);
@@ -41,7 +41,7 @@ const saveBeforeQuit = () => {
 app.whenReady().then(() => {
   mainWindow = createMainWindow();
   mainWindow.on("close", () => {
-    saveBeforeQuit();
+    saveSetting();
   });
 
   app.on("window-all-closed", () => {
@@ -115,6 +115,11 @@ app.whenReady().then(() => {
 
   ipcMain.on(AppEvent.SET_ITEM_FILTER, (event: any, filter: ItemFilter) => {
     itemFilter = filter;
+    event.returnValue = true;
+  });
+
+  ipcMain.on(AppEvent.SAVE_SETTING, (event: any) => {
+    saveSetting();
     event.returnValue = true;
   });
 });

@@ -20,6 +20,12 @@ const onKeyUp = (evt: KeyboardEvent) => {
     //F5
     evt.preventDefault();
     ipcRenderer.send(AppEvent.RELOAD);
+  } else if (evt.keyCode == 83) {
+    if (evt.ctrlKey) {
+      //ctr + S
+      evt.preventDefault();
+      ipcRenderer.send(AppEvent.SAVE_SETTING);
+    }
   }
 };
 window.addEventListener("keyup", onKeyUp, true);

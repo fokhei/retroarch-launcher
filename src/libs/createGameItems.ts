@@ -86,7 +86,7 @@ export const createGameItems = (
 
     if (!skip) {
       if (getRomFilter(category, "excludeProto")) {
-        const matchs = gameName.match(/\(Proto\)/gi);
+        const matchs = gameName.match(/\(Proto\s?/gi);
         if (matchs) {
           skip = true;
         }
@@ -125,6 +125,16 @@ export const createGameItems = (
       if (getRomFilter(category, "excludeUpdate")) {
         const matchs = gameName.match(/\[UPDATE\sv(\d.+)\]/gi);
         if (matchs) {
+          skip = true;
+        }
+      }
+    }
+
+
+    if (!skip) {
+      if (getRomFilter(category, "excludeNonUsa")) {
+        const matchs = gameName.match(/\(USA\)/gi);
+        if (!matchs) {
           skip = true;
         }
       }

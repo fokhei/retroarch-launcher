@@ -9,13 +9,12 @@
         execPath: "D:\\emu\\RetroArch\\retroarch.exe",
         params: ["-L", "%retroArchCore%", "%romPath%"]
       },
+
       {
         name: "TeknoParrot",
         execPath: "D:\\emu\\TeknoParrot\\TeknoParrotUi.exe",
         params: ["--profile=%teknoParrotProfile%"]
       },
-     
-
       
       {
         name: "M2 Emulator",
@@ -43,7 +42,6 @@
         execPath: "%pickPath%",
         pickerFilters: ["exe", "bat"]
       },
-
 
 
       {
@@ -90,8 +88,13 @@
           romsPath: "F:\\roms\\Atari - 2600\\no-intro",
           romFilter: {
             excludeBeta: true,
-            excludeProto: true
-          }
+            excludeProto: true,
+            excludeNonUsa: true
+          },
+           players: [{
+	          name: "RetroArch",
+	          retroArchCore: "D:\\emu\\RetroArch\\cores\\stella_libretro.dll"
+	        }]
       },
 
 

@@ -87,6 +87,7 @@
           shortName: "atari2600",
           romsPath: "F:\\roms\\Atari - 2600\\no-intro",
           romFilter: {
+            excludeBios: true,
             excludeBeta: true,
             excludeProto: true,
             excludeNonUsa: true
@@ -104,9 +105,16 @@
           shortName: "atari5200",
           romsPath: "F:\\roms\\Atari - 5200\\no-intro",
           romFilter: {
+            excludeBios: true,
             excludeBeta: true,
-            excludeProto: true
-          }
+            excludeProto: true,
+            excludeDemo: true,
+            excludeDiagnostics: true,
+          },
+          players: [{
+	          name: "RetroArch",
+	          retroArchCore: "D:\\emu\\RetroArch\\cores\\atari800_libretro.dll"
+	        }]
       },
 
 
@@ -116,8 +124,11 @@
           shortName: "atari7800",
           romsPath: "F:\\roms\\Atari - 7800\\no-intro",
           romFilter: {
+            excludeBios: true,
             excludeBeta: true,
-            excludeProto: true
+            excludeProto: true,
+            excludeDemo: true,
+            excludeDiagnostics: true,
           }
       },
 

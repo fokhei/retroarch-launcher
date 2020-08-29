@@ -141,6 +141,16 @@ export const createGameItems = (
     }
 
 
+    if (!skip) {
+      if (getRomFilter(category, "excludeDiagnostics")) {
+        const matchs = gameName.match(/Diagnostic(s?)/gi);
+        if (matchs) {
+          skip = true;
+        }
+      }
+    }
+
+    
 
 
 

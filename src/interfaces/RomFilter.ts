@@ -12,4 +12,5 @@ export interface RomFilter {
   includeStatus?: Array<string>;
   includeExts?: Array<string>;
   excludeNonUsa?: boolean;
+  excludeDiagnostics?: boolean;
 }

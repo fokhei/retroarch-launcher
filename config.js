@@ -88,7 +88,10 @@
           thumbnailDir: "Atari - 2600",
           shortName: "atari2600",
           romsPath: "F:\\roms\\Atari - 2600\\no-intro",
-         
+          romFilter: {
+            excludeBeta: true,
+            excludeProto: true
+          }
       },
 
 
@@ -97,7 +100,10 @@
           thumbnailDir: "Atari - 5200",
           shortName: "atari5200",
           romsPath: "F:\\roms\\Atari - 5200\\no-intro",
-         
+          romFilter: {
+            excludeBeta: true,
+            excludeProto: true
+          }
       },
 
 
@@ -106,6 +112,10 @@
           thumbnailDir: "Atari - 7800",
           shortName: "atari7800",
           romsPath: "F:\\roms\\Atari - 7800\\no-intro",
+          romFilter: {
+            excludeBeta: true,
+            excludeProto: true
+          }
       },
 
 
@@ -114,6 +124,10 @@
           thumbnailDir: "Atari - Jaguar",
           shortName: "jaguar",
           romsPath: "F:\\roms\\Atari - Jaguar\\no-intro",
+          romFilter: {
+            excludeBeta: true,
+            excludeProto: true
+          }
       },
 
 
@@ -122,6 +136,10 @@
           thumbnailDir: "Atari - Lynx",
           shortName: "lynx",
           romsPath: "F:\\roms\\Atari - Lynx\\no-intro",
+          romFilter: {
+            excludeBeta: true,
+            excludeProto: true
+          }
       },
 
 

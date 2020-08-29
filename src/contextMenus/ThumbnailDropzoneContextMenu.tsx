@@ -20,7 +20,7 @@ const ThumbnailDropZoneContextMenu = (
   const enabled = Boolean(trigger && trigger.item && trigger.thumbnailType);
 
   const onDownload = () => {
-    dispatch(scanMissingThumbnails(trigger.item, appConfig));
+    dispatch(scanMissingThumbnails([trigger.item], appConfig));
   };
   const onGoogleSearch = () => {
     let suffix = "";

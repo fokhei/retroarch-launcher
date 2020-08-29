@@ -4,12 +4,12 @@ import { AppConfigState } from "../states/appConfigState";
 export const SCAN_MISSING_THUMBNAILS = "SCAN_MISSING_THUMBNAILS";
 
 export const scanMissingThumbnails = (
-  item: ComputedGameItem,
-  appCOnfig: AppConfigState
+  items: Array<ComputedGameItem>,
+  appConfig: AppConfigState
 ) => {
   return {
     type: SCAN_MISSING_THUMBNAILS,
-    item,
-    appCOnfig,
+    items,
+    appConfig,
   };
 };

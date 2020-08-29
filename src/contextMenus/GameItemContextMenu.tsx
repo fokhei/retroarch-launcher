@@ -33,7 +33,7 @@ const GameItemContextMenu = (props: GameItemContextMenuProps) => {
     remote.shell.showItemInFolder(trigger.item.romPath);
   };
   const onDownloadThumbnail = () => {
-    dispatch(scanMissingThumbnails(trigger.item, appConfig));
+    dispatch(scanMissingThumbnails([trigger.item], appConfig));
   };
   const onGoogleSearch = () => {
     googleSearch(appConfig, trigger.item);

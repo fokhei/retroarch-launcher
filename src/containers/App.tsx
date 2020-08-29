@@ -110,7 +110,7 @@ const _App = (props: AppProps) => {
   const renderContextMenus = () => {
     return (
       <>
-        <CategoryContextMenu dispatch={dispatch} appConfig={appConfig} />
+        <CategoryContextMenu dispatch={dispatch} appConfig={appConfig} gameItem={gameItem} />
         <GameItemContextMenu dispatch={dispatch} appConfig={appConfig} />
         <GameNameContextMenu />
         <RomNameContextMenu />

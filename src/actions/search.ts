@@ -41,7 +41,7 @@ export const search = (
   if (orderBy == OrderBy.RANDOM) {
     seq = seq.shuffle();
   } else {
-    seq.sortBy((item) => item.gameName);
+    seq = seq.sortBy((item) => item.gameName);
   }
 
   const searchResults: Array<ComputedGameItem> = seq.toArray();

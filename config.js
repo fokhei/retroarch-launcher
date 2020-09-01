@@ -1,6 +1,6 @@
 {
 
-  appDataDir: "D:\\retrobarrel",
+  appDataDir: "D:\\.retrobarrel",
   thumbnailPath: "D:\\thumbnails",
 
   externalApps: [
@@ -49,6 +49,14 @@
         execPath: "D:\\emu\\DOSBox-0.72\\dosbox.exe",
         pickerFilters: ["exe", "bat", "com"],
         params: ["%pickPath%"]
+        
+      },
+
+
+      {
+        name: "PCX2",
+        execPath: "D:\\emu\\PCSX2\\pcsx2.exe",
+        params: ["%romPath%"]
         
       },
 
@@ -139,9 +147,15 @@
           shortName: "jaguar",
           romsPath: "F:\\roms\\Atari - Jaguar\\no-intro",
           romFilter: {
+            excludeBios: true,
             excludeBeta: true,
-            excludeProto: true
-          }
+            excludeProto: true,
+            excludeDemo: true,
+          },
+          players: [{
+	          name: "RetroArch",
+	          retroArchCore: "D:\\emu\\RetroArch\\cores\\virtualjaguar_libretro.dll"
+	        }]
       },
 
 
@@ -151,18 +165,28 @@
           shortName: "lynx",
           romsPath: "F:\\roms\\Atari - Lynx\\no-intro",
           romFilter: {
+            excludeBios: true,
             excludeBeta: true,
-            excludeProto: true
-          }
+            excludeProto: true,
+            excludeDemo: true,
+          },
+          players: [{
+	          name: "RetroArch",
+	          retroArchCore: "D:\\emu\\RetroArch\\cores\\handy_libretro.dll"
+	        }]
       },
 
 
-       {
-          name: "Atari - ST",
-          thumbnailDir: "Atari - ST",
-          shortName: "atari st",
-          romsPath: "F:\\roms\\Atari - ST\\no-intro",
-      },
+      //  {
+      //     name: "Atari - ST",
+      //     thumbnailDir: "Atari - ST",
+      //     shortName: "atari st",
+      //     romsPath: "F:\\roms\\Atari - ST\\no-intro",
+      //     players: [{
+	    //       name: "RetroArch",
+	    //       retroArchCore: "D:\\emu\\RetroArch\\cores\\hatari_libretro.dll"
+	    //     }]
+      // },
 
 
 
@@ -171,6 +195,13 @@
           thumbnailDir: "Bandai - WonderSwan",
           shortName: "wonderSwan",
           romsPath: "F:\\roms\\Bandai - WonderSwan\\no-intro",
+          romFilter: {
+            excludeBios: true
+          },
+          players: [{
+	          name: "RetroArch",
+	          retroArchCore: "D:\\emu\\RetroArch\\cores\\mednafen_wswan_libretro.dll"
+	        }]
       },
 
 
@@ -180,6 +211,13 @@
           thumbnailDir: "Bandai - WonderSwan Color",
           shortName: "wonderSwan",
           romsPath: "F:\\roms\\Bandai - WonderSwan Color\\no-intro",
+          romFilter: {
+            excludeBios: true
+          },
+          players: [{
+	          name: "RetroArch",
+	          retroArchCore: "D:\\emu\\RetroArch\\cores\\mednafen_wswan_libretro.dll"
+	        }]
       },
 
 
@@ -480,7 +518,8 @@
         name: "Sega - Dreamcast",
         thumbnailDir: "Sega - Dreamcast",
         shortName: "dc",
-        romsPath: "D:\\roms\\Sega - Dreamcast\\redump",
+        romsPath: "F:\\roms\\Sega - Dreamcast\\redump-unzipped",
+        scanType: "folder",
         players: [{
           name: "RetroArch",
             retroArchCore: "D:\\emu\\RetroArch\\cores\\flycast_libretro.dll"
@@ -492,7 +531,7 @@
         name: "Sega - Dreamcast (中文)",
         thumbnailDir: "Sega - Dreamcast",
         shortName: "dc",
-        romsPath: "D:\\roms\\Sega - Dreamcast\\chinese",
+        romsPath: "F:\\roms\\Sega - Dreamcast\\chinese",
         players: [{
           name: "RetroArch",
             retroArchCore: "D:\\emu\\RetroArch\\cores\\flycast_libretro.dll"
@@ -679,8 +718,7 @@
         },
         players: [
           {
-            name: "RetroArch",
-            retroArchCore: "D:\\emu\\RetroArch\\cores\\play_libretro.dll"
+            name: "PCX2"
           }
         ]
       },
@@ -776,7 +814,7 @@
         name: "Sony - PlayStation Vita",
         thumbnailDir: "Sony - PlayStation Vita",
         shortName: "psv",
-        romsPath: "F:\\roms\\Sony - PlayStation Vita",
+        romsPath: "D:\\roms\\Sony - PlayStation Vita",
         datPath: "D:\\dats\\noPayStation\\TSV\\GAMES\\PSV_GAMES.tsv",
         datParser: "noPayStationPsvTsv"
       },

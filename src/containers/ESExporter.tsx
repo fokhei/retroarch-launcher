@@ -24,23 +24,34 @@ enum WaitingFor {
 
 const _ESExporter = (props: ESExporterProps) => {
   const { className, dispatch, appConfig, gameItem } = props;
-  const [romDist, setRomDist] = useState(EMPTY_PATH);
+  const [distination, setDistination] = useState(EMPTY_PATH);
+  const [exportFiles, setExportFiles] = useState(false);
+  const [exportThumbnails, setExportThumbnails] = useState(false);
+
   const [thumbnailType, setThumbnailType] = useState<ThumbnailType>(
     ThumbnailType.SNAP
   );
   const [waiting, setWaiting] = useState<WaitingFor>(WaitingFor.NONE);
 
-  const selectRomDist = () => {
+  const selectDistination = () => {
     const options: any = {
-      title: "location to save the roms: ",
+      title: "Distination",
       properties: ["openDirectory"],
     };
     const results = dialog.showOpenDialog(null, options);
     if (results && results.length) {
-      setRomDist(results[0]);
+      setDistination(results[0]);
     } else {
-      setRomDist(EMPTY_PATH);
+      setDistination(EMPTY_PATH);
     }
+  };
+
+  const onExportFilesChange = (evt: any) => {
+    setExportFiles(evt.target.checked);
+  };
+
+  const onExportThumbnailsChange = (evt: any) => {
+    setExportThumbnails(evt.target.checked);
   };
 
   const onThumbnailTypeChange = (evt: any) => {
@@ -51,7 +62,14 @@ const _ESExporter = (props: ESExporterProps) => {
   const onExport = () => {
     setWaiting(WaitingFor.EXPORT);
     dispatch(
-      exportToEmulationStation(romDist, thumbnailType, appConfig, gameItem)
+      exportToEmulationStation(
+        distination,
+        exportFiles,
+        exportThumbnails,
+        thumbnailType,
+        appConfig,
+        gameItem
+      )
     );
   };
 
@@ -59,11 +77,29 @@ const _ESExporter = (props: ESExporterProps) => {
     dispatch(showESExporer(false));
   };
 
+  const renderThumbnailType = () => {
+    if (exportThumbnails) {
+      return (
+        <div className="item">
+          <div className="key">Thumbnail type: </div>
+          <div className="value">
+            <select value={thumbnailType} onChange={onThumbnailTypeChange}>
+              <option value={ThumbnailType.BOX}>BoxArt</option>
+              <option value={ThumbnailType.SNAP}>Snapshot</option>
+              <option value={ThumbnailType.TITLE}>Title Screen</option>
+            </select>
+          </div>
+        </div>
+      );
+    }
+    return null;
+  };
+
   const renderActions = () => {
     if (waiting != WaitingFor.NONE) {
       return <div className="busy">Please wait ...</div>;
     }
-    const exportEnable = romDist != EMPTY_PATH;
+    const exportEnable = distination != EMPTY_PATH;
     return (
       <div className="actions">
         <button disabled={!exportEnable} onClick={onExport}>
@@ -101,21 +137,34 @@ const _ESExporter = (props: ESExporterProps) => {
   return (
     <div className={className}>
       <div className="head">Export {length} game(s) to EmulationStation</div>
-
-      <div className="item" onClick={selectRomDist}>
-        <div className="key">Roms distination : </div>
-        <div className="value selector">{romDist}</div>
-      </div>
-
-      <div className="item">
-        <div className="key">Thumbnail type: </div>
-        <div className="value">
-          <select value={thumbnailType} onChange={onThumbnailTypeChange}>
-            <option value={ThumbnailType.BOX}>BoxArt</option>
-            <option value={ThumbnailType.SNAP}>Snapshot</option>
-            <option value={ThumbnailType.TITLE}>Title Screen</option>
-          </select>
+      <div className="body">
+        <div className="item" onClick={selectDistination}>
+          <div className="key">Roms distination : </div>
+          <div className="value selector">{distination}</div>
         </div>
+
+        <div className="item">
+          <div className="key">Export files</div>
+          <div className="value">
+            <input
+              type="checkbox"
+              checked={exportFiles}
+              onChange={onExportFilesChange}
+            />
+          </div>
+        </div>
+
+        <div className="item">
+          <div className="key">Export thumbnails</div>
+          <div className="value">
+            <input
+              type="checkbox"
+              checked={exportThumbnails}
+              onChange={onExportThumbnailsChange}
+            />
+          </div>
+        </div>
+        {renderThumbnailType()}
       </div>
 
       {renderActions()}
@@ -124,35 +173,52 @@ const _ESExporter = (props: ESExporterProps) => {
 };
 
 const ESExporter = styled(_ESExporter)`
-  width: 320px;
-  height: 240px;
+  width: 480px;
+  height: 320px;
   padding: 20px;
   border-radius: 10px;
   background-color: #000;
+  display: flex;
+  flex-direction: column;
   .head {
     color: #666;
     padding-bottom: 10px;
     margin-bottom: 20px;
     border-bottom: 1px solid rgba(100, 100, 100, 0.1);
   }
-  .item {
-    margin-top: 10px;
-    .selector {
-      margin-top: 5px;
-      padding: 5px;
-      color: orange;
-      border-radius: 5px;
-      cursor: pointer;
-      border: 1px solid orange;
-      font-size: 11px;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    select {
-      margin-top: 5px;
+  .body {
+    flex: 1;
+    .item {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: nowrap;
+
+      > .key {
+        width: 150px;
+      }
+
+      > .value {
+        flex: 1;
+        &.selector {
+          width: 100%;
+          margin-top: 5px;
+          padding: 5px;
+          color: orange;
+          border-radius: 5px;
+          cursor: pointer;
+          border: 1px solid orange;
+          font-size: 11px;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        select {
+          margin-top: 5px;
+        }
+      }
     }
   }
+
   .actions,
   .busy {
     border-top: 1px solid rgba(100, 100, 100, 0.1);

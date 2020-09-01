@@ -16,7 +16,9 @@ export const EXPORT_TO_EMULATION_STATION_RESET =
   "EXPORT_TO_EMULATION_STATION_RESET";
 
 export const exportToEmulationStation = (
-  romDist: string,
+  distination: string,
+  exportFiles: boolean,
+  exportThumbnails: boolean,
   thumbnailType: ThumbnailType,
   appConfig: AppConfigState,
   gameItem: GameItemState
@@ -25,22 +27,30 @@ export const exportToEmulationStation = (
     dispatch(exportToEmulationStationStart());
 
     const { searchResults } = gameItem;
-    const imgDist = path.resolve(romDist, "thumbnails");
-
-    if (!fs.existsSync(imgDist)) {
-      fs.mkdirSync(imgDist);
-    }
+    const imgDist = path.resolve(distination, "thumbnails");
+    
 
     setTimeout(() => {
       try {
+
+        if (exportThumbnails) {
+          if (!fs.existsSync(imgDist)) {
+            fs.mkdirSync(imgDist);
+          }
+        }
+
+
         let xml = "";
 
         searchResults.map((gameItem) => {
           const romBasename = path.basename(gameItem.romPath);
-          fsExtra.copySync(
-            gameItem.romPath,
-            path.resolve(romDist, romBasename)
-          );
+
+          if (exportFiles) {
+            const filePath = path.resolve(distination, romBasename);
+            if (!fs.existsSync(filePath)) {
+              fsExtra.copySync(gameItem.romPath, filePath);
+            }
+          }
 
           const thumbnailInfo = getThumbnailInfo(
             gameItem,
@@ -48,25 +58,32 @@ export const exportToEmulationStation = (
             appConfig
           );
           const imgBaseName = path.basename(thumbnailInfo.local);
-          fsExtra.copySync(
-            thumbnailInfo.local,
-            path.resolve(imgDist, imgBaseName)
-          );
+          if (exportThumbnails) {
+            const imgPath = path.resolve(imgDist, imgBaseName);
+            if (!fs.existsSync(imgPath)) {
+              fsExtra.copySync(thumbnailInfo.local, imgPath);
+            }
+          }
 
           xml += `
         <game>
             <path>./${romBasename}</path>
-            <name>${gameItem.gameName}</name>
-            <image>./thumbnails/${imgBaseName}</image>
+            <name>${gameItem.gameName}</name>`;
+          if (exportThumbnails) {
+            xml += `
+            <image>./thumbnails/${imgBaseName}</image>`;
+          }
+
+          xml += `
         </game>
         `;
         });
 
         xml = `<?xml version="1.0"?>
-        <gameList>
-          ${xml}
-        </gameList>`;
-        const xmlDist = path.resolve(romDist, "gamelist.xml");
+  <gameList>
+    ${xml}
+  </gameList>`;
+        const xmlDist = path.resolve(distination, "gamelist.xml");
         fs.writeFileSync(xmlDist, xml);
         dispatch(exportToEmulationStationSuccess());
       } catch (error) {

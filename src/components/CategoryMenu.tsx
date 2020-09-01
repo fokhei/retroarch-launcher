@@ -287,7 +287,7 @@ const CategoryMenu = styled(_CategoryMenu)`
           color: #999;
           border-bottom: 1px solid rgba(100, 100, 100, 0.1);
           font-size: 11px;
-          font-family: Tahoma, Verdana, Geneva, sans-serif;
+          
           cursor: pointer;
           &:hover {
             .label {

@@ -28,7 +28,7 @@ export const exportToEmulationStation = (
 
     const { searchResults } = gameItem;
     const imgDist = path.resolve(distination, "thumbnails");
-    
+
 
     setTimeout(() => {
       try {
@@ -41,6 +41,8 @@ export const exportToEmulationStation = (
 
 
         let xml = "";
+
+        searchResults.sort();
 
         searchResults.map((gameItem) => {
           const romBasename = path.basename(gameItem.romPath);

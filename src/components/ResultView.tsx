@@ -19,6 +19,8 @@ import { AppConfigState } from "../states/appConfigState";
 import { play } from "../externalApps/play";
 import { FavourState } from "../states/favourState";
 import { SearchResultTriggerProps } from "../contextMenus/SearchResultContextMenu";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars, faImage } from "@fortawesome/free-solid-svg-icons";
 
 const _ResultView = (props: ResultViewProps) => {
   const { className, dispatch, explorer, gameItem, appConfig, favour } = props;
@@ -28,6 +30,25 @@ const _ResultView = (props: ResultViewProps) => {
   const { itemsMap, itemFilter, searchResults } = gameItem;
   const { categoryName } = itemFilter;
   const item = getComputedItem(itemsMap, selectedItemId);
+
+  const toggleCategory = () => {
+    const next = !explorerConfig.showCategory;
+    const config = {
+      ...explorerConfig,
+      showCategory: next,
+    };
+    dispatch(setExplorerConfig(config));
+  };
+
+  const toggleImageZone = () => {
+    const next = !explorerConfig.showImageZone;
+    const config = {
+      ...explorerConfig,
+      showImageZone: next,
+    };
+    dispatch(setExplorerConfig(config));
+  };
+
 
   const onLayoutChange = (evt: any) => {
     const layout = evt.target.value as ResultLayout;
@@ -70,22 +91,14 @@ const _ResultView = (props: ResultViewProps) => {
     clipboard.writeText(item.gameName, "selection");
   };
 
-  const renderGameName = () => {
-    if (item) {
-      const collect = (): GameNameTriggerProps => {
-        return {
-          gameName: item.gameName,
-        };
-      };
-      return (
-        <ContextMenuTrigger id={ContextMenuId.GAME_NAME} collect={collect}>
-          <div className="gameName" onClick={onGameNameClick}>
-            {item.gameName}
-          </div>
-        </ContextMenuTrigger>
-      );
-    }
-    return null;
+  const renderCategoryToggler = () => {
+    return (
+      <div className="categoryToggler">
+        <a onClick={toggleCategory}>
+          <FontAwesomeIcon icon={faBars} />
+        </a>
+      </div>
+    );
   };
 
   const renderResultLength = () => {
@@ -144,6 +157,38 @@ const _ResultView = (props: ResultViewProps) => {
     return null;
   };
 
+  const renderImageToggler = () => {
+    return (
+      <div className="imageToggler">
+        <a onClick={toggleImageZone}>
+          <FontAwesomeIcon icon={faImage} />
+        </a>
+      </div>
+    );
+  };
+
+  const renderThumbnailDownloader = () => {
+    return <ThumbnailDownloader dispatch={dispatch} gameItem={gameItem} />;
+  };
+
+  const renderGameName = () => {
+    if (item) {
+      const collect = (): GameNameTriggerProps => {
+        return {
+          gameName: item.gameName,
+        };
+      };
+      return (
+        <ContextMenuTrigger id={ContextMenuId.GAME_NAME} collect={collect}>
+          <div className="gameName" onClick={onGameNameClick}>
+            {item.gameName}
+          </div>
+        </ContextMenuTrigger>
+      );
+    }
+    return null;
+  };
+
   const renderContent = () => {
     if ([ResultLayout.GAME_TITLE, ResultLayout.FILE_NAME].includes(layout)) {
       return (
@@ -180,18 +225,18 @@ const _ResultView = (props: ResultViewProps) => {
     return null;
   };
 
-  const renderThumbnailDownloader = () => {
-    return <ThumbnailDownloader dispatch={dispatch} gameItem={gameItem} />;
-  };
-
   return (
     <div className={className}>
       <div className="head">
-        {renderResultLength()}
-        {renderThumbnailDownloader()}
+        <div className="left">
+          {renderCategoryToggler()}
+          {renderResultLength()}
+        </div>
+        <div className="mid">{renderThumbnailDownloader()}</div>
         <div className="right">
           {renderSlider()}
           {renderLayoutSwitch()}
+          {renderImageToggler()}
         </div>
       </div>
       <div className="subHead">{renderGameName()}</div>
@@ -211,37 +256,79 @@ const ResultView = styled(_ResultView)`
     font-size: 12px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 10px;
+    padding: 10px 0;
     color: #555;
     background-color: rgba(0, 0, 0, 0.3);
     border-bottom: 1px solid rgba(0, 0, 0, 0.3);
-    .length {
-      user-select: none;
-    }
-    .right {
+    > .left {
       display: flex;
+      align-items: center;
+      .categoryToggler {
+        width: 48px;
+        a {
+          display: block;
+          /* width: 32px; */
+          height: 32px;
+          text-align: center;
+          line-height: 32px;
+          color: #666;
+          cursor: pointer;
+          &:hover {
+            color: #17bbaf;
+            background-color: rgba(0, 0, 0, 0.3);
+          }
+        }
+      }
+      .length {
+        user-select: none;
+      }
     }
-    .options {
-      padding-left: 10px;
+    > .mid {
+      flex: 1;
+      align-items: center;
     }
 
-    .slider {
-      appearance: none;
-      outline: none;
-      width: 80px;
-      height: 8px;
-      background: rgba(150, 150, 150, 0.2);
-      margin-top: 8px;
-      &::-webkit-slider-thumb {
+    > .right {
+      display: flex;
+      align-items: center;
+      justify-content:flex-end;
+      .options {
+        padding-left: 10px;
+      }
+
+      .slider {
         appearance: none;
-        appearance: none;
-        width: 25px;
+        outline: none;
+        width: 80px;
         height: 8px;
-        background: rgba(150, 150, 150, 0.3);
-        cursor: pointer;
-        &:hover {
-          background-color: #17bbaf;
+        background: rgba(150, 150, 150, 0.2);
+        margin-top: 8px;
+        &::-webkit-slider-thumb {
+          appearance: none;
+          appearance: none;
+          width: 25px;
+          height: 8px;
+          background: rgba(150, 150, 150, 0.3);
+          cursor: pointer;
+          &:hover {
+            background-color: #17bbaf;
+          }
+        }
+      }
+      .imageToggler {
+        width: 48px;
+        a {
+          display: block;
+          /* width: 32px; */
+          height: 32px;
+          text-align: center;
+          line-height: 32px;
+          color: #666;
+          cursor: pointer;
+          &:hover {
+            color: #17bbaf;
+            background-color: rgba(0, 0, 0, 0.3);
+          }
         }
       }
     }

@@ -52,14 +52,17 @@ const _Explorer = (props: ExplorerProps) => {
   };
 
   const renderRightBar = () => {
-    return (
-      <RightBar
-        dispatch={dispatch}
-        appConfig={appConfig}
-        explorer={explorer}
-        gameItem={gameItem}
-      />
-    );
+    if (explorer.explorerConfig.showImageZone) {
+      return (
+        <RightBar
+          dispatch={dispatch}
+          appConfig={appConfig}
+          explorer={explorer}
+          gameItem={gameItem}
+        />
+      );
+    }
+    return null;
   };
 
   const mountEffect = () => {

@@ -10,7 +10,7 @@
   },
   "build": {
     "extraFiles": [
-      "config.js",
+      "dir.json",
       "icon.png"
     ]
   },

@@ -3,7 +3,7 @@ import { RootState } from "../states";
 import { connect } from "react-redux";
 import { AppConfigState } from "../states/appConfigState";
 import { Dispatch } from "redux";
-import { fetchAppConfig } from "../actions/fetchAppConfig";
+import { fetchCategories } from "../actions/fetchCategories";
 import BusyIcon from "../components/BusyIcon";
 import styled from "styled-components";
 import Explorer from "./Explorer";
@@ -29,10 +29,14 @@ import ESExporter from "./ESExporter";
 import { fetchUIConfig } from "../actions/fetchUI";
 import { ipcRenderer } from "electron";
 import { AppEvent } from "../interfaces/AppEvent";
+import { fetchDir } from "../actions/fetchDir";
+import { fetchExternalApps } from "../actions/fetchExternalApps";
 
 enum WaitingFor {
   NONE,
-  FETCH_APP_COFIG,
+  FETCH_DIR,
+  FETCH_EXTERNAL_APPS,
+  FETCH_CATEGORIES,
   FETCH_ITEMS,
   FETCH_FAVOUR,
   FECTH_UI_CONFIG,
@@ -48,9 +52,7 @@ const _App = (props: AppProps) => {
     scanner,
     favour,
   } = props;
-  const [waiting, setWaiting] = useState<WaitingFor>(
-    WaitingFor.FETCH_APP_COFIG
-  );
+  const [waiting, setWaiting] = useState<WaitingFor>(WaitingFor.FETCH_DIR);
 
   const { explorerConfig, showPlayerPicker, showESExporter } = explorer;
   const { selectedItemId } = explorerConfig;
@@ -110,7 +112,11 @@ const _App = (props: AppProps) => {
   const renderContextMenus = () => {
     return (
       <>
-        <CategoryContextMenu dispatch={dispatch} appConfig={appConfig} gameItem={gameItem} />
+        <CategoryContextMenu
+          dispatch={dispatch}
+          appConfig={appConfig}
+          gameItem={gameItem}
+        />
         <GameItemContextMenu dispatch={dispatch} appConfig={appConfig} />
         <GameNameContextMenu />
         <RomNameContextMenu />
@@ -124,22 +130,33 @@ const _App = (props: AppProps) => {
     );
   };
 
-  const dispatchFetchAllItems = () => {
-    setWaiting(WaitingFor.FETCH_ITEMS);
-    dispatch(fetchAllItems(appConfig));
-  };
-
   const mountEffect = () => {
-    setWaiting(WaitingFor.FETCH_APP_COFIG);
-    dispatch(fetchAppConfig());
+    setWaiting(WaitingFor.FETCH_DIR);
+    dispatch(fetchDir());
   };
 
   const appConfigChangeEffect = () => {
-    if (waiting == WaitingFor.FETCH_APP_COFIG) {
-      const { success, error } = appConfig.fetch;
+    if (waiting == WaitingFor.FETCH_DIR) {
+      const { success, error } = appConfig.remotes.dir;
       if (error) throw error;
       if (success) {
-        dispatchFetchAllItems();
+        setWaiting(WaitingFor.FETCH_EXTERNAL_APPS);
+        dispatch(fetchExternalApps(appConfig.appDataDir));
+      }
+    } else if (waiting == WaitingFor.FETCH_EXTERNAL_APPS) {
+      const { success, error } = appConfig.remotes.externalApps;
+      if (error) throw error;
+      if (success) {
+        setWaiting(WaitingFor.FETCH_CATEGORIES);
+        dispatch(fetchCategories(appConfig.appDataDir));
+      }
+    } else if (waiting == WaitingFor.FETCH_CATEGORIES) {
+      const { success, error } = appConfig.remotes.categories;
+      if (error) throw error;
+      if (success) {
+        ipcRenderer.sendSync(AppEvent.SET_APP_CONFIG, appConfig);
+        setWaiting(WaitingFor.FETCH_ITEMS);
+        dispatch(fetchAllItems(appConfig));
       }
     }
   };

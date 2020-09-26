@@ -6,9 +6,19 @@ export interface AppConfigState {
   thumbnailPath: string;
   externalApps: Array<ExternalApp>;
   categories: Array<Category>;
-  fetch: {
-    success: boolean;
-    error: boolean;
+  remotes: {
+    dir: {
+      success: boolean;
+      error: any;
+    };
+    externalApps: {
+      success: boolean;
+      error: any;
+    };
+    categories: {
+      success: boolean;
+      error: any;
+    };
   };
 }
 
@@ -18,9 +28,19 @@ export const createAppConfigState = (): AppConfigState => {
     thumbnailPath: "./thumbnails",
     externalApps: [],
     categories: [],
-    fetch: {
-      success: false,
-      error: null,
+    remotes: {
+      dir: {
+        success: false,
+        error: null,
+      },
+      externalApps: {
+        success: false,
+        error: null,
+      },
+      categories: {
+        success: false,
+        error: null,
+      },
     },
   };
 };

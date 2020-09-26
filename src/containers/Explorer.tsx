@@ -13,9 +13,18 @@ import RightBar from "../components/RightBar";
 import { FavourState } from "../states/favourState";
 import { ItemFilter } from "../interfaces/itemFilter";
 import SlideBar from "../components/SlideBar";
+import { MappingState } from "../states/mappingState";
 
 const _Explorer = (props: ExplorerProps) => {
-  const { className, dispatch, appConfig, gameItem, explorer, favour } = props;
+  const {
+    className,
+    dispatch,
+    appConfig,
+    gameItem,
+    explorer,
+    favour,
+    mapping,
+  } = props;
   const { itemFilter } = gameItem;
 
   const onSearch = (itemFilter: ItemFilter) => {
@@ -47,6 +56,7 @@ const _Explorer = (props: ExplorerProps) => {
         gameItem={gameItem}
         appConfig={appConfig}
         favour={favour}
+        mapping={mapping}
       />
     );
   };
@@ -96,6 +106,7 @@ interface ExplorerProps {
   gameItem: GameItemState;
   explorer: ExplorerState;
   favour: FavourState;
+  mapping: MappingState;
 }
 
 const mapStateToProps = (state: RootState) => {
@@ -104,6 +115,7 @@ const mapStateToProps = (state: RootState) => {
     gameItem: state.gameItem,
     explorer: state.explorer,
     favour: state.favour,
+    mapping: state.mapping,
   };
 };
 

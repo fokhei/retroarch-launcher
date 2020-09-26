@@ -20,10 +20,11 @@ import { play } from "../externalApps/play";
 import { FavourState } from "../states/favourState";
 import { SearchResultTriggerProps } from "../contextMenus/SearchResultContextMenu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faImage } from "@fortawesome/free-solid-svg-icons";
+import { faBars, faCog, faImage } from "@fortawesome/free-solid-svg-icons";
+import { MappingState } from '../states/mappingState';
 
 const _ResultView = (props: ResultViewProps) => {
-  const { className, dispatch, explorer, gameItem, appConfig, favour } = props;
+  const { className, dispatch, explorer, gameItem, appConfig, favour, mapping } = props;
   const { explorerConfig } = explorer;
   const { layout, gridSize, selectedItemId } = explorerConfig;
 
@@ -48,7 +49,6 @@ const _ResultView = (props: ResultViewProps) => {
     };
     dispatch(setExplorerConfig(config));
   };
-
 
   const onLayoutChange = (evt: any) => {
     const layout = evt.target.value as ResultLayout;
@@ -80,7 +80,7 @@ const _ResultView = (props: ResultViewProps) => {
     const category = getCategory(appConfig, item.categoryName);
     if (category.hasOwnProperty("players")) {
       if (category.players.length == 1) {
-        play(appConfig, item, category.players[0]);
+        play(appConfig, mapping, item, category.players[0]);
         return;
       }
     }
@@ -186,7 +186,17 @@ const _ResultView = (props: ResultViewProps) => {
         </ContextMenuTrigger>
       );
     }
-    return null;
+    return <div className="gameName" />;
+  };
+
+  const renderSettingIcon = () => {
+    return (
+      <ContextMenuTrigger id={ContextMenuId.SETTING}>
+        <div className="settingIcon">
+          <FontAwesomeIcon icon={faCog} />
+        </div>
+      </ContextMenuTrigger>
+    );
   };
 
   const renderContent = () => {
@@ -239,7 +249,10 @@ const _ResultView = (props: ResultViewProps) => {
           {renderImageToggler()}
         </div>
       </div>
-      <div className="subHead">{renderGameName()}</div>
+      <div className="subHead">
+        {renderGameName()}
+        {renderSettingIcon()}
+      </div>
       <div className="body">{renderContent()}</div>
     </div>
   );
@@ -291,7 +304,7 @@ const ResultView = styled(_ResultView)`
     > .right {
       display: flex;
       align-items: center;
-      justify-content:flex-end;
+      justify-content: flex-end;
       .options {
         padding-left: 10px;
       }
@@ -340,6 +353,9 @@ const ResultView = styled(_ResultView)`
     box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     user-select: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 
     .gameName {
       display: inline-block;
@@ -351,6 +367,20 @@ const ResultView = styled(_ResultView)`
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      flex: 1;
+    }
+    .settingIcon {
+      width: 48px;
+      height: 32px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #666;
+      cursor: pointer;
+      &:hover {
+        color: #17bbaf;
+        background-color: rgba(0, 0, 0, 0.3);
+      }
     }
   }
 
@@ -377,6 +407,7 @@ interface ResultViewProps {
   gameItem: GameItemState;
   appConfig: AppConfigState;
   favour: FavourState;
+  mapping: MappingState;
 }
 
 export default ResultView;

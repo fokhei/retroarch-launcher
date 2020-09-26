@@ -4,6 +4,7 @@ import { ExternalApp } from "../externalApps/ExternalApp";
 export interface AppConfigState {
   appDataDir: string;
   thumbnailPath: string;
+  teknoParrotDir: string;
   externalApps: Array<ExternalApp>;
   categories: Array<Category>;
   remotes: {
@@ -24,8 +25,9 @@ export interface AppConfigState {
 
 export const createAppConfigState = (): AppConfigState => {
   return {
-    appDataDir: "./",
-    thumbnailPath: "./thumbnails",
+    appDataDir: "",
+    thumbnailPath: "",
+    teknoParrotDir: "",
     externalApps: [],
     categories: [],
     remotes: {
@@ -40,7 +42,7 @@ export const createAppConfigState = (): AppConfigState => {
       categories: {
         success: false,
         error: null,
-      },
+      }
     },
   };
 };

@@ -7,9 +7,10 @@ import { AppConfigState } from "../states/appConfigState";
 import { getPlayers } from "../libs/getPlayers";
 import { Player } from "../externalApps/Player";
 import { play } from "../externalApps/play";
+import { MappingState } from '../states/mappingState';
 
 const _PlayerPicker = (props: PlayerPickerProps) => {
-  const { className, hideHandler, appConfig, explorer, gameItem } = props;
+  const { className, hideHandler, appConfig, mapping, explorer, gameItem } = props;
   const { explorerConfig } = explorer;
   const { selectedItemId } = explorerConfig;
   const item = gameItem.itemsMap[selectedItemId.toString()];
@@ -17,7 +18,7 @@ const _PlayerPicker = (props: PlayerPickerProps) => {
   const players = getPlayers(category);
 
   const onPlay = (player) => {
-    play(appConfig, item, player);
+    play(appConfig, mapping, item, player);
   };
   const renderPlayers = () => {
     if (players.length) {
@@ -92,6 +93,7 @@ interface PlayerPickerProps {
   appConfig: AppConfigState;
   explorer: ExplorerState;
   gameItem: GameItemState;
+  mapping: MappingState;
 }
 
 export default PlayerPicker;

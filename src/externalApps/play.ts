@@ -6,20 +6,24 @@ import { execFile } from "child_process";
 import { AppConfigState } from "../states/appConfigState";
 import { getExternalApp } from "../libs/getExternalApp";
 import { NotificationManager } from "react-notifications";
-import { getTeknoParrotProfile } from "../libs/teknoParrotProfile";
+import { getTeknoParrotProfile } from "../libs/getTeknoParrotProfile";
+import { MappingState } from "../states/mappingState";
 
 const { dialog } = require("electron").remote;
 
 export const play = (
   appConfig: AppConfigState,
+  mapping: MappingState,
   item: ComputedGameItem,
   player: Player
 ) => {
   if (player) {
+    let shouldExec = true;
     const romExist = fs.existsSync(item.romPath);
 
     if (!romExist) {
       NotificationManager.error(item.romPath, "Game file not exist!");
+      shouldExec = false;
       return;
     }
 
@@ -36,6 +40,7 @@ export const play = (
       };
       const results = dialog.showOpenDialog(null, dialogOptions);
       if (!results) {
+        shouldExec = false;
         return;
       }
       pickPath = results[0];
@@ -60,8 +65,17 @@ export const play = (
         } else if (param == "%pickPath%") {
           param = pickPath;
         } else if (param == "--profile=%teknoParrotProfile%") {
-          const profile = getTeknoParrotProfile(item.gameName);
-          param = param.replace("%teknoParrotProfile%", profile);
+          const profile = getTeknoParrotProfile(mapping, item.gameName);
+          if (profile != "") {
+            param = param.replace("%teknoParrotProfile%", profile);
+          } else {
+            NotificationManager.error(
+              item.gameName,
+              "Fail to map TeknoParrot profile"
+            );
+            shouldExec = false;
+            return;
+          }
         }
         args.push(param);
       });
@@ -71,13 +85,15 @@ export const play = (
       execPath = pickPath;
     }
 
-    const basename = path.basename(execPath);
-    const cwd = execPath.replace(basename, "");
-    const options: any = { cwd };
-    execFile(execPath, args, options, (err: any) => {
-      if (err) {
-        NotificationManager.error(err.toString());
-      }
-    });
+    if (shouldExec) {
+      const basename = path.basename(execPath);
+      const cwd = execPath.replace(basename, "");
+      const options: any = { cwd };
+      execFile(execPath, args, options, (err: any) => {
+        if (err) {
+          // NotificationManager.error(err.toString());
+        }
+      });
+    }
   }
 };

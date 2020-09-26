@@ -31,6 +31,9 @@ import { ipcRenderer } from "electron";
 import { AppEvent } from "../interfaces/AppEvent";
 import { fetchDir } from "../actions/fetchDir";
 import { fetchExternalApps } from "../actions/fetchExternalApps";
+import SettingContextMenu from "../contextMenus/SettingContextMenu";
+import { MappingState } from "../states/mappingState";
+import { fetchMapping } from "../actions/fetchMapping";
 
 enum WaitingFor {
   NONE,
@@ -40,6 +43,7 @@ enum WaitingFor {
   FETCH_ITEMS,
   FETCH_FAVOUR,
   FECTH_UI_CONFIG,
+  FETCH_MAPPING,
 }
 
 const _App = (props: AppProps) => {
@@ -51,6 +55,7 @@ const _App = (props: AppProps) => {
     explorer,
     scanner,
     favour,
+    mapping,
   } = props;
   const [waiting, setWaiting] = useState<WaitingFor>(WaitingFor.FETCH_DIR);
 
@@ -89,6 +94,7 @@ const _App = (props: AppProps) => {
           <PlayerPicker
             hideHandler={hideHandler}
             appConfig={appConfig}
+            mapping={mapping}
             explorer={explorer}
             gameItem={gameItem}
           />
@@ -112,10 +118,10 @@ const _App = (props: AppProps) => {
   const renderContextMenus = () => {
     return (
       <>
-        <CategoryContextMenu
+        <SettingContextMenu
           dispatch={dispatch}
           appConfig={appConfig}
-          gameItem={gameItem}
+          mapping={mapping}
         />
         <GameItemContextMenu dispatch={dispatch} appConfig={appConfig} />
         <GameNameContextMenu />
@@ -125,6 +131,11 @@ const _App = (props: AppProps) => {
         <ThumbnailDropZoneContextMenu
           dispatch={dispatch}
           appConfig={appConfig}
+        />
+        <CategoryContextMenu
+          dispatch={dispatch}
+          appConfig={appConfig}
+          gameItem={gameItem}
         />
       </>
     );
@@ -191,6 +202,17 @@ const _App = (props: AppProps) => {
           explorer.explorerConfig
         );
         ipcRenderer.sendSync(AppEvent.SET_ITEM_FILTER, gameItem.itemFilter);
+        setWaiting(WaitingFor.FETCH_MAPPING);
+        dispatch(fetchMapping(appConfig));
+      }
+    }
+  };
+
+  const mappingChangeEffect = () => {
+    if (waiting == WaitingFor.FETCH_MAPPING) {
+      const { error, success } = mapping.remotes.fetch;
+      if (error) throw error;
+      if (success) {
         setWaiting(WaitingFor.NONE);
       }
     }
@@ -201,6 +223,8 @@ const _App = (props: AppProps) => {
   useEffect(gameItemChangeEffect, [gameItem]);
   useEffect(favourChangeEffect, [favour]);
   useEffect(explorerChangeEffect, [explorer]);
+  useEffect(mappingChangeEffect, [mapping]);
+
 
   return (
     <div className={className}>
@@ -236,6 +260,7 @@ interface AppProps {
   explorer: ExplorerState;
   scanner: ScannerState;
   favour: FavourState;
+  mapping: MappingState;
 }
 const mapStateToProps = (state: RootState) => {
   return {
@@ -244,6 +269,7 @@ const mapStateToProps = (state: RootState) => {
     explorer: state.explorer,
     scanner: state.scanner,
     favour: state.favour,
+    mapping: state.mapping,
   };
 };
 export default connect(mapStateToProps)(App);

@@ -182,34 +182,36 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
   };
 
   const renderSubCategories = (mainLabel: string) => {
-    let childs: Array<any> = [];
-    if (subCategories.hasOwnProperty(mainLabel)) {
-      const subCategory = subCategories[mainLabel];
-      subCategory.map((subLabel) => {
-        const key = `${mainLabel} - ${subLabel}`;
-        let className = "subCategory";
-        if (mainLabel == categoryName && subLabel == subCategoryName) {
-          className += " actived";
-        }
-        childs.push(
-          <div className={className} key={key} data-subcategory={subLabel}>
-            {key}
-          </div>
-        );
-      });
+    if (mainLabel == categoryName) {
+      let childs: Array<any> = [];
+      if (subCategories.hasOwnProperty(mainLabel)) {
+        const subCategory = subCategories[mainLabel];
+        subCategory.map((subLabel) => {
+          // const key = `${mainLabel} - ${subLabel}`;
+          const key = subLabel;
+          let className = "subCategory";
+          if (mainLabel == categoryName && subLabel == subCategoryName) {
+            className += " actived";
+          }
+          childs.push(
+            <div className={className} key={key} data-subcategory={subLabel}>
+              {key}
+            </div>
+          );
+        });
+      }
+
+      if (childs.length) {
+        return <div className="subCategories">{childs}</div>;
+      }
     }
 
-    if (childs.length) {
-      return <div className="subCategories">{childs}</div>;
-    }
     return null;
   };
 
   return (
     <div className={className}>
-      <div className="head">
-        {rednerKeyWord()}
-      </div>
+      <div className="head">{rednerKeyWord()}</div>
       <div className="subHead">
         {renderFavourOptions()}
         {renderOrderOptions()}
@@ -287,7 +289,7 @@ const CategoryMenu = styled(_CategoryMenu)`
           color: #999;
           border-bottom: 1px solid rgba(100, 100, 100, 0.1);
           font-size: 11px;
-          
+
           cursor: pointer;
           &:hover {
             .label {
@@ -303,6 +305,7 @@ const CategoryMenu = styled(_CategoryMenu)`
           .subCategories {
             margin-top: 5px;
             .subCategory {
+              text-indent: 20px;
               padding: 5px 0;
               border-top: 1px solid rgba(100, 100, 100, 0.1);
               &:hover {

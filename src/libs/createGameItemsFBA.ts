@@ -43,6 +43,15 @@ export const createGameItemsFBA = (
       }
 
       if (shouldExport) {
+        if (getRomFilter(category, "excludeDemo")) {
+          const matchs = index.gameName.match(/\WDemo\W/gi);
+          if (matchs) {
+            shouldExport = false;
+          }
+        }
+      }
+
+      if (shouldExport) {
         let subCategoryName = "";
         if (Number(index.year) <= 1984) {
           subCategoryName = "Classic";

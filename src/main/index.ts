@@ -56,23 +56,19 @@ app.whenReady().then(() => {
   });
 
   ipcMain.on(AppEvent.OPEN_DEV_TOOLS, (_event: any) => {
-    if (!devTools) {
-      devTools = new BrowserWindow();
-      devTools.removeMenu();
-      mainWindow.webContents.setDevToolsWebContents(devTools.webContents);
-      mainWindow.webContents.openDevTools({ mode: "detach" });
-      mainWindow.webContents.once("did-finish-load", function () {
-        const windowBounds = mainWindow.getBounds();
-        devTools.setPosition(
-          windowBounds.x + windowBounds.width,
-          windowBounds.y
-        );
-        devTools.setSize(windowBounds.width / 2, windowBounds.height);
-      });
-    } else {
-      devTools.show();
-    }
+    devTools = new BrowserWindow();
+    devTools.removeMenu();
+    mainWindow.webContents.setDevToolsWebContents(devTools.webContents);
+    mainWindow.webContents.openDevTools({ mode: "detach" });
+    mainWindow.webContents.once("did-finish-load", function () {
+      const windowBounds = mainWindow.getBounds();
+      devTools.setPosition(windowBounds.x + windowBounds.width, windowBounds.y);
+      devTools.setSize(windowBounds.width / 2, windowBounds.height);
+    });
+
+    devTools.show();
   });
+  
   ipcMain.on(AppEvent.RELOAD, (_event: any) => {
     mainWindow.reload();
   });

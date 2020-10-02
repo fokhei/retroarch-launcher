@@ -13,4 +13,5 @@ export interface RomFilter {
   includeExts?: Array<string>;
   excludeNonUsa?: boolean;
   excludeDiagnostics?: boolean;
+  excludeByFileNames?: Array<string>;
 }

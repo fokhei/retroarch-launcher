@@ -150,6 +150,21 @@ export const createGameItems = (
       }
     }
 
+
+    if (!skip) {
+      const filters = getRomFilter(category, "excludeByFileNames");
+      if (filters) {
+        const {length} = filters;
+        for (let i=0; i<length; i++) {
+            if (romName.includes(filters[i])) {
+              skip = true;
+              break;
+            }
+        }
+      }
+    }
+
+
     if (!skip) {
       if (getNameFilter(category, "removeLangBracket")) {
         gameName = removeLangBracket(gameName);

@@ -10,8 +10,9 @@ enum WaitingFor {
 }
 
 const _ThumbnailDownloader = (props: ThumbnailDownloaderProps) => {
-  const { className, dispatch, gameItem } = props;
+  const { dispatch, gameItem } = props;
   const [waiting, setWaiting] = useState<WaitingFor>(WaitingFor.NONE);
+  const className = props.className + " ThumbnailDownloader";
 
   const renderStatus = () => {
     if (waiting == WaitingFor.DOWNLOAD) {
@@ -53,7 +54,9 @@ const _ThumbnailDownloader = (props: ThumbnailDownloaderProps) => {
   return <div className={className}>{renderStatus()}</div>;
 };
 
-const ThumbnailDownloader = styled(_ThumbnailDownloader)``;
+const ThumbnailDownloader = styled(_ThumbnailDownloader)`
+text-align:center;
+`;
 
 interface ThumbnailDownloaderProps {
   className?: string;

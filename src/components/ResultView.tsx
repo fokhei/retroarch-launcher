@@ -295,6 +295,7 @@ const ResultView = styled(_ResultView)`
       .length {
         user-select: none;
       }
+      
     }
     > .mid {
       flex: 1;

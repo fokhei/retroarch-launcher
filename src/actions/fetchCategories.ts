@@ -9,13 +9,15 @@ export const fetchCategories = (appDataDir: string) => {
   let error = null;
   let categories: Array<Category> = [];
 
-  const filePath = path.resolve(appDataDir, "categories.js");
+  const filePath = path.resolve(appDataDir, "categories.json");
   if (!fs.existsSync(filePath)) {
     error = `File not found: ${filePath}`;
   } else {
     try {
       const text: string = fs.readFileSync(filePath).toString();
-      eval("categories=" + text);
+      // eval("categories=" + text);
+      const json = JSON.parse(text);
+      categories = json.categories;
       success = true;
    
     } catch (error) {

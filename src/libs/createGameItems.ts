@@ -16,21 +16,26 @@ import { removeNonFirstBrackets } from "../nameFilters/removeNonFirstBrackets";
 import { removePspIdBracket } from "../nameFilters/removePspIdBracket";
 import { getRomFilter } from "./getRomFilter";
 import { getNameFilter } from "./getNameFilter";
-
+import { ScanType } from "../interfaces/ScanType";
 
 export const createGameItems = (
   category: Category,
   subCategoryName: string,
   files: Array<string>,
-  datIndexes?: DatIndexes
+  datIndexes?: DatIndexes,
+  scanType?: ScanType
 ): Array<GameItem> => {
   let items = [];
   files.forEach((file) => {
     const romName = removeAlias(path.basename(file));
-    const ext = path.extname(romName);
-    let gameName = romName.replace(ext, "");
-    let skip = false;
 
+    const ext = path.extname(romName);
+    let gameName = romName;
+    if (scanType != ScanType.FOLDER) {
+      gameName = romName.replace(ext, "");
+    }
+
+    let skip = false;
 
     const datParser = getDatParser(category);
     if (datParser) {
@@ -40,8 +45,6 @@ export const createGameItems = (
         skip = !gameName;
       }
     }
-
-    
 
     if (!skip) {
       const includeExts = getRomFilter(category, "includeExts");
@@ -120,7 +123,6 @@ export const createGameItems = (
       }
     }
 
-
     if (!skip) {
       if (getRomFilter(category, "excludeUpdate")) {
         const matchs = gameName.match(/\[UPDATE\sv(\d.+)\]/gi);
@@ -129,7 +131,6 @@ export const createGameItems = (
         }
       }
     }
-
 
     if (!skip) {
       if (getRomFilter(category, "excludeNonUsa")) {
@@ -140,7 +141,6 @@ export const createGameItems = (
       }
     }
 
-
     if (!skip) {
       if (getRomFilter(category, "excludeDiagnostics")) {
         const matchs = gameName.match(/Diagnostic(s?)/gi);
@@ -149,10 +149,6 @@ export const createGameItems = (
         }
       }
     }
-
-    
-
-
 
     if (!skip) {
       if (getNameFilter(category, "removeLangBracket")) {

@@ -5,6 +5,8 @@ import { NotificationManager } from "react-notifications";
 import { getFiles } from "../libs/getFiles";
 import readXmlAsJs from "../libs/readXmlAsJs";
 import { MappingState } from "../states/mappingState";
+import { removeSymbolForFileName } from "../nameFilters/removeSymbolForFileName";
+import { removeDoubleSpace } from "../nameFilters/removeDoubleSpace";
 
 export const SCAN_TEKNOPARROT_PROFILES_SUCCESS =
   "SCAN_TEKNOPARROT_PROFILES_SUCCESS";
@@ -35,7 +37,10 @@ export const scanTeknoParrotProfiles = (
             const xml = readXmlAsJs(file);
             const profileName = path.basename(file);
             const gameName = xml.GameProfile.GameName._text;
-            const romFolderName = gameName.replace(/[&*/:`<>?\\|]/gi, "");
+            const romFolderName = removeDoubleSpace(
+              removeSymbolForFileName(gameName)
+            );
+          
             next.teknoParrot[romFolderName] = profileName;
           });
           // console.log(mapping);

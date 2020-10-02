@@ -9,6 +9,7 @@ export const categoriesHandler = (
   action: AnyAction
 ): AppConfigState => {
   const { success, error, categories } = action;
+ 
   return Object.assign(
     { ...state },
     {

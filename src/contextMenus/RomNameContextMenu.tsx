@@ -3,6 +3,7 @@ import { ContextMenu, connectMenu } from "react-contextmenu";
 import { ContextMenuId } from "./ContextMenuId";
 import { clipboard } from "electron";
 import { createMenuItem } from "./createMenuItem";
+import * as path from "path";
 
 const id = ContextMenuId.ROM_NAME;
 
@@ -10,13 +11,18 @@ const RomNameContextMenu = (props: RomNameContextMenuProps) => {
   const { trigger } = props;
   const enabled = Boolean(trigger && trigger.romPath);
 
-  const onCopy = () => {
+  const onCopyName = () => {
+    clipboard.writeText(path.basename(trigger.romPath), "selection");
+  };
+
+  const onCopyPath = () => {
     clipboard.writeText(trigger.romPath, "selection");
   };
 
   return (
     <ContextMenu id={id}>
-      {createMenuItem("Copy rom path", onCopy, enabled)}
+      {createMenuItem("Copy rom name", onCopyName, enabled)}
+      {createMenuItem("Copy rom path", onCopyPath, enabled)}
     </ContextMenu>
   );
 };

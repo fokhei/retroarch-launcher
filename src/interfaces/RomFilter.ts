@@ -14,4 +14,5 @@ export interface RomFilter {
   excludeNonUsa?: boolean;
   excludeDiagnostics?: boolean;
   excludeByFileNames?: Array<string>;
+  excludeHomebrew?: boolean;
 }

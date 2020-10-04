@@ -12,7 +12,10 @@ const RomNameContextMenu = (props: RomNameContextMenuProps) => {
   const enabled = Boolean(trigger && trigger.romPath);
 
   const onCopyName = () => {
-    clipboard.writeText(path.basename(trigger.romPath), "selection");
+    const basename = path.basename(trigger.romPath);
+    const ext = path.extname(basename);
+    const noExt = basename.replace(ext, "");
+    clipboard.writeText(noExt, "selection");
   };
 
   const onCopyPath = () => {

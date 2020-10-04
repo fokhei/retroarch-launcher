@@ -23,6 +23,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faCog, faImage } from "@fortawesome/free-solid-svg-icons";
 import { MappingState } from '../states/mappingState';
 
+
+
 const _ResultView = (props: ResultViewProps) => {
   const { className, dispatch, explorer, gameItem, appConfig, favour, mapping } = props;
   const { explorerConfig } = explorer;
@@ -234,6 +236,8 @@ const _ResultView = (props: ResultViewProps) => {
     }
     return null;
   };
+
+
 
   return (
     <div className={className}>

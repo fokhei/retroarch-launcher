@@ -1,4 +1,5 @@
 import fs from "fs";
+import * as path from "path";
 import React, { RefObject, createRef, useState } from "react";
 import styled from "styled-components";
 import { AutoSizer, Grid, GridCellProps } from "react-virtualized";
@@ -10,6 +11,14 @@ import { GameItemTriggerProps } from "../contextMenus/GameItemContextMenu";
 import { ResultLayout } from "../interfaces/ResultLayout";
 import { ThumbnailType } from "../interfaces/ThumbnailType";
 import { FavourState } from "../states/favourState";
+
+// declare global {
+//   interface Window {
+//     out: ()=>void
+//   }
+// }
+
+
 
 const _ResultGrid = (props: ResultGridProps) => {
   const {
@@ -109,6 +118,17 @@ const _ResultGrid = (props: ResultGridProps) => {
     return null;
   };
 
+  // window.out = ()=>{
+  //   let arr: Array<string> = [];
+  //   results.map(result=>{
+  //     const basename = path.basename(result.romPath)
+  //     const ext = path.extname(basename);
+  //     const noExt = basename.replace(ext, "");
+  //     arr.push(noExt)
+  //   })
+  //   console.log(JSON.stringify(arr));
+  // }
+
   return (
     <div className={className}>
       <AutoSizer>
@@ -160,7 +180,8 @@ const ResultGrid = styled(_ResultGrid)`
             height: 100%;
             background-position: center center;
             background-repeat: no-repeat;
-            background-size: cover;
+            background-size: contain;
+            /* background-size: cover; */
             border: 1px solid transparent;
           }
 

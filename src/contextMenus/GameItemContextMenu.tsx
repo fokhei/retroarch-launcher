@@ -53,7 +53,7 @@ const GameItemContextMenu = (props: GameItemContextMenuProps) => {
     const ext = path.extname(basename);
     const noExt = basename.replace(ext, "");
 
-    if (!mameGroups2.hasOwnProperty(category)){
+    if (!mameGroups2.hasOwnProperty(category)) {
       mameGroups2[category] = [];
     }
 
@@ -77,9 +77,17 @@ const GameItemContextMenu = (props: GameItemContextMenuProps) => {
   const onSetToGamble = () => {
     setToMameGroup("Gamble");
   };
+  const onSetToLightgun = () => {
+    setToMameGroup("Lightgun");
+  };
+
   const onSetToMahJong = () => {
     setToMameGroup("MahJong");
   };
+  const onSetToPinball = () => {
+    setToMameGroup("Pinball");
+  };
+
   const onSetToPuzzle = () => {
     setToMameGroup("Puzzle");
   };
@@ -89,20 +97,22 @@ const GameItemContextMenu = (props: GameItemContextMenuProps) => {
   const onSetToRacing = () => {
     setToMameGroup("Racing");
   };
-  const onSetToShootingHorizontal= () => {
+
+  const onSetToRhyme = () => {
+    setToMameGroup("Rhyme");
+  };
+
+  const onSetToShootingHorizontal = () => {
     setToMameGroup("Shooting (Horizontal)");
   };
 
-  const onSetToShootingVertical= () => {
+  const onSetToShootingVertical = () => {
     setToMameGroup("Shooting (Vertical)");
   };
 
-  const onSetToSport= () => {
+  const onSetToSport = () => {
     setToMameGroup("Sport");
   };
-
-
-
 
   return (
     <ContextMenu id={id}>
@@ -118,12 +128,23 @@ const GameItemContextMenu = (props: GameItemContextMenuProps) => {
       {createMenuItem("set to Classic", onSetToClassic, enabled)}
       {createMenuItem("set to Fighting", onSetToFighting, enabled)}
       {createMenuItem("set to Gamble", onSetToGamble, enabled)}
+      {createMenuItem("set to Lightgun", onSetToLightgun, enabled)}
       {createMenuItem("set to MahJong", onSetToMahJong, enabled)}
+      {createMenuItem("set to Pinball", onSetToPinball, enabled)}
       {createMenuItem("set to Puzzle", onSetToPuzzle, enabled)}
       {createMenuItem("set to Quiz", onSetToQuiz, enabled)}
       {createMenuItem("set to Racing", onSetToRacing, enabled)}
-      {createMenuItem("set to Shooting Horizontal", onSetToShootingHorizontal, enabled)}
-      {createMenuItem("set to Shooting Vertical", onSetToShootingVertical, enabled)}
+      {createMenuItem("set to Rhyme", onSetToRhyme, enabled)}
+      {createMenuItem(
+        "set to Shooting Horizontal",
+        onSetToShootingHorizontal,
+        enabled
+      )}
+      {createMenuItem(
+        "set to Shooting Vertical",
+        onSetToShootingVertical,
+        enabled
+      )}
       {createMenuItem("set to Sport", onSetToSport, enabled)}
     </ContextMenu>
   );

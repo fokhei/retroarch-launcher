@@ -6,12 +6,12 @@ import { createGameItem } from "./createGameItem";
 import { Category } from "../interfaces/Category";
 import { GameItem } from "../interfaces/GameItem";
 
-interface SubGroup {
+interface ManufacturerGroup {
   name: string;
   manufacturers: Array<string>;
 }
 
-const subGroups: Array<SubGroup> = [
+const manufacturerGroups: Array<ManufacturerGroup> = [
   {
     name: "Capcom",
     manufacturers: ["Capcom"],
@@ -172,8 +172,8 @@ export const createGameItemsFBA = (
         }
 
         if (subCategoryName == "") {
-          for (let i = 0; i < subGroups.length; i++) {
-            const subGroup = subGroups[i];
+          for (let i = 0; i < manufacturerGroups.length; i++) {
+            const subGroup = manufacturerGroups[i];
             for (let j = 0; j < subGroup.manufacturers.length; j++) {
               const pattern = subGroup.manufacturers[j];
               // console.log(pattern, index.manufacturer, index.manufacturer.match(new RegExp(pattern, "gi")) )

@@ -19,18 +19,10 @@ import { ThumbnailDropZoneTriggerProps } from "../contextMenus/ThumbnailDropzone
 
 const _RightBar = (props: RightBarProps) => {
   const { className, dispatch, explorer, gameItem, appConfig } = props;
-  const { explorerConfig } = explorer
+  const { explorerConfig } = explorer;
   const { selectedItemId } = explorerConfig;
   const { itemsMap } = gameItem;
   const item = getComputedItem(itemsMap, selectedItemId);
-
-  // if (item) {
-  //   const basename = path.basename(item.romPath);
-  //   const ext = path.extname(basename);
-  //   const noExt = basename.replace(ext, "");
-  //   console.log(`"${noExt}",`)
-  // }
-  
 
   const onThumbnailDoubleClick = (evt: any) => {
     const thumbnailType = evt.currentTarget.getAttribute(

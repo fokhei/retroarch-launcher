@@ -12,14 +12,6 @@ import { ResultLayout } from "../interfaces/ResultLayout";
 import { ThumbnailType } from "../interfaces/ThumbnailType";
 import { FavourState } from "../states/favourState";
 
-// declare global {
-//   interface Window {
-//     out: ()=>void
-//   }
-// }
-
-
-
 const _ResultGrid = (props: ResultGridProps) => {
   const {
     className,
@@ -117,17 +109,6 @@ const _ResultGrid = (props: ResultGridProps) => {
     }
     return null;
   };
-
-  // window.out = ()=>{
-  //   let arr: Array<string> = [];
-  //   results.map(result=>{
-  //     const basename = path.basename(result.romPath)
-  //     const ext = path.extname(basename);
-  //     const noExt = basename.replace(ext, "");
-  //     arr.push(noExt)
-  //   })
-  //   console.log(JSON.stringify(arr));
-  // }
 
   return (
     <div className={className}>

@@ -12,6 +12,7 @@ import { setPlayerPicker } from "../actions/setPlayerPicker";
 import { toggleFavour } from "../actions/toggleFavour";
 import { mameGroups } from "../libs/mameGroups";
 import * as path from "path";
+import lazy from "lazy.js";
 
 declare global {
   interface Window {
@@ -57,10 +58,13 @@ const GameItemContextMenu = (props: GameItemContextMenuProps) => {
       mameGroups2[category] = [];
     }
 
-    if (!mameGroups2[category].hasOwnProperty(noExt)) {
+    if (!mameGroups2[category].includes(noExt)) {
       mameGroups2[category].push(noExt);
     }
     window.out = () => {
+      Object.keys(mameGroups2).map((key) => {
+        mameGroups2[key] = lazy(mameGroups2[key]).uniq().sort().toArray();
+      });
       console.log(JSON.stringify(mameGroups2));
     };
   };

@@ -6,4 +6,6 @@ export interface DatIndex {
   diskName?: string;
   year?: string;
   manufacturer?: string;
+  cloneOf?: string;
+  romOf?: string;
 }

@@ -76,6 +76,10 @@ const datParsers: DatParsers = {
         continue;
       }
 
+      // if (attrs.hasOwnProperty("cloneof")) {
+      //   continue;
+      // }
+
       if (includeStatus) {
         const driverStatus = game.driver._attributes.status;
         if (!includeStatus.includes(driverStatus)) {
@@ -92,6 +96,10 @@ const datParsers: DatParsers = {
       const gameName = game.description._text;
       const driverStatus = game.driver._attributes.status;
       const year = game.year._text.substr(0, 4);
+      let cloneOf = "";
+      if (attrs.hasOwnProperty("cloneof")) {
+        cloneOf = attrs.cloneof;
+      }
 
       datIndexes[id] = {
         id,
@@ -99,13 +107,13 @@ const datParsers: DatParsers = {
         manufacturer,
         driverStatus,
         year,
+        cloneOf,
       };
     }
     return datIndexes;
   },
 
   [ParserType.MAME]: (category: Category, datIndexes: DatIndexes) => {
-   
     const datPath = getDatPath(category);
     const excludeRomOfs = getRomFilter(category, "excludeRomOfs") as Array<
       string
@@ -180,7 +188,7 @@ const datParsers: DatParsers = {
         };
       }
     }
-    
+
     return datIndexes;
   },
 

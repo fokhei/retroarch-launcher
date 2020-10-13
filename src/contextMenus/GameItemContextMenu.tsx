@@ -10,9 +10,9 @@ import { scanMissingThumbnails } from "../actions/scanMissingThumbnails";
 import { createMenuItem } from "./createMenuItem";
 import { setPlayerPicker } from "../actions/setPlayerPicker";
 import { toggleFavour } from "../actions/toggleFavour";
-import { mameGroups } from "../libs/mameGroups";
-import * as path from "path";
-import lazy from "lazy.js";
+// import { mameGroups } from "../libs/mameGroups";
+// import * as path from "path";
+// import lazy from "lazy.js";
 
 declare global {
   interface Window {
@@ -21,7 +21,7 @@ declare global {
 }
 
 const id = ContextMenuId.GAME_ITEM;
-let mameGroups2 = { ...mameGroups };
+// let mameGroups2 = { ...mameGroups };
 
 const GameItemContextMenu = (props: GameItemContextMenuProps) => {
   const { dispatch, appConfig, trigger } = props;
@@ -49,85 +49,91 @@ const GameItemContextMenu = (props: GameItemContextMenuProps) => {
     googleSearch(appConfig, trigger.item);
   };
 
-  const setToMameGroup = (category: string) => {
-    const basename = path.basename(trigger.item.romPath);
-    const ext = path.extname(basename);
-    const noExt = basename.replace(ext, "");
+  // const setToMameGroup = (category: string) => {
+  //   const basename = path.basename(trigger.item.romPath);
+  //   const ext = path.extname(basename);
+  //   const noExt = basename.replace(ext, "");
 
-    if (!mameGroups2.hasOwnProperty(category)) {
-      mameGroups2[category] = [];
-    }
+  //   if (!mameGroups2.hasOwnProperty(category)) {
+  //     mameGroups2[category] = [];
+  //   }
 
-    if (!mameGroups2[category].includes(noExt)) {
-      mameGroups2[category].push(noExt);
-    }
-    window.out = () => {
-      Object.keys(mameGroups2).map((key) => {
-        mameGroups2[key] = lazy(mameGroups2[key]).uniq().sort().toArray();
-      });
-      console.log(JSON.stringify(mameGroups2));
-    };
-  };
+  //   if (!mameGroups2[category].includes(noExt)) {
+  //     mameGroups2[category].push(noExt);
+  //   }
+  //   window.out = () => {
+  //     Object.keys(mameGroups2).map((key) => {
+  //       mameGroups2[key] = lazy(mameGroups2[key]).uniq().sort().toArray();
+  //     });
+  //     console.log(JSON.stringify(mameGroups2));
+  //   };
+  // };
 
-  const onSetToAction = () => {
-    setToMameGroup("Action");
-  };
-  const onSetToClassic = () => {
-    setToMameGroup("Classic");
-  };
-  const onSetToFighting = () => {
-    setToMameGroup("Fighting");
-  };
-  const onSetToGamble = () => {
-    setToMameGroup("Gamble");
-  };
-  const onSetToLightgun = () => {
-    setToMameGroup("Lightgun");
-  };
+  // const onSetToAction = () => {
+  //   setToMameGroup("Action");
+  // };
+  // const onSetToClassic = () => {
+  //   setToMameGroup("Classic");
+  // };
+  // const onSetToFighting = () => {
+  //   setToMameGroup("Fighting");
+  // };
+  // const onSetToGamble = () => {
+  //   setToMameGroup("Gamble");
+  // };
+  // const onSetToLightgun = () => {
+  //   setToMameGroup("Lightgun");
+  // };
 
-  const onSetToMahJong = () => {
-    setToMameGroup("MahJong");
-  };
-  const onSetToPinball = () => {
-    setToMameGroup("Pinball");
-  };
+  // const onSetToMahJong = () => {
+  //   setToMameGroup("MahJong");
+  // };
+  // const onSetToPinball = () => {
+  //   setToMameGroup("Pinball");
+  // };
 
-  const onSetToPuzzle = () => {
-    setToMameGroup("Puzzle");
-  };
-  const onSetToQuiz = () => {
-    setToMameGroup("Quiz");
-  };
-  const onSetToRacing = () => {
-    setToMameGroup("Racing");
-  };
+  // const onSetToPuzzle = () => {
+  //   setToMameGroup("Puzzle");
+  // };
+  // const onSetToQuiz = () => {
+  //   setToMameGroup("Quiz");
+  // };
+  // const onSetToRacing = () => {
+  //   setToMameGroup("Racing");
+  // };
 
-  const onSetToRhyme = () => {
-    setToMameGroup("Rhyme");
-  };
+  // const onSetToRhyme = () => {
+  //   setToMameGroup("Rhyme");
+  // };
 
-  const onSetToShootingHorizontal = () => {
-    setToMameGroup("Shooting (Horizontal)");
-  };
+  // const onSetToShootingHorizontal = () => {
+  //   setToMameGroup("Shooting (Horizontal)");
+  // };
 
-  const onSetToShootingVertical = () => {
-    setToMameGroup("Shooting (Vertical)");
-  };
+  // const onSetToShootingVertical = () => {
+  //   setToMameGroup("Shooting (Vertical)");
+  // };
 
-  const onSetToSport = () => {
-    setToMameGroup("Sport");
-  };
+
+  // const onSetToShootingMisc = () => {
+  //   setToMameGroup("Shooting (Misc)");
+  // };
+
+  // const onSetToSport = () => {
+  //   setToMameGroup("Sport");
+  // };
 
   return (
     <ContextMenu id={id}>
-      {/* {createMenuItem("Play", onPlay, enabled)}
+      {createMenuItem("Play", onPlay, enabled)}
       {createMenuItem("Toggle favour", onToggleFavour, enabled)}
       {createMenuItem("Open rom", onOpen, enabled)}
       {createMenuItem("Show rom directory", onShow, enabled)}
-      {createMenuItem("Download thumbnails", onDownloadThumbnail, enabled)} */}
+      {createMenuItem("Download thumbnails", onDownloadThumbnail, enabled)} 
       {createMenuItem("Google search image", onGoogleSearch, enabled)}
 
       {/* ----------------------------------------- */}
+{/*       
       {createMenuItem("set to Action", onSetToAction, enabled)}
       {createMenuItem("set to Classic", onSetToClassic, enabled)}
       {createMenuItem("set to Fighting", onSetToFighting, enabled)}
@@ -149,7 +155,12 @@ const GameItemContextMenu = (props: GameItemContextMenuProps) => {
         onSetToShootingVertical,
         enabled
       )}
-      {createMenuItem("set to Sport", onSetToSport, enabled)}
+       {createMenuItem(
+        "set to Shooting Misc",
+        onSetToShootingMisc,
+        enabled
+      )}
+      {createMenuItem("set to Sport", onSetToSport, enabled)} */}
     </ContextMenu>
   );
 };

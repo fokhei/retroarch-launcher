@@ -1,5 +1,4 @@
 import fs from "fs";
-import * as path from "path";
 import React, { RefObject, createRef, useState } from "react";
 import styled from "styled-components";
 import { AutoSizer, Grid, GridCellProps } from "react-virtualized";
@@ -161,8 +160,8 @@ const ResultGrid = styled(_ResultGrid)`
             height: 100%;
             background-position: center center;
             background-repeat: no-repeat;
-            background-size: contain;
-            /* background-size: cover; */
+            /* background-size: contain; */
+            background-size: cover;
             border: 1px solid transparent;
           }
 

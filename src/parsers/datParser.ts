@@ -177,6 +177,11 @@ const datParsers: DatParsers = {
           manufacturer = game.manufacturer._text;
         }
 
+        let cloneOf = "";
+        if (attrs.hasOwnProperty("cloneof")) {
+          cloneOf = attrs.cloneof;
+        }
+
         datIndexes[id] = {
           id,
           gameName,
@@ -185,6 +190,7 @@ const datParsers: DatParsers = {
           diskName,
           year,
           manufacturer,
+          cloneOf
         };
       }
     }

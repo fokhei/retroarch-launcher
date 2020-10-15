@@ -13,6 +13,7 @@ import { getDirectoriesSync } from "../libs/getDirectoriesSync";
 import { createGameItemsFBA } from "../libs/createGameItemsFBA";
 import { createGameItemsMAME } from "../libs/createGameItemsMAME";
 import { GAME_LIST_DIR_NAME } from "../libs/constants";
+import { filterExts } from "../libs/filterExts";
 
 export const SCAN_ROMS_START = "SCAN_ROMS_START";
 export const SCAN_ROMS_SUCCESS = "SCAN_ROMS_SUCCESS";
@@ -55,7 +56,7 @@ export const scanRoms = (appConfig: AppConfigState, categoryName: string) => {
             const items = createGameItems(
               category,
               "",
-              files,
+              filterExts(files, category.scanExts),
               datIndexes,
               scanType
             );

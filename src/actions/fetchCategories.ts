@@ -15,11 +15,13 @@ export const fetchCategories = (appDataDir: string) => {
   } else {
     try {
       const text: string = fs.readFileSync(filePath).toString();
-      // eval("categories=" + text);
-      const json = JSON.parse(text);
-      categories = json.categories;
-     
-      success = true;
+      try {
+        const json = JSON.parse(text);
+        categories = json.categories;
+        success = true;
+      } catch (e2) {
+        error = `Error on parse file: ${filePath}`;
+      }
     } catch (error) {
       error = `Error on parse file: ${filePath}`;
     }

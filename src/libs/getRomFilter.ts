@@ -1,6 +1,6 @@
-import { Category } from "../interfaces/Category";
+import { Category, SubCategory } from "../interfaces/Category";
 
-export const getRomFilter = (category: Category, filterName: string) => {
+export const getRomFilter = (category: Category|SubCategory, filterName: string) => {
   if (category.hasOwnProperty("romFilter")) {
     const { romFilter } = category;
     if (romFilter.hasOwnProperty(filterName)) {

@@ -26,6 +26,8 @@ export const createGameItems = (
   scanType?: ScanType,
   isArchive?: boolean
 ): Array<GameItem> => {
+
+
   let items = [];
   files.forEach((file) => {
     const romName = removeAlias(path.basename(file));
@@ -38,7 +40,7 @@ export const createGameItems = (
 
     let skip = false;
 
-    const datParser = getDatParser(category);
+    const datParser = getDatParser(category as Category);
     if (datParser) {
       if (nameParsers.hasOwnProperty(datParser)) {
         const func = nameParsers[datParser];

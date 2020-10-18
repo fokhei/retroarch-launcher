@@ -23,13 +23,12 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
   const { className, appConfig, gameItem, searchHandler } = props;
 
   const { subCategories, itemFilter } = gameItem;
- 
   const categoryNames = lazy(appConfig.categories)
     .sort()
     .pluck("name")
     .toArray();
 
-  
+   
 
   const {
     categoryName,
@@ -187,8 +186,10 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
   const renderSubCategories = (mainLabel: string) => {
     if (mainLabel == categoryName) {
       let childs: Array<any> = [];
+    
       if (subCategories.hasOwnProperty(mainLabel)) {
-        const subCategory = subCategories[mainLabel];
+        const subCategory = subCategories[mainLabel].sort();
+
         subCategory.map((subLabel) => {
           // const key = `${mainLabel} - ${subLabel}`;
           const key = subLabel;

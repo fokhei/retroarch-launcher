@@ -18,6 +18,7 @@ export const fetchCategories = (appDataDir: string) => {
       // eval("categories=" + text);
       const json = JSON.parse(text);
       categories = json.categories;
+     
       success = true;
     } catch (error) {
       error = `Error on parse file: ${filePath}`;

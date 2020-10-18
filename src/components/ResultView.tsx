@@ -22,6 +22,7 @@ import { SearchResultTriggerProps } from "../contextMenus/SearchResultContextMen
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faCog, faImage } from "@fortawesome/free-solid-svg-icons";
 import { MappingState } from '../states/mappingState';
+import { getPlayers } from '../libs/getPlayers';
 
 
 
@@ -80,11 +81,10 @@ const _ResultView = (props: ResultViewProps) => {
 
   const onPlay = () => {
     const category = getCategory(appConfig, item.categoryName);
-    if (category.hasOwnProperty("players")) {
-      if (category.players.length == 1) {
-        play(appConfig, mapping, item, category.players[0]);
-        return;
-      }
+    const players = getPlayers(category, item);
+    if (players.length == 1) {
+      play(appConfig, mapping, item, players[0]);
+      return;
     }
     dispatch(setPlayerPicker(true));
   };

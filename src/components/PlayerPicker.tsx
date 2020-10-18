@@ -7,15 +7,22 @@ import { AppConfigState } from "../states/appConfigState";
 import { getPlayers } from "../libs/getPlayers";
 import { Player } from "../externalApps/Player";
 import { play } from "../externalApps/play";
-import { MappingState } from '../states/mappingState';
+import { MappingState } from "../states/mappingState";
 
 const _PlayerPicker = (props: PlayerPickerProps) => {
-  const { className, hideHandler, appConfig, mapping, explorer, gameItem } = props;
+  const {
+    className,
+    hideHandler,
+    appConfig,
+    mapping,
+    explorer,
+    gameItem,
+  } = props;
   const { explorerConfig } = explorer;
   const { selectedItemId } = explorerConfig;
   const item = gameItem.itemsMap[selectedItemId.toString()];
   const category = getCategory(appConfig, item.categoryName);
-  const players = getPlayers(category);
+  const players = getPlayers(category, item);
 
   const onPlay = (player) => {
     play(appConfig, mapping, item, player);

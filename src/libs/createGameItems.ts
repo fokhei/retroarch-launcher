@@ -1,5 +1,5 @@
 import * as path from "path";
-import { Category } from "../interfaces/Category";
+import { Category, SubCategory } from "../interfaces/Category";
 import { DatIndexes } from "../interfaces/DatIndexes";
 import { createGameItem } from "./createGameItem";
 import { GameItem } from "../interfaces/GameItem";
@@ -19,11 +19,12 @@ import { getNameFilter } from "./getNameFilter";
 import { ScanType } from "../interfaces/ScanType";
 
 export const createGameItems = (
-  category: Category,
+  category: Category|SubCategory,
   subCategoryName: string,
   files: Array<string>,
   datIndexes?: DatIndexes,
-  scanType?: ScanType
+  scanType?: ScanType,
+  isArchive?: boolean
 ): Array<GameItem> => {
   let items = [];
   files.forEach((file) => {
@@ -189,7 +190,7 @@ export const createGameItems = (
       }
 
       gameName = removeDoubleSpace(gameName);
-      const item = createGameItem(file, gameName, subCategoryName);
+      const item = createGameItem(file, gameName, subCategoryName, isArchive);
       items.push(item);
     }
   });

@@ -7268,6 +7268,13 @@ sax@>=0.6.0, sax@^1.2.4:
   resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
   integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
 
+scan-dir-recursive@^1.0.11:
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/scan-dir-recursive/-/scan-dir-recursive-1.0.11.tgz#e4c017d648722d8e6ef74b66199a71c68a5880a4"
+  integrity sha1-5MAX1khyLY5u90tmGZpxxopYgKQ=
+  dependencies:
+    minimatch "^3.0.4"
+
 scheduler@^0.18.0:
   version "0.18.0"
   resolved "https://registry.yarnpkg.com/scheduler/-/scheduler-0.18.0.tgz#5901ad6659bc1d8f3fdaf36eb7a67b0d6746b1c4"

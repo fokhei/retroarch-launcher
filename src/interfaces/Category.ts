@@ -4,16 +4,21 @@ import { ScanType } from "./ScanType";
 import { Player } from "../externalApps/Player";
 import { DatParser } from "./DatPaser";
 
-export interface Category {
+export interface SubCategory {
   name: string;
-  thumbnailDir: string;
-  shortName: string;
   romsPath: string;
   scanType?: ScanType;
   scanExts?: Array<string>;
-  datPath?: string;
-  datParser?: DatParser;
   romFilter?: RomFilter;
   nameFilter?: NameFilter;
+  isArchive?: boolean;
+}
+
+export interface Category extends SubCategory {
+  thumbnailDir: string;
+  shortName: string;
+  datPath?: string;
+  datParser?: DatParser;
   players?: Array<Player>;
+  subCategories: Array<SubCategory>;
 }

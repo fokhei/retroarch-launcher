@@ -23,10 +23,13 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
   const { className, appConfig, gameItem, searchHandler } = props;
 
   const { subCategories, itemFilter } = gameItem;
+ 
   const categoryNames = lazy(appConfig.categories)
     .sort()
     .pluck("name")
     .toArray();
+
+  
 
   const {
     categoryName,

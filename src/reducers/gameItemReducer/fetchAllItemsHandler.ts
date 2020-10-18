@@ -6,9 +6,8 @@ import * as path from "path";
 import { Playlist } from "../../interfaces/PlayList";
 import { createComputedGameItem } from "../../libs/createComputedItem";
 import { ComputedGameItem } from "../../interfaces/ComputedGameItem";
-import { getCategory } from "../../libs/getCategory";
-import lazy from "lazy.js";
-import { GAME_LIST_DIR_NAME } from '../../libs/constants';
+import { GAME_LIST_DIR_NAME } from "../../libs/constants";
+import { AppConfigState } from "../../states/appConfigState";
 
 let _id = 0;
 
@@ -20,55 +19,52 @@ export const fetchAllItemsHandler = (
   let itemsMap = {};
   let subCategories = {};
 
-  const { appConfig } = action;
-  const { appDataDir } = appConfig;
+  const appConfig = action.appConfig as AppConfigState;
+  const { appDataDir, categories } = appConfig;
 
   if (!fs.existsSync(appDataDir)) {
     fs.mkdirSync(appDataDir);
   }
-
 
   const gamelistPath = path.resolve(appDataDir, GAME_LIST_DIR_NAME);
   if (!fs.existsSync(gamelistPath)) {
     fs.mkdirSync(gamelistPath);
   }
 
-  const files = fs.readdirSync(gamelistPath);
-  files.map((file: string) => {
-    const ext = path.extname(file);
-    if (ext == ".json") {
-      const text: any = fs.readFileSync(path.resolve(gamelistPath, file));
-      const playlist = JSON.parse(text) as Playlist;
-      const categoryName = file.replace(ext, "");
-      const category = getCategory(appConfig, categoryName);
-      playlist.items.map((item) => {
-        const id = ++_id;
-        const computedItem = createComputedGameItem(
-          item,
-          id,
-          category,
-          action.appConfig
-        );
-        items.push(computedItem);
-        itemsMap[computedItem.id.toString()] = computedItem;
+  categories.map((category) => {
+    const categoryName = category.name;
+    const fileName = `${categoryName}.json`;
+    const filePath = path.resolve(gamelistPath, fileName);
+    if (fs.existsSync(filePath)) {
+      const text: any = fs.readFileSync(filePath);
+      try {
+        const playlist = JSON.parse(text) as Playlist;
+        playlist.items.map((item) => {
+          const id = ++_id;
+          const computedItem = createComputedGameItem(
+            item,
+            id,
+            category,
+            action.appConfig
+          );
+          items.push(computedItem);
+          itemsMap[computedItem.id.toString()] = computedItem;
 
-        if (item.subCategoryName != "") {
-          if (subCategories.hasOwnProperty(categoryName)) {
-            const subCat = subCategories[categoryName];
-            if (!subCat.includes(item.subCategoryName)) {
-              subCat.push(item.subCategoryName);
+          if (item.subCategoryName != "") {
+            if (subCategories.hasOwnProperty(categoryName)) {
+              const subCat = subCategories[categoryName];
+              if (!subCat.includes(item.subCategoryName)) {
+                subCat.push(item.subCategoryName);
+              }
+            } else {
+              subCategories[categoryName] = [item.subCategoryName];
             }
-          } else {
-            subCategories[categoryName] = [item.subCategoryName];
           }
-        }
-      });
+        });
+      } catch (e) {
+        console.error(`Error on parse playlist: ${filePath}`);
+      }
     }
-  });
-
-  Object.keys(subCategories).map((key) => {
-    const subCat = subCategories[key];
-    subCategories[key] = lazy(subCat).sort().toArray();
   });
 
   return update(state, {

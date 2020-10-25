@@ -16,18 +16,16 @@ import { removePspIdBracket } from "../nameFilters/removePspIdBracket";
 import { getRomFilter } from "./getRomFilter";
 import { getNameFilter } from "./getNameFilter";
 import { ScanType } from "../interfaces/ScanType";
-import { DatParser } from '../interfaces/DatPaser';
+import { DatParser } from "../interfaces/DatPaser";
 
 export const createGameItems = (
-  category: Category|SubCategory,
+  category: Category | SubCategory,
   subCategoryName: string,
   files: Array<string>,
   datIndexes?: DatIndexes,
-  datParser?: DatParser,
-  scanType?: ScanType,
-  isArchive?: boolean
+  datParser?: DatParser
 ): Array<GameItem> => {
-
+  const { scanType, isArchive, isFavour } = category;
 
   let items = [];
   files.forEach((file) => {
@@ -154,20 +152,18 @@ export const createGameItems = (
       }
     }
 
-
     if (!skip) {
       const filters = getRomFilter(category, "excludeByFileNames");
       if (filters) {
-        const {length} = filters;
-        for (let i=0; i<length; i++) {
-            if (romName.includes(filters[i])) {
-              skip = true;
-              break;
-            }
+        const { length } = filters;
+        for (let i = 0; i < length; i++) {
+          if (romName.includes(filters[i])) {
+            skip = true;
+            break;
+          }
         }
       }
     }
-
 
     if (!skip) {
       if (getNameFilter(category, "removeLangBracket")) {
@@ -193,7 +189,13 @@ export const createGameItems = (
       }
 
       gameName = removeDoubleSpace(gameName);
-      const item = createGameItem(file, gameName, subCategoryName, isArchive);
+      const item = createGameItem(
+        file,
+        gameName,
+        subCategoryName,
+        isArchive,
+        isFavour
+      );
       items.push(item);
     }
   });

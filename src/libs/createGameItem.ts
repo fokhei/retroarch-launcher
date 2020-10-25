@@ -4,12 +4,14 @@ export const createGameItem = (
   romPath: string,
   gameName: string,
   subCategoryName: string,
-  isArchive: boolean
+  isArchive: boolean,
+  isFavour: boolean
 ): GameItem => {
   return {
     romPath,
     gameName,
     subCategoryName,
-    isArchive: isArchive ? isArchive : false,
+    isArchive: isArchive,
+    isFavour: isFavour,
   };
 };

@@ -28,8 +28,6 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
     .pluck("name")
     .toArray();
 
-   
-
   const {
     categoryName,
     subCategoryName,
@@ -186,7 +184,7 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
   const renderSubCategories = (mainLabel: string) => {
     if (mainLabel == categoryName) {
       let childs: Array<any> = [];
-    
+
       if (subCategories.hasOwnProperty(mainLabel)) {
         const subCategory = subCategories[mainLabel].sort();
 

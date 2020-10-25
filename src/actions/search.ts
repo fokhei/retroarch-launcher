@@ -33,7 +33,7 @@ export const search = (
   }
 
   if (favourOnly) {
-    // seq = seq.filter((item) => favour.list.includes(item.key));
+     seq = seq.filter((item) => item.isFavour == true);
   }
 
   if (orderBy == OrderBy.RANDOM) {

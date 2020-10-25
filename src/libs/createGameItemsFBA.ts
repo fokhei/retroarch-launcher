@@ -76,7 +76,7 @@ export const createGameItemsFBA = (
           subCategoryName = "Misc";
         }
 
-        const item = createGameItem(romPath, index.gameName, subCategoryName, false);
+        const item = createGameItem(romPath, index.gameName, subCategoryName, false, false);
         items.push(item);
       }
     }

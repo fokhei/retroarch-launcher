@@ -15,7 +15,7 @@ import { createGameItemsMAME } from "../libs/createGameItemsMAME";
 import { GAME_LIST_DIR_NAME } from "../libs/constants";
 import { filterExts } from "../libs/filterExts";
 import { SubCategory as Category } from "../interfaces/Category";
-import { getDatParser } from '../libs/getDatParser';
+import { getDatParser } from "../libs/getDatParser";
 const scanSync = require("scan-dir-recursive/sync");
 
 export const SCAN_ROMS_START = "SCAN_ROMS_START";
@@ -78,9 +78,7 @@ export const scanRoms = (appConfig: AppConfigState, categoryName: string) => {
           subCategoryName,
           dirsOrFiles,
           datIndexes,
-          datParser,
-          scanType,
-          category.isArchive
+          datParser
         );
         return items;
       };

@@ -12,6 +12,7 @@ export interface SubCategory {
   romFilter?: RomFilter;
   nameFilter?: NameFilter;
   isArchive?: boolean;
+  isFavour?: boolean;
 }
 
 export interface Category extends SubCategory {

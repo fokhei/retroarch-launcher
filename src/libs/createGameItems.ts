@@ -17,12 +17,14 @@ import { removePspIdBracket } from "../nameFilters/removePspIdBracket";
 import { getRomFilter } from "./getRomFilter";
 import { getNameFilter } from "./getNameFilter";
 import { ScanType } from "../interfaces/ScanType";
+import { DatParser } from '../interfaces/DatPaser';
 
 export const createGameItems = (
   category: Category|SubCategory,
   subCategoryName: string,
   files: Array<string>,
   datIndexes?: DatIndexes,
+  datParser?: DatParser,
   scanType?: ScanType,
   isArchive?: boolean
 ): Array<GameItem> => {
@@ -40,7 +42,7 @@ export const createGameItems = (
 
     let skip = false;
 
-    const datParser = getDatParser(category as Category);
+    // const datParser = getDatParser(category as Category);
     if (datParser) {
       if (nameParsers.hasOwnProperty(datParser)) {
         const func = nameParsers[datParser];

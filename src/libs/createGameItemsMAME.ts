@@ -54,11 +54,6 @@ export const createGameItemsMAME = (
        
 
         if (subCategoryName == "") {
-          // if (index.diskName != "") {
-          //   subCategoryName = "Misc (CHD)";
-          // } else {
-          //   subCategoryName = "Misc";
-          // }
           subCategoryName = "Misc";
         }
 

@@ -14,8 +14,8 @@ import { createGameItemsFBA } from "../libs/createGameItemsFBA";
 import { createGameItemsMAME } from "../libs/createGameItemsMAME";
 import { GAME_LIST_DIR_NAME } from "../libs/constants";
 import { filterExts } from "../libs/filterExts";
-// import { ComputedGameItem } from "../interfaces/ComputedGameItem";
 import { SubCategory as Category } from "../interfaces/Category";
+import { getDatParser } from '../libs/getDatParser';
 const scanSync = require("scan-dir-recursive/sync");
 
 export const SCAN_ROMS_START = "SCAN_ROMS_START";
@@ -28,6 +28,7 @@ export const scanRoms = (appConfig: AppConfigState, categoryName: string) => {
 
     const category = getCategory(appConfig, categoryName);
     const datIndexes = createDatIndexes(category);
+    const datParser = getDatParser(category);
     const { appDataDir } = appConfig;
     const gamelistPath = path.resolve(appDataDir, GAME_LIST_DIR_NAME);
 
@@ -71,11 +72,13 @@ export const scanRoms = (appConfig: AppConfigState, categoryName: string) => {
         } else {
           throw Error(`unhandle scanType "${scanType}"!`);
         }
+
         items = createGameItems(
           category,
           subCategoryName,
           dirsOrFiles,
           datIndexes,
+          datParser,
           scanType,
           category.isArchive
         );
@@ -97,32 +100,6 @@ export const scanRoms = (appConfig: AppConfigState, categoryName: string) => {
         exportGeneralPlaylist(category, items, gamelistPath);
       }
       dispatch(scanRomsSuccess(categoryName, datIndexes, items, appConfig));
-
-      // const scanType = getScanType(category);
-      // if (scanType == ScanType.FILE) {
-      //   return getFiles(category.romsPath)
-      //     .then((files: Array<string>) => {
-      //       const items = createGameItems(
-      //         category,
-      //         "",
-      //         filterExts(files, category.scanExts),
-      //         datIndexes,
-      //         scanType
-      //       );
-      //       exportGeneralPlaylist(category, items, gamelistPath);
-      //       dispatch(
-      //         scanRomsSuccess(categoryName, datIndexes, items, appConfig)
-      //       );
-      //     })
-      //     .catch((err: any) => {
-      //       dispatch(scanRomsError(err));
-      //     });
-      // } else if (scanType == ScanType.FOLDER) {
-      //   const dirs = getDirectoriesSync(category.romsPath);
-      //   const items = createGameItems(category, "", dirs, datIndexes, scanType);
-      //   exportGeneralPlaylist(category, items, gamelistPath);
-      //   dispatch(scanRomsSuccess(categoryName, datIndexes, items, appConfig));
-      // }
     }
   };
 };

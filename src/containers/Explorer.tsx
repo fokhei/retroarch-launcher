@@ -10,7 +10,6 @@ import { GameItemState } from "../states/gameItemState";
 import { search } from "../actions/search";
 import ResultView from "../components/ResultView";
 import RightBar from "../components/RightBar";
-import { FavourState } from "../states/favourState";
 import { ItemFilter } from "../interfaces/itemFilter";
 import SlideBar from "../components/SlideBar";
 import { MappingState } from "../states/mappingState";
@@ -22,13 +21,12 @@ const _Explorer = (props: ExplorerProps) => {
     appConfig,
     gameItem,
     explorer,
-    favour,
     mapping,
   } = props;
   const { itemFilter } = gameItem;
 
   const onSearch = (itemFilter: ItemFilter) => {
-    dispatch(search(itemFilter, gameItem, favour));
+    dispatch(search(itemFilter, gameItem));
   };
 
   const renderSlideBar = () => {
@@ -55,7 +53,6 @@ const _Explorer = (props: ExplorerProps) => {
         explorer={explorer}
         gameItem={gameItem}
         appConfig={appConfig}
-        favour={favour}
         mapping={mapping}
       />
     );
@@ -76,7 +73,7 @@ const _Explorer = (props: ExplorerProps) => {
   };
 
   const mountEffect = () => {
-    dispatch(search(itemFilter, gameItem, favour));
+    dispatch(search(itemFilter, gameItem));
   };
 
   useEffect(mountEffect, []);
@@ -105,7 +102,6 @@ interface ExplorerProps {
   appConfig: AppConfigState;
   gameItem: GameItemState;
   explorer: ExplorerState;
-  favour: FavourState;
   mapping: MappingState;
 }
 
@@ -114,7 +110,6 @@ const mapStateToProps = (state: RootState) => {
     appConfig: state.appConfig,
     gameItem: state.gameItem,
     explorer: state.explorer,
-    favour: state.favour,
     mapping: state.mapping,
   };
 };

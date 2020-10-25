@@ -3,4 +3,5 @@ export interface GameItem {
   romPath: string;
   subCategoryName: string;
   isArchive?: boolean;
+  isFavour?: boolean;
 }

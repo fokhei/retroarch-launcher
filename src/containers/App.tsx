@@ -22,8 +22,6 @@ import ThumbnailDropZoneContextMenu from "../contextMenus/ThumbnailDropZoneConte
 import PlayerPicker from "../components/PlayerPicker";
 import { setPlayerPicker } from "../actions/setPlayerPicker";
 import { NotificationContainer } from "react-notifications";
-import { FavourState } from "../states/favourState";
-import { fetchFavour } from "../actions/fetchFavour";
 import SearchResultContextMenu from "../contextMenus/SearchResultContextMenu";
 import ESExporter from "./ESExporter";
 import { fetchUIConfig } from "../actions/fetchUI";
@@ -43,7 +41,6 @@ enum WaitingFor {
   FETCH_EXTERNAL_APPS,
   FETCH_CATEGORIES,
   FETCH_ITEMS,
-  FETCH_FAVOUR,
   FECTH_UI_CONFIG,
   FETCH_MAPPING,
 }
@@ -55,8 +52,7 @@ const _App = (props: AppProps) => {
     appConfig,
     gameItem,
     explorer,
-    scanner,
-    favour,
+    scanner,   
     mapping,
   } = props;
   const [waiting, setWaiting] = useState<WaitingFor>(WaitingFor.FETCH_DIR);
@@ -179,22 +175,13 @@ const _App = (props: AppProps) => {
       const { success, error } = gameItem.fetch;
       if (error) throw error;
       if (success) {
-        setWaiting(WaitingFor.FETCH_FAVOUR);
-        dispatch(fetchFavour(appConfig.appDataDir));
-      }
-    }
-  };
-
-  const favourChangeEffect = () => {
-    if (waiting == WaitingFor.FETCH_FAVOUR) {
-      const { error, success } = favour.fetch;
-      if (error) throw error;
-      if (success) {
         setWaiting(WaitingFor.FECTH_UI_CONFIG);
         dispatch(fetchUIConfig(appConfig.appDataDir));
       }
     }
   };
+
+ 
 
   const explorerChangeEffect = () => {
     if (waiting == WaitingFor.FECTH_UI_CONFIG) {
@@ -223,7 +210,6 @@ const _App = (props: AppProps) => {
   useEffect(mountEffect, []);
   useEffect(appConfigChangeEffect, [appConfig]);
   useEffect(gameItemChangeEffect, [gameItem]);
-  useEffect(favourChangeEffect, [favour]);
   useEffect(explorerChangeEffect, [explorer]);
   useEffect(mappingChangeEffect, [mapping]);
 
@@ -261,7 +247,6 @@ interface AppProps {
   gameItem: GameItemState;
   explorer: ExplorerState;
   scanner: ScannerState;
-  favour: FavourState;
   mapping: MappingState;
 }
 const mapStateToProps = (state: RootState) => {
@@ -270,7 +255,6 @@ const mapStateToProps = (state: RootState) => {
     gameItem: state.gameItem,
     explorer: state.explorer,
     scanner: state.scanner,
-    favour: state.favour,
     mapping: state.mapping,
   };
 };

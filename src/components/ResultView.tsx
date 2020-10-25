@@ -17,7 +17,6 @@ import { clipboard } from "electron";
 import { getCategory } from "../libs/getCategory";
 import { AppConfigState } from "../states/appConfigState";
 import { play } from "../externalApps/play";
-import { FavourState } from "../states/favourState";
 import { SearchResultTriggerProps } from "../contextMenus/SearchResultContextMenu";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faCog, faImage } from "@fortawesome/free-solid-svg-icons";
@@ -27,7 +26,7 @@ import { getPlayers } from '../libs/getPlayers';
 
 
 const _ResultView = (props: ResultViewProps) => {
-  const { className, dispatch, explorer, gameItem, appConfig, favour, mapping } = props;
+  const { className, dispatch, explorer, gameItem, appConfig, mapping } = props;
   const { explorerConfig } = explorer;
   const { layout, gridSize, selectedItemId } = explorerConfig;
 
@@ -207,7 +206,6 @@ const _ResultView = (props: ResultViewProps) => {
         <ResultList
           categoryName={categoryName}
           results={searchResults}
-          favour={favour}
           itemId={selectedItemId}
           setItemId={onItemIdChange}
           playHandler={onPlay}
@@ -225,7 +223,6 @@ const _ResultView = (props: ResultViewProps) => {
         <ResultGrid
           categoryName={categoryName}
           results={searchResults}
-          favour={favour}
           itemId={selectedItemId}
           setItemId={onItemIdChange}
           playHandler={onPlay}
@@ -411,7 +408,6 @@ interface ResultViewProps {
   explorer: ExplorerState;
   gameItem: GameItemState;
   appConfig: AppConfigState;
-  favour: FavourState;
   mapping: MappingState;
 }
 

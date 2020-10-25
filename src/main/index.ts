@@ -7,14 +7,13 @@ import psTree from "ps-tree";
 import { AppConfigState } from "../states/appConfigState";
 import fs from "fs";
 import * as path from "path";
-import { FAVOUR_FILE_NAME, UI_FILE_NAME } from "../libs/constants";
+import { UI_FILE_NAME } from "../libs/constants";
 import { ExplorerConfig } from "../states/explorerState";
 import { ItemFilter } from "../interfaces/itemFilter";
 
 let mainWindow: BrowserWindow;
 let devTools: BrowserWindow;
 let appConfig: AppConfigState;
-let favourList: Array<string>;
 let explorerConfig: ExplorerConfig;
 let itemFilter: ItemFilter;
 
@@ -29,11 +28,6 @@ const saveSetting = () => {
           itemFilter,
         })
       );
-    }
-
-    if (favourList) {
-      const favourPath = path.resolve(appConfig.appDataDir, FAVOUR_FILE_NAME);
-      fs.writeFileSync(favourPath, JSON.stringify({ list: favourList }));
     }
   }
 };
@@ -68,7 +62,7 @@ app.whenReady().then(() => {
 
     devTools.show();
   });
-  
+
   ipcMain.on(AppEvent.RELOAD, (_event: any) => {
     mainWindow.reload();
   });
@@ -95,11 +89,6 @@ app.whenReady().then(() => {
       event.returnValue = true;
     }
   );
-
-  ipcMain.on(AppEvent.SET_FAVOUR_LIST, (event: any, list: Array<string>) => {
-    favourList = list;
-    event.returnValue = true;
-  });
 
   ipcMain.on(
     AppEvent.SET_EXPLORER_CONFIG,

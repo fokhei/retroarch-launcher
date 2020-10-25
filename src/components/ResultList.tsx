@@ -11,7 +11,6 @@ import { ContextMenuTrigger } from "react-contextmenu";
 import { ContextMenuId } from "../contextMenus/ContextMenuId";
 import { ComputedGameItem } from "../interfaces/ComputedGameItem";
 import { GameItemTriggerProps } from "../contextMenus/GameItemContextMenu";
-import { FavourState } from "../states/favourState";
 import { ResultLayout } from "../interfaces/ResultLayout";
 import * as path from "path";
 
@@ -20,7 +19,6 @@ const _ResultList = (props: ResultListProps) => {
     className,
     categoryName,
     results,
-    favour,
     itemId,
     setItemId,
     playHandler,
@@ -102,7 +100,7 @@ const _ResultList = (props: ResultListProps) => {
   };
 
   const renderFavour = (data: ComputedGameItem) => {
-    if (favour.list.includes(data.key)) {
+    if (data.isFavour) {
       return <span className="favour">⭐</span>;
     }
     return <span className="favour" />;
@@ -183,7 +181,6 @@ interface ResultListProps {
   className?: string;
   categoryName: string;
   results: Array<ComputedGameItem>;
-  favour: FavourState;
   itemId: number;
   setItemId: (itemId: number) => void;
   playHandler: () => void;

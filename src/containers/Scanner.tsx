@@ -10,7 +10,6 @@ import { getCategory } from "../libs/getCategory";
 import { hideScanner } from "../actions/hideScanner";
 import { search } from "../actions/search";
 import { ItemFilter, OrderBy } from "../interfaces/itemFilter";
-import { FavourState } from "../states/favourState";
 import { GameItemState } from '../states/gameItemState';
 
 enum WaitingFor {
@@ -19,7 +18,7 @@ enum WaitingFor {
 }
 
 const _Scanner = (props: ScannerProps) => {
-  const { className, dispatch, appConfig, scanner, gameItem, favour } = props;
+  const { className, dispatch, appConfig, scanner, gameItem } = props;
   const [waiting, setWaiting] = useState<WaitingFor>(WaitingFor.NONE);
   const [result, setResult] = useState("");
   const { categoryName } = scanner;
@@ -83,7 +82,7 @@ const _Scanner = (props: ScannerProps) => {
           favourOnly: false,
           orderBy: OrderBy.NAME
         };
-        dispatch(search(filter, gameItem, favour));
+        dispatch(search(filter, gameItem));
       }
     }
   };
@@ -147,15 +146,13 @@ interface ScannerProps {
   appConfig: AppConfigState;
   scanner: ScannerState;
   gameItem: GameItemState;
-  favour: FavourState;
 }
 
 const mapStateToProps = (state: RootState) => {
   return {
     appConfig: state.appConfig,
     scanner: state.scanner,
-    gameItem: state.gameItem,
-    favour: state.favour,
+    gameItem: state.gameItem
   };
 };
 

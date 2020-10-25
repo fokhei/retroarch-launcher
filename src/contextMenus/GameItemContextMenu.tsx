@@ -9,7 +9,7 @@ import { googleSearch } from "../libs/googleSearch";
 import { scanMissingThumbnails } from "../actions/scanMissingThumbnails";
 import { createMenuItem } from "./createMenuItem";
 import { setPlayerPicker } from "../actions/setPlayerPicker";
-import { toggleFavour } from "../actions/toggleFavour";
+
 // import { mameGroups } from "../libs/mameGroups";
 // import * as path from "path";
 // import lazy from "lazy.js";
@@ -30,10 +30,6 @@ const GameItemContextMenu = (props: GameItemContextMenuProps) => {
 
   const onPlay = () => {
     dispatch(setPlayerPicker(true));
-  };
-
-  const onToggleFavour = () => {
-    dispatch(toggleFavour(trigger.item));
   };
 
   const onOpen = () => {
@@ -126,7 +122,6 @@ const GameItemContextMenu = (props: GameItemContextMenuProps) => {
   return (
     <ContextMenu id={id}>
       {createMenuItem("Play", onPlay, enabled)}
-      {createMenuItem("Toggle favour", onToggleFavour, enabled)}
       {createMenuItem("Open rom", onOpen, enabled)}
       {createMenuItem("Show rom directory", onShow, enabled)}
       {createMenuItem("Download thumbnails", onDownloadThumbnail, enabled)} 

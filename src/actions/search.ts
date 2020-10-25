@@ -1,4 +1,3 @@
-import { FavourState } from "../states/favourState";
 import { ItemFilter, OrderBy } from "../interfaces/itemFilter";
 import { GameItemState } from "../states/gameItemState";
 import lazy from "lazy.js";
@@ -9,8 +8,7 @@ export const SEARCH = "SEARCH";
 
 export const search = (
   itemFilter: ItemFilter,
-  gameItem: GameItemState,
-  favour: FavourState
+  gameItem: GameItemState
 ) => {
   const {
     categoryName,
@@ -35,7 +33,7 @@ export const search = (
   }
 
   if (favourOnly) {
-    seq = seq.filter((item) => favour.list.includes(item.key));
+    // seq = seq.filter((item) => favour.list.includes(item.key));
   }
 
   if (orderBy == OrderBy.RANDOM) {

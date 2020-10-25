@@ -3,7 +3,6 @@ import { Category, SubCategory } from "../interfaces/Category";
 import { DatIndexes } from "../interfaces/DatIndexes";
 import { createGameItem } from "./createGameItem";
 import { GameItem } from "../interfaces/GameItem";
-import { getDatParser } from "./getDatParser";
 import { nameParsers } from "../parsers/nameParsers";
 import { removeLangBracket } from "../nameFilters/removeLangBracket";
 import { removeDiscBracket } from "../nameFilters/removeDiscBracket";

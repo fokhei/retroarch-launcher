@@ -9,14 +9,12 @@ import { toBackgroundUrl } from "../libs/toBackgroundUrl";
 import { GameItemTriggerProps } from "../contextMenus/GameItemContextMenu";
 import { ResultLayout } from "../interfaces/ResultLayout";
 import { ThumbnailType } from "../interfaces/ThumbnailType";
-import { FavourState } from "../states/favourState";
 
 const _ResultGrid = (props: ResultGridProps) => {
   const {
     className,
     categoryName,
     results,
-    favour,
     itemId,
     setItemId,
     playHandler,
@@ -103,7 +101,7 @@ const _ResultGrid = (props: ResultGridProps) => {
   };
 
   const renderFavour = (data: ComputedGameItem) => {
-    if (favour.list.includes(data.key)) {
+    if (data.isFavour) {
       return <span className="favour">⭐</span>;
     }
     return null;
@@ -204,7 +202,6 @@ interface ResultGridProps {
   className?: string;
   categoryName: string;
   results: Array<ComputedGameItem>;
-  favour: FavourState;
   itemId: number;
   setItemId: (itemId: number) => void;
   playHandler: () => void;

@@ -8,7 +8,7 @@ import { removeLangBracket } from "../nameFilters/removeLangBracket";
 import { removeDiscBracket } from "../nameFilters/removeDiscBracket";
 import { removeAlias } from "../nameFilters/removeAlias";
 import { removeVersionBracket } from "../nameFilters/removeVersionBracket";
-import { removeNintendoTitleIdBracket } from "../nameFilters/removeNintendoTitleIdBracket";
+import { removeSwitchTitleIdBracket } from "../nameFilters/removeSwitchTitleIdBracket";
 import { removeDoubleSpace } from "../nameFilters/removeDoubleSpace";
 import { removeAllBrackets } from "../nameFilters/removeAllBrackets";
 import { removeNonFirstBrackets } from "../nameFilters/removeNonFirstBrackets";
@@ -17,6 +17,7 @@ import { getRomFilter } from "./getRomFilter";
 import { getNameFilter } from "./getNameFilter";
 import { ScanType } from "../interfaces/ScanType";
 import { DatParser } from "../interfaces/DatPaser";
+import { removeWiiTitleIdBracket } from '../nameFilters/removeWiiTitleIdBracket';
 
 export const createGameItems = (
   category: Category | SubCategory,
@@ -175,8 +176,11 @@ export const createGameItems = (
       if (getNameFilter(category, "removeVersion")) {
         gameName = removeVersionBracket(gameName);
       }
-      if (getNameFilter(category, "removeTitleId")) {
-        gameName = removeNintendoTitleIdBracket(gameName);
+      if (getNameFilter(category, "removeSwitchTitleId")) {
+        gameName = removeSwitchTitleIdBracket(gameName);
+      }
+      if (getNameFilter(category, "removeWiiTitleId")) {
+        gameName = removeWiiTitleIdBracket(gameName);
       }
       if (getNameFilter(category, "removeNonFirstBrackets")) {
         gameName = removeNonFirstBrackets(gameName);

@@ -3,6 +3,7 @@ export interface NameFilter {
   removeDisc?: boolean;
   removeVersion?: boolean;
   removeSwitchTitleId?: boolean;
+  removeWiiUTitleId?: boolean;
   removeWiiTitleId?: boolean;
   removeAllBrackets?: boolean;
   removeNonFirstBrackets?: boolean;

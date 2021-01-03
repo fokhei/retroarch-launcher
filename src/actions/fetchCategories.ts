@@ -1,6 +1,7 @@
 import fs from "fs";
 import * as path from "path";
 import { Category } from "../interfaces/Category";
+import { getValidFileExt } from '../libs/getValidFileExt';
 const scanSync = require("scan-dir-recursive/sync");
 
 export const FETCH_CATEGORIES = "FETCH_CATEGORIES";
@@ -13,7 +14,7 @@ export const fetchCategories = (appDataDir: string) => {
   const categoriesPath = path.resolve(appDataDir, "categories");
   let files = scanSync(categoriesPath);
   files = files.filter((file) => {
-    const ext = path.extname(file);
+    const ext = getValidFileExt(file);
     return ext == ".json";
   });
 

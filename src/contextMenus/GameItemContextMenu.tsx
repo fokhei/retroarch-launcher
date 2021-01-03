@@ -47,7 +47,7 @@ const GameItemContextMenu = (props: GameItemContextMenuProps) => {
 
   // const setToMameGroup = (category: string) => {
   //   const basename = path.basename(trigger.item.romPath);
-  //   const ext = path.extname(basename);
+  //   const ext = getValidFileExt(basename);
   //   const noExt = basename.replace(ext, "");
 
   //   if (!mameGroups2.hasOwnProperty(category)) {

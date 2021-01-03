@@ -4,6 +4,7 @@ import { ContextMenuId } from "./ContextMenuId";
 import { clipboard } from "electron";
 import { createMenuItem } from "./createMenuItem";
 import * as path from "path";
+import { getValidFileExt } from '../libs/getValidFileExt';
 
 const id = ContextMenuId.ROM_NAME;
 
@@ -13,7 +14,7 @@ const RomNameContextMenu = (props: RomNameContextMenuProps) => {
 
   const onCopyName = () => {
     const basename = path.basename(trigger.romPath);
-    const ext = path.extname(basename);
+    const ext = getValidFileExt(basename);
     const noExt = basename.replace(ext, "");
     clipboard.writeText(noExt, "selection");
   };

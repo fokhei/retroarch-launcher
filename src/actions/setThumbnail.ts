@@ -1,5 +1,4 @@
 import fs from "fs";
-import * as path from "path";
 import { AppConfigState } from "../states/appConfigState";
 import { ComputedGameItem } from "../interfaces/ComputedGameItem";
 import { ThumbnailType } from "../interfaces/ThumbnailType";
@@ -7,6 +6,7 @@ import { prepareThumbnailDir } from "../libs/prepareThumbnailDir";
 import webp from "webp-converter";
 import { ipcRenderer } from "electron";
 import { AppEvent } from "../interfaces/AppEvent";
+import { getValidFileExt } from '../libs/getValidFileExt';
 
 export const SET_THUMBNAIL_START = "SET_THUMBNAIL_START";
 export const SET_THUMBNAIL_SUCCESS = "SET_THUMBNAIL_SUCCESS";
@@ -22,7 +22,7 @@ export const setThumbnail = (
     dispatch(setThumbnailStart());
 
     prepareThumbnailDir(appConfig, item);
-    const ext = path.extname(filePath).toLowerCase();
+    const ext = getValidFileExt(filePath).toLowerCase();
     let outPath = item.thumbnails[thumbnailType];
 
     if (ext == ".png") {

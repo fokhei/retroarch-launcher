@@ -15,9 +15,10 @@ import { removeNonFirstBrackets } from "../nameFilters/removeNonFirstBrackets";
 import { removePspIdBracket } from "../nameFilters/removePspIdBracket";
 import { getRomFilter } from "./getRomFilter";
 import { getNameFilter } from "./getNameFilter";
-import { ScanType } from "../interfaces/ScanType";
 import { DatParser } from "../interfaces/DatPaser";
-import { removeWiiTitleIdBracket } from '../nameFilters/removeWiiTitleIdBracket';
+import { removeWiiTitleIdBracket } from "../nameFilters/removeWiiTitleIdBracket";
+import { getValidFileExt } from "./getValidFileExt";
+import { removeWiiUTitleIdBracket } from '../nameFilters/removeWiiUTitleIdBracket';
 
 export const createGameItems = (
   category: Category | SubCategory,
@@ -26,15 +27,16 @@ export const createGameItems = (
   datIndexes?: DatIndexes,
   datParser?: DatParser
 ): Array<GameItem> => {
-  const { scanType, isArchive, isFavour } = category;
+  const { isArchive, isFavour } = category;
 
   let items = [];
   files.forEach((file) => {
-
-    const ext = path.extname(file);
     const romName = removeAlias(path.basename(file));
+
+    const ext = getValidFileExt(romName);
+
     let gameName = romName;
-    if (scanType != ScanType.FOLDER) {
+    if (ext) {
       gameName = romName.replace(ext, "");
     }
 
@@ -51,7 +53,7 @@ export const createGameItems = (
 
     if (!skip) {
       const includeExts = getRomFilter(category, "includeExts");
-      if (includeExts && includeExts.length) {
+      if (ext && includeExts && includeExts.length) {
         skip = !includeExts.includes(ext);
       }
     }
@@ -178,6 +180,9 @@ export const createGameItems = (
       }
       if (getNameFilter(category, "removeSwitchTitleId")) {
         gameName = removeSwitchTitleIdBracket(gameName);
+      }
+      if (getNameFilter(category, "removeWiiUTitleId")) {
+        gameName = removeWiiUTitleIdBracket(gameName);
       }
       if (getNameFilter(category, "removeWiiTitleId")) {
         gameName = removeWiiTitleIdBracket(gameName);

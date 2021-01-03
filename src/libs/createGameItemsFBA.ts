@@ -7,6 +7,7 @@ import { Category } from "../interfaces/Category";
 import { GameItem } from "../interfaces/GameItem";
 import { removeAlias } from "../nameFilters/removeAlias";
 import { mameGroups } from "./mameGroups";
+import { getValidFileExt } from './getValidFileExt';
 
 export const createGameItemsFBA = (
   category: Category,
@@ -54,7 +55,7 @@ export const createGameItemsFBA = (
       if (shouldExport) {
         let subCategoryName = "";
 
-        const ext = path.extname(romName);
+        const ext = getValidFileExt(romName);
         let noExt = romName.replace(ext, "");
         if (index.cloneOf != "") {
           noExt = index.cloneOf;

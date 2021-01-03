@@ -7,6 +7,7 @@ import { Category } from "../interfaces/Category";
 import { GameItem } from "../interfaces/GameItem";
 import { removeAlias } from "../nameFilters/removeAlias";
 import { mameGroups } from "../libs/mameGroups";
+import { getValidFileExt } from './getValidFileExt';
 
 export const createGameItemsMAME = (
   category: Category,
@@ -36,7 +37,7 @@ export const createGameItemsMAME = (
       if (shouldExport) {
         let subCategoryName = "";
 
-        const ext = path.extname(romName);
+        const ext = getValidFileExt(romName);
         const noExt = romName.replace(ext, "");
 
         if (subCategoryName == "") {

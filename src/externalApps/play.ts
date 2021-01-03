@@ -8,6 +8,7 @@ import { getExternalApp } from "../libs/getExternalApp";
 import { NotificationManager } from "react-notifications";
 import { getTeknoParrotProfile } from "../libs/getTeknoParrotProfile";
 import { MappingState } from "../states/mappingState";
+import { getValidFileExt } from '../libs/getValidFileExt';
 
 const { dialog } = require("electron").remote;
 
@@ -60,7 +61,7 @@ export const play = (
           param = path.basename(item.romPath);
         } else if (param == "%romBasenameNoExt%") {
           const romBasename = path.basename(item.romPath);
-          const ext = path.extname(romBasename);
+          const ext = getValidFileExt(romBasename);
           param = romBasename.replace(ext, "");
         } else if (param == "%pickPath%") {
           param = pickPath;

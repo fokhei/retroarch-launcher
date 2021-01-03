@@ -190,14 +190,14 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
         const subCategory = subCategories[mainLabel];
 
         subCategory.map((subLabel) => {
-          const category = getCategory(appConfig, mainLabel);
-          const subCat = category.subCategoriesMap[subLabel];
-
           const key = subLabel;
           let className = "subCategory";
-
-          if (subCat.isFavour) {
-            className += " favour";
+          const category = getCategory(appConfig, mainLabel);
+          const subCat = category.subCategoriesMap[subLabel];
+          if (subCat && subCat.hasOwnProperty("isFavour")) {
+            if (subCat.isFavour) {
+              className += " favour";
+            }
           }
 
           if (mainLabel == categoryName && subLabel == subCategoryName) {

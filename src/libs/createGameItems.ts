@@ -30,9 +30,9 @@ export const createGameItems = (
 
   let items = [];
   files.forEach((file) => {
-    const romName = removeAlias(path.basename(file));
 
-    const ext = path.extname(romName);
+    const ext = path.extname(file);
+    const romName = removeAlias(path.basename(file));
     let gameName = romName;
     if (scanType != ScanType.FOLDER) {
       gameName = romName.replace(ext, "");

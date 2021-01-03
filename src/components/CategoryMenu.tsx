@@ -16,6 +16,7 @@ import { GameItemState } from "../states/gameItemState";
 import { ItemFilter, OrderBy } from "../interfaces/itemFilter";
 import lazy from "lazy.js";
 import { AppConfigState } from "../states/appConfigState";
+import { getCategory } from "../libs/getCategory";
 
 let _keywordHandler: any;
 
@@ -186,12 +187,19 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
       let childs: Array<any> = [];
 
       if (subCategories.hasOwnProperty(mainLabel)) {
-        const subCategory = subCategories[mainLabel].sort();
+        const subCategory = subCategories[mainLabel];
 
         subCategory.map((subLabel) => {
-          // const key = `${mainLabel} - ${subLabel}`;
+          const category = getCategory(appConfig, mainLabel);
+          const subCat = category.subCategoriesMap[subLabel];
+
           const key = subLabel;
           let className = "subCategory";
+
+          if (subCat.isFavour) {
+            className += " favour";
+          }
+
           if (mainLabel == categoryName && subLabel == subCategoryName) {
             className += " actived";
           }
@@ -291,8 +299,8 @@ const CategoryMenu = styled(_CategoryMenu)`
           color: #999;
           border-bottom: 1px solid rgba(100, 100, 100, 0.1);
           font-size: 11px;
-
           cursor: pointer;
+
           &:hover {
             .label {
               color: #ccc;
@@ -310,6 +318,11 @@ const CategoryMenu = styled(_CategoryMenu)`
               text-indent: 20px;
               padding: 5px 0;
               border-top: 1px solid rgba(100, 100, 100, 0.1);
+              &.favour {
+                &:before {
+                  content: "⭐";
+                }
+              }
               &:hover {
                 color: #ccc;
               }

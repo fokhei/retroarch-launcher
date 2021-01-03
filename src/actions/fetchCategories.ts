@@ -21,6 +21,13 @@ export const fetchCategories = (appDataDir: string) => {
     const text: string = fs.readFileSync(file).toString();
     try {
       const json = JSON.parse(text);
+      json.category.subCategoriesMap = {};
+      if (json.category.hasOwnProperty("subCategories")) {
+        json.category.subCategories.map((subCat) => {
+          json.category.subCategoriesMap[subCat.name] = subCat;
+        });
+      }
+
       categories.push(json.category);
     } catch (err) {
       error = `Error on parse file: ${file}`;

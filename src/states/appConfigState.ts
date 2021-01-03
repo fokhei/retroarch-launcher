@@ -7,6 +7,7 @@ export interface AppConfigState {
   teknoParrotDir: string;
   externalApps: Array<ExternalApp>;
   categories: Array<Category>;
+  
   remotes: {
     dir: {
       success: boolean;

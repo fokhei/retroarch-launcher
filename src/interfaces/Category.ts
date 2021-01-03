@@ -22,4 +22,5 @@ export interface Category extends SubCategory {
   datParser?: DatParser;
   players?: Array<Player>;
   subCategories: Array<SubCategory>;
+  subCategoriesMap: Record<string, SubCategory>;
 }

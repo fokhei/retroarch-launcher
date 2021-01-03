@@ -18,7 +18,7 @@ export const fetchCategories = (appDataDir: string) => {
     return ext == ".json";
   });
 
-  files.map((file) => {
+  files.map((file, index) => {
     const text: string = fs.readFileSync(file).toString();
     try {
       const json = JSON.parse(text);
@@ -28,12 +28,14 @@ export const fetchCategories = (appDataDir: string) => {
           json.category.subCategoriesMap[subCat.name] = subCat;
         });
       }
-
+      json.category.rowIndex = index+1;
       categories.push(json.category);
     } catch (err) {
       error = `Error on parse file: ${file}`;
     }
   });
+
+  
 
   success = true;
 

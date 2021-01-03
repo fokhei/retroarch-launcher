@@ -1,4 +1,4 @@
-import React, { RefObject, createRef } from "react";
+import React, { RefObject, createRef, useEffect, useState } from "react";
 import styled from "styled-components";
 import debounce from "debounce";
 import {
@@ -36,6 +36,8 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
     favourOnly,
     orderBy,
   } = itemFilter;
+
+  const [rowIndex, setRowIndex] = useState(0);
 
   const listRef: RefObject<any> = createRef();
   _keywordHandler = debounce(searchHandler, 300, false);
@@ -219,6 +221,18 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
     return null;
   };
 
+  const categoryNameChangeEffect = () => {
+    let rowIndex = 0;
+    if (categoryName) {
+      const cat = getCategory(appConfig, categoryName);
+      if (cat) {
+        rowIndex = cat.rowIndex;
+      }
+    }
+    setRowIndex(rowIndex);
+  };
+  useEffect(categoryNameChangeEffect, [categoryName]);
+
   return (
     <div className={className}>
       <div className="head">{rednerKeyWord()}</div>
@@ -240,6 +254,8 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
               rowHeight={cellMeasurerCache.rowHeight}
               rowRenderer={renderRow}
               overscanRowCount={1}
+              scrollToAlignment="start"
+              scrollToIndex={rowIndex}
             />
           )}
         </AutoSizer>

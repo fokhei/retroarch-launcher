@@ -23,4 +23,5 @@ export interface Category extends SubCategory {
   players?: Array<Player>;
   subCategories: Array<SubCategory>;
   subCategoriesMap: Record<string, SubCategory>;
+  rowIndex: number;
 }

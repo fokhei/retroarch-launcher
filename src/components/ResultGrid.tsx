@@ -1,5 +1,5 @@
 import fs from "fs";
-import React, { RefObject, createRef, useState } from "react";
+import React, { RefObject, createRef, useState, useEffect } from "react";
 import styled from "styled-components";
 import { AutoSizer, Grid, GridCellProps } from "react-virtualized";
 import { ComputedGameItem } from "../interfaces/ComputedGameItem";
@@ -106,6 +106,11 @@ const _ResultGrid = (props: ResultGridProps) => {
     }
     return null;
   };
+
+  const resultsChangeEffect = () => {
+    gridRef.current.scrollToPosition({ scrollLeft: 0, scrollTop: 0 });
+  };
+  useEffect(resultsChangeEffect, [results]);
 
   return (
     <div className={className}>

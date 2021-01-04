@@ -5,8 +5,8 @@ import { Dispatch } from "redux";
 import { showScanner } from "../actions/showScanner";
 import { CategoryAll } from "../libs/categoryAll";
 import { AppConfigState } from "../states/appConfigState";
-import { getCategory } from "../libs/getCategory";
-import { remote } from "electron";
+// import { getCategory } from "../libs/getCategory";
+// import { remote } from "electron";
 import { createMenuItem } from "./createMenuItem";
 import { GameItemState } from "../states/gameItemState";
 import lazy from "lazy.js";
@@ -24,11 +24,11 @@ const CategoryContextMenu = (props: CategoryContextMenuProps) => {
     dispatch(showScanner(trigger.categoryName));
   };
 
-  const onShow = () => {
-    const category = getCategory(appConfig, trigger.categoryName);
-    const { romsPath } = category;
-    remote.shell.openItem(romsPath);
-  };
+  // const onShow = () => {
+  //   const category = getCategory(appConfig, trigger.categoryName);
+  //   const { romsPath } = category;
+  //   remote.shell.openItem(romsPath);
+  // };
 
   const onDownloadThumbnails = () => {
     const items = lazy(gameItem.items)
@@ -42,7 +42,7 @@ const CategoryContextMenu = (props: CategoryContextMenuProps) => {
   return (
     <ContextMenu id={id}>
       {createMenuItem("Scan this category", onScan, enabled)}
-      {createMenuItem("Show roms directory", onShow, enabled)}
+      {/* {createMenuItem("Show roms directory", onShow, enabled)} */}
       {createMenuItem("Download thumbnails", onDownloadThumbnails, enabled)}
     </ContextMenu>
   );

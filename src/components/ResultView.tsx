@@ -11,8 +11,6 @@ import { getComputedItem } from "../libs/getComputedItem";
 import ResultList from "./ResultList";
 import ResultGrid from "./ResultGrid";
 import ThumbnailDownloader from "./ThumbnailDownloader";
-import { GameNameTriggerProps } from "../contextMenus/GameNameContextMenu";
-import { setPlayerPicker } from "../actions/setPlayerPicker";
 import { clipboard } from "electron";
 import { getCategory } from "../libs/getCategory";
 import { AppConfigState } from "../states/appConfigState";
@@ -22,6 +20,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faCog, faImage } from "@fortawesome/free-solid-svg-icons";
 import { MappingState } from '../states/mappingState';
 import { getPlayers } from '../libs/getPlayers';
+import { GameNameTriggerProps } from '../contextMenus/GameNameContextMenu';
 
 
 
@@ -81,11 +80,7 @@ const _ResultView = (props: ResultViewProps) => {
   const onPlay = () => {
     const category = getCategory(appConfig, item.categoryName);
     const players = getPlayers(category, item);
-    if (players.length == 1) {
-      play(appConfig, mapping, item, players[0]);
-      return;
-    }
-    dispatch(setPlayerPicker(true));
+    play(appConfig, mapping, item, players[0]);
   };
 
   const onGameNameClick = () => {
@@ -228,6 +223,7 @@ const _ResultView = (props: ResultViewProps) => {
           playHandler={onPlay}
           gridSize={gridSize}
           layout={layout}
+          explorerConfig={explorer.explorerConfig}
         />
       );
     }

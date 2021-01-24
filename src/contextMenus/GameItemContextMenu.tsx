@@ -121,7 +121,7 @@ const GameItemContextMenu = (props: GameItemContextMenuProps) => {
 
   return (
     <ContextMenu id={id}>
-      {createMenuItem("Play", onPlay, enabled)}
+      {createMenuItem("Play with...", onPlay, enabled)}
       {createMenuItem("Open rom", onOpen, enabled)}
       {createMenuItem("Show rom directory", onShow, enabled)}
       {createMenuItem("Download thumbnails", onDownloadThumbnail, enabled)} 

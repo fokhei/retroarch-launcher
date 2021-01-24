@@ -39,9 +39,13 @@ const _PlayerPicker = (props: PlayerPickerProps) => {
       onPlay(player);
       hideHandler();
     };
+    let name = player.name;
+    if (player.hasOwnProperty("caption")) {
+      name += " - " + player.caption
+    }
     return (
       <a className="player" key={index} onClick={onClick}>
-        {player.name}
+        {name}
       </a>
     );
   };

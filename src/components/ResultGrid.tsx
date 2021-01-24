@@ -9,6 +9,7 @@ import { toBackgroundUrl } from "../libs/toBackgroundUrl";
 import { GameItemTriggerProps } from "../contextMenus/GameItemContextMenu";
 import { ResultLayout } from "../interfaces/ResultLayout";
 import { ThumbnailType } from "../interfaces/ThumbnailType";
+import { ExplorerConfig } from "../states/explorerState";
 
 const _ResultGrid = (props: ResultGridProps) => {
   const {
@@ -20,6 +21,7 @@ const _ResultGrid = (props: ResultGridProps) => {
     playHandler,
     gridSize,
     layout,
+    explorerConfig,
   } = props;
   const gridRef: RefObject<any> = createRef();
   const [columnCount, setColumnCount] = useState(1);
@@ -54,7 +56,7 @@ const _ResultGrid = (props: ResultGridProps) => {
     if (dataIndex >= 0 && dataIndex <= results.length - 1) {
       data = results[dataIndex];
       if (data) {
-        const { gameName, thumbnails } = data;
+        const { thumbnails } = data;
         const filePath = thumbnails[thumbnailType];
         const fileExists = fs.existsSync(filePath);
 
@@ -84,10 +86,7 @@ const _ResultGrid = (props: ResultGridProps) => {
               onContextMenu={onRightClick}
             >
               <div className="thumbnail" style={style}></div>
-              <div className="label">
-                {renderFavour(data)}
-                {gameName}
-              </div>
+              {renderLabel(data)}
             </div>
           </ContextMenuTrigger>
         );
@@ -98,6 +97,18 @@ const _ResultGrid = (props: ResultGridProps) => {
         {item}
       </div>
     );
+  };
+
+  const renderLabel = (data: ComputedGameItem) => {
+    if (explorerConfig.showGridLabel) {
+      return (
+        <div className="label">
+          {renderFavour(data)}
+          {data.gameName}
+        </div>
+      );
+    }
+    return null;
   };
 
   const renderFavour = (data: ComputedGameItem) => {
@@ -163,8 +174,8 @@ const ResultGrid = styled(_ResultGrid)`
             height: 100%;
             background-position: center center;
             background-repeat: no-repeat;
-            /* background-size: contain; */
-            background-size: cover;
+            background-size: ${(props: ResultGridProps) =>
+              props.explorerConfig.gridBackgroundSize}
             border: 1px solid transparent;
           }
 
@@ -212,6 +223,7 @@ interface ResultGridProps {
   playHandler: () => void;
   gridSize: number;
   layout: ResultLayout;
+  explorerConfig: ExplorerConfig;
 }
 
 export default ResultGrid;

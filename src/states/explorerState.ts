@@ -4,6 +4,8 @@ export interface ExplorerConfig {
   selectedItemId: number;
   layout: ResultLayout;
   gridSize: number;
+  gridBackgroundSize: string;
+  showGridLabel: boolean;
   showCategory: boolean;
   showImageZone: boolean;
 }
@@ -20,6 +22,8 @@ export const createExplorerConfig = (): ExplorerConfig => {
     selectedItemId: 0,
     layout: ResultLayout.SNAPSHOT,
     gridSize: 160,
+    gridBackgroundSize: "cover",
+    showGridLabel: true,
     showCategory: true,
     showImageZone: true,
   };

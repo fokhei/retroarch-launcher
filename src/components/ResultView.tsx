@@ -263,7 +263,7 @@ const ResultView = styled(_ResultView)`
 
   > .head {
     height: 32px;
-    font-size: 12px;
+    //font-size: 12px;
     display: flex;
     align-items: center;
     padding: 10px 0;
@@ -360,7 +360,7 @@ const ResultView = styled(_ResultView)`
       line-height: 32px;
       padding: 0 10px;
       width: 100%;
-      font-size: 15px;
+     // font-size: 15px;
       color: #17bbaf;
       white-space: nowrap;
       overflow: hidden;
@@ -393,7 +393,7 @@ const ResultView = styled(_ResultView)`
     background-color: transparent;
     color: #555;
     padding: 5px;
-    font-size: 12px;
+   // font-size: 12px;
     cursor: pointer;
   }
 `;

@@ -115,7 +115,7 @@ const Scanner = styled(_Scanner)`
   flex-direction: column;
   .header {
     .categoryName {
-      font-size: 1.3em;
+      //font-size: 1.3em;
       color: #fff;
     }
     .romsPath {
@@ -130,7 +130,7 @@ const Scanner = styled(_Scanner)`
     }
     .result {
       color: green;
-      font-size: 1.2em;
+     // font-size: 1.2em;
       font-weight: bold;
     }
   }

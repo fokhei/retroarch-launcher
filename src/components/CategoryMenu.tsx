@@ -104,7 +104,7 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
         <input
           type="search"
           defaultValue={keyword}
-          placeholder="search"
+          placeholder="Search"
           onChange={onKeywordChange}
         />
       </div>
@@ -266,7 +266,6 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
 
 const CategoryMenu = styled(_CategoryMenu)`
   width: 260px;
-  font-size: 12px;
   background-color: rgba(0, 0, 0, 0.5);
   border-right: 1px solid rgba(100, 100, 100, 0.1);
   display: flex;
@@ -299,7 +298,6 @@ const CategoryMenu = styled(_CategoryMenu)`
       background-color: transparent;
       color: #555;
       padding: 5px;
-      font-size: 12px;
       cursor: pointer;
     }
   }
@@ -314,7 +312,6 @@ const CategoryMenu = styled(_CategoryMenu)`
           padding: 5px 10px;
           color: #999;
           border-bottom: 1px solid rgba(100, 100, 100, 0.1);
-          font-size: 11px;
           cursor: pointer;
 
           &:hover {

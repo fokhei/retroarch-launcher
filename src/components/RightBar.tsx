@@ -132,7 +132,7 @@ const RightBar = styled(_RightBar)`
     color: #555;
     user-select: none;
     text-align: left;
-    font-size: 11px;
+    font-size: 1em;
     line-height: 32px;
     .react-contextmenu-wrapper {
       .baseName {

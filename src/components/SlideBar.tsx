@@ -17,6 +17,7 @@ const SlideBar = styled(_SlideBar)`
   align-items: center;
   padding: 10px 5px;
   background-color: rgba(0, 0, 0, 0.3);
+
 `;
 
 interface SlideBarProps {

@@ -207,7 +207,7 @@ const ESExporter = styled(_ESExporter)`
           border-radius: 5px;
           cursor: pointer;
           border: 1px solid orange;
-          font-size: 11px;
+          //font-size: 11px;
           white-space: nowrap;
           overflow: hidden;
           text-overflow: ellipsis;

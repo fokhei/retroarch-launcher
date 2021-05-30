@@ -33,8 +33,6 @@ import SettingContextMenu from "../contextMenus/SettingContextMenu";
 import { MappingState } from "../states/mappingState";
 import { fetchMapping } from "../actions/fetchMapping";
 
-
-
 enum WaitingFor {
   NONE,
   FETCH_DIR,
@@ -52,7 +50,7 @@ const _App = (props: AppProps) => {
     appConfig,
     gameItem,
     explorer,
-    scanner,   
+    scanner,
     mapping,
   } = props;
   const [waiting, setWaiting] = useState<WaitingFor>(WaitingFor.FETCH_DIR);
@@ -181,8 +179,6 @@ const _App = (props: AppProps) => {
     }
   };
 
- 
-
   const explorerChangeEffect = () => {
     if (waiting == WaitingFor.FECTH_UI_CONFIG) {
       if (explorer.fetched) {
@@ -213,7 +209,6 @@ const _App = (props: AppProps) => {
   useEffect(explorerChangeEffect, [explorer]);
   useEffect(mappingChangeEffect, [mapping]);
 
-
   return (
     <div className={className}>
       {renderExplorer()}
@@ -230,13 +225,19 @@ const App = styled(_App)`
   width: 100%;
   height: 100%;
   overflow: hidden;
-
   > .busy {
     width: 100%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  input,
+  textarea,
+  select,
+  button {
+    font-size: 1em;
+    font-family: Tahoma, Verdana, sans-serif;
   }
 `;
 

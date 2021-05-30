@@ -90,7 +90,7 @@ const PlayerPicker = styled(_PlayerPicker)`
       display: block;
       border-bottom: 1px solid rgba(100, 100, 100, 0.1);
       padding: 5px 0;
-      font-size: 16px;
+      //font-size: 16px;
       &:hover {
         color: orange;
       }

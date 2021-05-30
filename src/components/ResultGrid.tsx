@@ -190,7 +190,8 @@ const ResultGrid = styled(_ResultGrid)`
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            font-size: 11px;
+           
+            font-weight: bold;
             text-align: center;
             padding: 2px 5px;
             z-index: 2;

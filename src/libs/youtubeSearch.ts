@@ -1,0 +1,23 @@
+import { toUrlKeyword } from "./toUrlKeyword";
+import { shell } from "electron";
+import { ComputedGameItem } from "../interfaces/ComputedGameItem";
+import { AppConfigState } from "../states/appConfigState";
+import { getCategory } from "./getCategory";
+
+export const youtubeSearch = (
+  config: AppConfigState,
+  item: ComputedGameItem,
+  suffix: string = ""
+) => {
+  let keyword = "";
+  const category = getCategory(config, item.categoryName);
+  if (category) {
+    keyword += category.shortName + "+";
+  }
+  keyword += item.gameName;
+  if (suffix) {
+    keyword += "+" + suffix;
+  }
+  const q = toUrlKeyword(keyword);
+  shell.openExternal(`https://www.youtube.com/results?search_query=${q}`);
+};

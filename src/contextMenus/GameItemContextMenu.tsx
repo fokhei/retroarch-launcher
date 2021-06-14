@@ -10,6 +10,7 @@ import { scanMissingThumbnails } from "../actions/scanMissingThumbnails";
 import { createMenuItem } from "./createMenuItem";
 import { setPlayerPicker } from "../actions/setPlayerPicker";
 import { theGamesDbSearch } from "../libs/theGamesDbSearch";
+import { youtubeSearch } from "../libs/youtubeSearch";
 
 const id = ContextMenuId.GAME_ITEM;
 
@@ -37,6 +38,10 @@ const GameItemContextMenu = (props: GameItemContextMenuProps) => {
   const onTheGamesDbSearch = () => {
     theGamesDbSearch(appConfig, trigger.item);
   };
+  const onYoutubeSearch = () => {
+    youtubeSearch(appConfig, trigger.item);
+  };
+
 
 
   return (
@@ -47,6 +52,7 @@ const GameItemContextMenu = (props: GameItemContextMenuProps) => {
       {createMenuItem("Download thumbnails", onDownloadThumbnail, enabled)}
       {createMenuItem("Google search image", onGoogleSearch, enabled)}
       {createMenuItem("TheGamesDB search", onTheGamesDbSearch, enabled)}
+      {createMenuItem("Youtube search", onYoutubeSearch, enabled)}
     </ContextMenu>
   );
 };

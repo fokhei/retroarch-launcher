@@ -45,7 +45,7 @@ export const createGameItemState = (): GameItemState => {
     pendingToDownload: [],
     subCategories: {},
     itemFilter: createItemFilter(),
-    bookmarkIds: [53,64],
+    bookmarkIds: [],
     fetch: {
       success: false,
       error: null,

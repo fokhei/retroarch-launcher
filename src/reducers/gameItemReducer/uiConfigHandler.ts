@@ -11,5 +11,6 @@ export const uiConfigHandler = (
 
   return update(state, {
     itemFilter: { $set: config.itemFilter },
+    bookmarkIds:  { $set: config.bookmarkIds },
   });
 };

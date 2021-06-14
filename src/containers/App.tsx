@@ -187,6 +187,7 @@ const _App = (props: AppProps) => {
           explorer.explorerConfig
         );
         ipcRenderer.sendSync(AppEvent.SET_ITEM_FILTER, gameItem.itemFilter);
+        ipcRenderer.sendSync(AppEvent.SET_BOOKMARK_IDS, gameItem.bookmarkIds);
         setWaiting(WaitingFor.FETCH_MAPPING);
         dispatch(fetchMapping(appConfig));
       }

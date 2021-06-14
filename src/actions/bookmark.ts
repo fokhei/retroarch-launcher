@@ -1,6 +1,8 @@
 import { GameItemState } from "../states/gameItemState";
 import lazy from "lazy.js";
 import { CategoryBookmark } from "../libs/categoryAll";
+import { ipcRenderer } from "electron";
+import { AppEvent } from "../interfaces/AppEvent";
 
 export const ADD_TO_BOOKMARK = "ADD_TO_BOOKMARK";
 export const REMOVE_FROM_BOOKMARK = "REMOVE_FROM_BOOKMARK";
@@ -11,7 +13,8 @@ export const addToBookmark = (
     gameItem: GameItemState
 ) => {
     const bookmarkIds = lazy([...gameItem.bookmarkIds]).concat(ids).uniq().toArray();
-    const { searchResults } = gameItem
+    const { searchResults } = gameItem;
+    ipcRenderer.sendSync(AppEvent.SET_BOOKMARK_IDS, bookmarkIds);
     return {
         type: ADD_TO_BOOKMARK,
         bookmarkIds,
@@ -28,7 +31,7 @@ export const removeFromBookmark = (
     if (gameItem.itemFilter.categoryName == CategoryBookmark) {
         searchResults = lazy(searchResults).reject(item => ids.includes(item.id)).toArray();
     }
-    
+    ipcRenderer.sendSync(AppEvent.SET_BOOKMARK_IDS, bookmarkIds);
     return {
         type: REMOVE_FROM_BOOKMARK,
         bookmarkIds,
@@ -47,6 +50,7 @@ export const clearAllBookmark = (
         searchResults = lazy(searchResults).reject(item => bookmarkIds.includes(item.id)).toArray();
     }
     bookmarkIds = [];
+    ipcRenderer.sendSync(AppEvent.SET_BOOKMARK_IDS, bookmarkIds);
     return {
         type: CLEAR_ALL_BOOKMARK,
         bookmarkIds,

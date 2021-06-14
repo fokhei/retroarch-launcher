@@ -16,6 +16,7 @@ let devTools: BrowserWindow;
 let appConfig: AppConfigState;
 let explorerConfig: ExplorerConfig;
 let itemFilter: ItemFilter;
+let bookmarkIds: Array<number>;
 
 const saveSetting = () => {
   if (appConfig) {
@@ -26,6 +27,7 @@ const saveSetting = () => {
         JSON.stringify({
           explorerConfig,
           itemFilter,
+          bookmarkIds
         })
       );
     }
@@ -100,6 +102,11 @@ app.whenReady().then(() => {
 
   ipcMain.on(AppEvent.SET_ITEM_FILTER, (event: any, filter: ItemFilter) => {
     itemFilter = filter;
+    event.returnValue = true;
+  });
+
+  ipcMain.on(AppEvent.SET_BOOKMARK_IDS, (event: any, ids: Array<number>) => {
+    bookmarkIds = ids;
     event.returnValue = true;
   });
 

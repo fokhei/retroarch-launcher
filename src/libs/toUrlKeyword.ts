@@ -1,7 +1,7 @@
 import { removeAllBrackets } from "../nameFilters/removeAllBrackets";
 import { removeThe } from "../nameFilters/removeThe";
 
-export const toGoogleKeyword = (str: string) => {
+export const toUrlKeyword = (str: string) => {
   let keyword = removeAllBrackets(str);
   keyword = removeThe(keyword);
   keyword = keyword.replace(/\s\-\s/gi, "+");

@@ -1,4 +1,4 @@
-import { toGoogleKeyword } from "./toGoogleKeyword";
+import { toUrlKeyword } from "./toUrlKeyword";
 import { shell } from "electron";
 import { ComputedGameItem } from "../interfaces/ComputedGameItem";
 import { AppConfigState } from "../states/appConfigState";
@@ -18,6 +18,6 @@ export const googleSearch = (
   if (suffix) {
     keyword += "+" + suffix;
   }
-  const q = toGoogleKeyword(keyword);
+  const q = toUrlKeyword(keyword);
   shell.openExternal(`https://www.google.com/search?tbm=isch&q=${q}`);
 };

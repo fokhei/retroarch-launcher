@@ -18,6 +18,7 @@ export interface SubCategory {
 export interface Category extends SubCategory {
   thumbnailDir: string;
   shortName: string;
+  theGamsDbPlatform?: number;
   datPath?: string;
   datParser?: DatParser;
   players?: Array<Player>;

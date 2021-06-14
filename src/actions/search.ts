@@ -1,7 +1,7 @@
 import { ItemFilter, OrderBy } from "../interfaces/itemFilter";
 import { GameItemState } from "../states/gameItemState";
 import lazy from "lazy.js";
-import { CategoryAll } from "../libs/categoryAll";
+import { CategoryAll, CategoryBookmark } from "../libs/categoryAll";
 import { ComputedGameItem } from "../interfaces/ComputedGameItem";
 
 export const SEARCH = "SEARCH";
@@ -20,11 +20,19 @@ export const search = (
 
   let seq: any = lazy(gameItem.items);
 
+
+
   if (categoryName != CategoryAll) {
-    seq = seq.filter((item) => item.categoryName == categoryName);
-    if (subCategoryName) {
-      seq = seq.filter((item) => item.subCategoryName == subCategoryName);
+
+    if (categoryName == CategoryBookmark) {
+      seq = seq.filter((item) => gameItem.bookmarkIds.includes(item.id));
+    } else {
+      seq = seq.filter((item) => item.categoryName == categoryName);
+      if (subCategoryName) {
+        seq = seq.filter((item) => item.subCategoryName == subCategoryName);
+      }
     }
+
   }
   if (keyword && keyword.trim() != "") {
     seq = seq.filter((item) =>
@@ -33,7 +41,7 @@ export const search = (
   }
 
   if (favourOnly) {
-     seq = seq.filter((item) => item.isFavour == true);
+    seq = seq.filter((item) => item.isFavour == true);
   }
 
   if (orderBy == OrderBy.RANDOM) {

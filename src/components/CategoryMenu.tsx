@@ -10,7 +10,7 @@ import {
 } from "react-virtualized";
 import { ContextMenuId } from "../contextMenus/ContextMenuId";
 import { ContextMenuTrigger } from "react-contextmenu";
-import { CategoryAll } from "../libs/categoryAll";
+import { CategoryAll, CategoryBookmark } from "../libs/categoryAll";
 import { CategoryTriggerProps } from "../contextMenus/CategoryContextMenu";
 import { GameItemState } from "../states/gameItemState";
 import { ItemFilter, OrderBy } from "../interfaces/itemFilter";
@@ -42,7 +42,7 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
   const listRef: RefObject<any> = createRef();
   _keywordHandler = debounce(searchHandler, 300, false);
 
-  const labels: Array<string> = [CategoryAll, ...categoryNames.sort()];
+  const labels: Array<string> = [CategoryAll, CategoryBookmark, ...categoryNames.sort()];
 
   const cellMeasurerCache = new CellMeasurerCache({
     fixedWidth: true,

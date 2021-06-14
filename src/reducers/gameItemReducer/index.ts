@@ -45,6 +45,9 @@ import {
 import { FETCH_UI_CONFIG } from "../../actions/fetchUI";
 import { uiConfigHandler } from "./uiConfigHandler";
 
+import { ADD_TO_BOOKMARK, REMOVE_FROM_BOOKMARK, CLEAR_ALL_BOOKMARK } from "../../actions/bookmark";
+import { bookmarkHandler } from "./bookmarkHandler"
+
 const gameItemReducer = (
   state: GameItemState = createGameItemState(),
   action: AnyAction
@@ -96,6 +99,11 @@ const gameItemReducer = (
 
     case FETCH_UI_CONFIG:
       return uiConfigHandler(state, action);
+
+    case ADD_TO_BOOKMARK:
+    case CLEAR_ALL_BOOKMARK:
+    case REMOVE_FROM_BOOKMARK:
+      return bookmarkHandler(state, action);
 
     default:
       return state;

@@ -119,7 +119,7 @@ const _App = (props: AppProps) => {
           appConfig={appConfig}
           mapping={mapping}
         />
-        <GameItemContextMenu dispatch={dispatch} appConfig={appConfig} />
+        <GameItemContextMenu dispatch={dispatch} appConfig={appConfig} gameItem={gameItem} />
         <GameNameContextMenu />
         <RomNameContextMenu />
         <SearchResultContextMenu dispatch={dispatch} />

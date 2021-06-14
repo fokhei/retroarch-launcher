@@ -16,6 +16,7 @@ export interface GameItemState {
   pendingToDownload: Array<ThumbnailInfo>;
   subCategories: SubCategories;
   itemFilter: ItemFilter;
+  bookmarkIds: Array<number>;
   fetch: {
     success: boolean;
     error: any;
@@ -44,6 +45,7 @@ export const createGameItemState = (): GameItemState => {
     pendingToDownload: [],
     subCategories: {},
     itemFilter: createItemFilter(),
+    bookmarkIds: [53,64],
     fetch: {
       success: false,
       error: null,

@@ -3,32 +3,29 @@ import { ContextMenu, connectMenu } from "react-contextmenu";
 import { ContextMenuId } from "./ContextMenuId";
 import { Dispatch } from "redux";
 import { showScanner } from "../actions/showScanner";
-import { CategoryAll } from "../libs/categoryAll";
+import { CategoryAll, CategoryBookmark } from "../libs/categoryAll";
 import { AppConfigState } from "../states/appConfigState";
-// import { getCategory } from "../libs/getCategory";
-// import { remote } from "electron";
 import { createMenuItem } from "./createMenuItem";
 import { GameItemState } from "../states/gameItemState";
 import lazy from "lazy.js";
 import { scanMissingThumbnails } from "../actions/scanMissingThumbnails";
+import { clearAllBookmark } from "../actions/bookmark";
 
 const id = ContextMenuId.CATEGORY;
 
 const CategoryContextMenu = (props: CategoryContextMenuProps) => {
   const { dispatch, trigger, appConfig, gameItem } = props;
   const enabled = Boolean(
-    trigger && trigger.categoryName && trigger.categoryName != CategoryAll
+    trigger && trigger.categoryName
   );
+
+
 
   const onScan = () => {
     dispatch(showScanner(trigger.categoryName));
   };
 
-  // const onShow = () => {
-  //   const category = getCategory(appConfig, trigger.categoryName);
-  //   const { romsPath } = category;
-  //   remote.shell.openItem(romsPath);
-  // };
+
 
   const onDownloadThumbnails = () => {
     const items = lazy(gameItem.items)
@@ -39,11 +36,48 @@ const CategoryContextMenu = (props: CategoryContextMenuProps) => {
     }
   };
 
+  const onClearAllBookmark = () => {
+    dispatch(clearAllBookmark(gameItem));
+  };
+
+
+
+
+  const createMenuItemForScan = () => {
+    if (enabled) {
+      if (![CategoryAll, CategoryBookmark].includes(trigger.categoryName)) {
+        return createMenuItem("Scan this category", onScan, enabled)
+      }
+    }
+    return null;
+  }
+
+  const createMenuItemForDownloadThumbnail = () => {
+    if (enabled) {
+      if (![CategoryAll, CategoryBookmark].includes(trigger.categoryName)) {
+        return createMenuItem("Download thumbnails", onDownloadThumbnails, enabled)
+      }
+    }
+    return null;
+  }
+
+
+  const createMenuItemForClearBookmark = () => {
+    if (enabled) {
+      if (trigger.categoryName == CategoryBookmark) {
+        return createMenuItem("Clear all bookmark", onClearAllBookmark, enabled)
+      }
+    }
+    return null;
+  }
+
+
+
   return (
     <ContextMenu id={id}>
-      {createMenuItem("Scan this category", onScan, enabled)}
-      {/* {createMenuItem("Show roms directory", onShow, enabled)} */}
-      {createMenuItem("Download thumbnails", onDownloadThumbnails, enabled)}
+      {createMenuItemForScan()}
+      {createMenuItemForDownloadThumbnail()}
+      {createMenuItemForClearBookmark()}
     </ContextMenu>
   );
 };

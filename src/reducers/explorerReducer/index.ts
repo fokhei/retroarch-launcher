@@ -16,6 +16,9 @@ import { esExporterHandler } from "./esExporterHandler";
 import { FETCH_UI_CONFIG } from "../../actions/fetchUI";
 import { uiConfigHandler } from "./uiConfigHandler";
 
+import { REMOVE_FROM_BOOKMARK, CLEAR_ALL_BOOKMARK } from "../../actions/bookmark";
+import { bookmarkHandler } from "./bookmarkHandler";
+
 const explorerReducer = (
   state: ExplorerState = createExplorerState(),
   action: AnyAction
@@ -35,6 +38,10 @@ const explorerReducer = (
 
     case SEARCH:
       return searchHandler(state, action);
+
+    case REMOVE_FROM_BOOKMARK:
+    case CLEAR_ALL_BOOKMARK:
+      return bookmarkHandler(state, action);
 
     default:
       return state;

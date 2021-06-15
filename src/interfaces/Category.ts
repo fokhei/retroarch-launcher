@@ -3,6 +3,7 @@ import { NameFilter } from "./NameFilter";
 import { ScanType } from "./ScanType";
 import { Player } from "../externalApps/Player";
 import { DatParser } from "./DatPaser";
+import { DigOption } from "./DigOption";
 
 export interface SubCategory {
   name: string;
@@ -18,7 +19,7 @@ export interface SubCategory {
 export interface Category extends SubCategory {
   thumbnailDir: string;
   shortName: string;
-  digDir: string;
+  dig: DigOption;
   theGamsDbPlatform?: number;
   datPath?: string;
   datParser?: DatParser;

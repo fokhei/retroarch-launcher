@@ -49,13 +49,13 @@ export const exportToDig = (
         searchResults.sort()
         searchResults.map((gameItem) => {
           const category = getCategory(appConfig, gameItem.categoryName)
+          const { dig } = category
 
-          if (category.digDir) {
+          if (dig) {
             const romBasename = path.basename(gameItem.romPath)
 
-
             if (exportFiles) {
-              const fileDir = path.resolve(distination, category.digDir)
+              const fileDir = path.resolve(distination, dig.dir)
               const fileDist = path.resolve(fileDir, romBasename)
               if (!fs.existsSync(fileDir)) {
                 fs.mkdirSync(fileDir)
@@ -72,12 +72,19 @@ export const exportToDig = (
                 appConfig,
               )
               if (fs.existsSync(thumbnailInfo.local)) {
-                const coverDir = path.resolve(coverPath, category.digDir)
+                const coverDir = path.resolve(coverPath, dig.dir)
                 if (!fs.existsSync(coverDir)) {
                   fs.mkdirSync(coverDir)
                 }
-                const imgBaseName = path.basename(thumbnailInfo.local)
-                const coverDist = path.resolve(coverDir, imgBaseName)
+                let imgName = path.basename(thumbnailInfo.local)
+                if (dig.exportImageAsRomName) {
+                  imgName = romBasename.replace(
+                    path.extname(romBasename),
+                    '.png',
+                  )
+                }
+
+                const coverDist = path.resolve(coverDir, imgName)
                 if (!fs.existsSync(coverDist)) {
                   fsExtra.copySync(thumbnailInfo.local, coverDist)
                 }
@@ -91,12 +98,18 @@ export const exportToDig = (
                 appConfig,
               )
               if (fs.existsSync(thumbnailInfo.local)) {
-                const snapDir = path.resolve(snapPath, category.digDir)
+                const snapDir = path.resolve(snapPath, dig.dir)
                 if (!fs.existsSync(snapDir)) {
                   fs.mkdirSync(snapDir)
                 }
-                const imgBaseName = path.basename(thumbnailInfo.local)
-                const snapDist = path.resolve(snapDir, imgBaseName)
+                let imgName = path.basename(thumbnailInfo.local)
+                if (dig.exportImageAsRomName) {
+                  imgName = romBasename.replace(
+                    path.extname(romBasename),
+                    '.png',
+                  )
+                }
+                const snapDist = path.resolve(snapDir, imgName)
                 if (!fs.existsSync(snapDist)) {
                   fsExtra.copySync(thumbnailInfo.local, snapDist)
                 }

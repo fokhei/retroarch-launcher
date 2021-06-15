@@ -13,11 +13,16 @@ const SearchResultContextMenu = (props: SearchResultContextMenuProps) => {
   const { dispatch, trigger } = props;
   const enabled = Boolean(
     trigger &&
-      trigger.categoryName &&
-      trigger.categoryName != CategoryAll &&
-      trigger.searchResults &&
-      trigger.searchResults.length
+    trigger.categoryName &&
+    trigger.categoryName != CategoryAll &&
+    trigger.searchResults &&
+    trigger.searchResults.length
   );
+
+
+  const onExportToDig = () => {
+
+  };
 
   const onExportToEmulationStation = () => {
     dispatch(showESExporer(true));
@@ -28,6 +33,11 @@ const SearchResultContextMenu = (props: SearchResultContextMenuProps) => {
       {createMenuItem(
         "Export for EmulationStation",
         onExportToEmulationStation,
+        enabled
+      )}
+      {createMenuItem(
+        "Export for Dig",
+        onExportToDig,
         enabled
       )}
     </ContextMenu>

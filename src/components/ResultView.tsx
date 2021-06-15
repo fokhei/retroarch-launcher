@@ -167,6 +167,14 @@ const _ResultView = (props: ResultViewProps) => {
     return <ThumbnailDownloader dispatch={dispatch} gameItem={gameItem} />;
   };
 
+  const renderCatName = () => {
+    if (item) {
+      const category = getCategory(appConfig, item.categoryName)
+      return <div className="catName">{category.shortName}</div>
+    }
+    return null;
+  }
+
   const renderGameName = () => {
     if (item) {
       const collect = (): GameNameTriggerProps => {
@@ -182,7 +190,7 @@ const _ResultView = (props: ResultViewProps) => {
         </ContextMenuTrigger>
       );
     }
-    return <div className="gameName" />;
+    return null;
   };
 
   const renderSettingIcon = () => {
@@ -247,7 +255,10 @@ const _ResultView = (props: ResultViewProps) => {
         </div>
       </div>
       <div className="subHead">
-        {renderGameName()}
+        <div className="names">
+          {renderCatName()}
+          {renderGameName()}
+        </div>
         {renderSettingIcon()}
       </div>
       <div className="body">{renderContent()}</div>
@@ -263,7 +274,6 @@ const ResultView = styled(_ResultView)`
 
   > .head {
     height: 32px;
-    //font-size: 12px;
     display: flex;
     align-items: center;
     padding: 10px 0;
@@ -277,7 +287,6 @@ const ResultView = styled(_ResultView)`
         width: 48px;
         a {
           display: block;
-          /* width: 32px; */
           height: 32px;
           text-align: center;
           line-height: 32px;
@@ -330,7 +339,6 @@ const ResultView = styled(_ResultView)`
         width: 48px;
         a {
           display: block;
-          /* width: 32px; */
           height: 32px;
           text-align: center;
           line-height: 32px;
@@ -350,23 +358,32 @@ const ResultView = styled(_ResultView)`
     background-color: rgba(0, 0, 0, 0.3);
     box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
     overflow: hidden;
-    user-select: none;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-
-    .gameName {
-      display: inline-block;
-      line-height: 32px;
-      padding: 0 10px;
-      width: 100%;
-     // font-size: 15px;
-      color: #17bbaf;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      flex: 1;
+    padding-left: 20px;
+    .names {
+      flex :1;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      .catName {
+        color: #666;
+        &:after{
+          content: " >"
+        }
+      }
+      
+      .gameName {
+        flex:1;
+        line-height: 32px;
+        padding: 0 10px;
+        color: #17bbaf;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
     }
+
     .settingIcon {
       width: 48px;
       height: 32px;

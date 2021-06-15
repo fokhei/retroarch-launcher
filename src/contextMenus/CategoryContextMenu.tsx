@@ -3,13 +3,13 @@ import { ContextMenu, connectMenu } from "react-contextmenu";
 import { ContextMenuId } from "./ContextMenuId";
 import { Dispatch } from "redux";
 import { showScanner } from "../actions/showScanner";
-import { CategoryAll, CategoryBookmark } from "../libs/categoryAll";
 import { AppConfigState } from "../states/appConfigState";
 import { createMenuItem } from "./createMenuItem";
 import { GameItemState } from "../states/gameItemState";
 import lazy from "lazy.js";
 import { scanMissingThumbnails } from "../actions/scanMissingThumbnails";
 import { clearAllBookmark } from "../actions/bookmark";
+import { CategoryAll, CategoryBookmark } from "../libs/constants";
 
 const id = ContextMenuId.CATEGORY;
 

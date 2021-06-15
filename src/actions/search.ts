@@ -1,8 +1,8 @@
 import { ItemFilter, OrderBy } from "../interfaces/itemFilter";
 import { GameItemState } from "../states/gameItemState";
 import lazy from "lazy.js";
-import { CategoryAll, CategoryBookmark } from "../libs/categoryAll";
 import { ComputedGameItem } from "../interfaces/ComputedGameItem";
+import { CategoryAll, CategoryBookmark } from "../libs/constants";
 
 export const SEARCH = "SEARCH";
 

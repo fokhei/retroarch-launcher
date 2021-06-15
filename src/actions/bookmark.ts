@@ -1,8 +1,8 @@
 import { GameItemState } from "../states/gameItemState";
 import lazy from "lazy.js";
-import { CategoryBookmark } from "../libs/categoryAll";
 import { ipcRenderer } from "electron";
 import { AppEvent } from "../interfaces/AppEvent";
+import { CategoryBookmark } from "../libs/constants";
 
 export const ADD_TO_BOOKMARK = "ADD_TO_BOOKMARK";
 export const REMOVE_FROM_BOOKMARK = "REMOVE_FROM_BOOKMARK";

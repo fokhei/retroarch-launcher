@@ -3,9 +3,9 @@ import { ContextMenu, connectMenu } from "react-contextmenu";
 import { ContextMenuId } from "./ContextMenuId";
 import { createMenuItem } from "./createMenuItem";
 import { ComputedGameItem } from "../interfaces/ComputedGameItem";
-import { CategoryAll } from "../libs/categoryAll";
 import { showESExporer } from "../actions/showESExporter";
 import { Dispatch } from "redux";
+import { CategoryAll } from "../libs/constants";
 
 const id = ContextMenuId.SEARCH_RESULT;
 

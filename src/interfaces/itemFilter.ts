@@ -1,4 +1,5 @@
-import { CategoryAll } from "../libs/categoryAll";
+import { CategoryAll } from "../libs/constants";
+
 
 export enum OrderBy {
   NAME,

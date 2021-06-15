@@ -10,13 +10,13 @@ import {
 } from "react-virtualized";
 import { ContextMenuId } from "../contextMenus/ContextMenuId";
 import { ContextMenuTrigger } from "react-contextmenu";
-import { CategoryAll, CategoryBookmark } from "../libs/categoryAll";
 import { CategoryTriggerProps } from "../contextMenus/CategoryContextMenu";
 import { GameItemState } from "../states/gameItemState";
 import { ItemFilter, OrderBy } from "../interfaces/itemFilter";
 import lazy from "lazy.js";
 import { AppConfigState } from "../states/appConfigState";
 import { getCategory } from "../libs/getCategory";
+import { CategoryAll, CategoryBookmark } from "../libs/constants";
 
 let _keywordHandler: any;
 

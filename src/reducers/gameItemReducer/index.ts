@@ -1,112 +1,142 @@
-import { AnyAction } from "redux";
-import { GameItemState, createGameItemState } from "../../states/gameItemState";
-import { FETCH_ALL_ITEMS } from "../../actions/fetchAllItems";
-import { fetchAllItemsHandler } from "./fetchAllItemsHandler";
-import { SEARCH } from "../../actions/search";
-import { searchHandler } from "./searchHandler";
+import { AnyAction } from 'redux'
+import { GameItemState, createGameItemState } from '../../states/gameItemState'
+import { FETCH_ALL_ITEMS } from '../../actions/fetchAllItems'
+import { fetchAllItemsHandler } from './fetchAllItemsHandler'
+import { SEARCH } from '../../actions/search'
+import { searchHandler } from './searchHandler'
 import {
   SET_THUMBNAIL_START,
   SET_THUMBNAIL_SUCCESS,
   SET_THUMBNAIL_ERROR,
-} from "../../actions/setThumbnail";
+} from '../../actions/setThumbnail'
 import {
   setThumbnailStartHandler,
   setThumbnailSuccessHandler,
   setThumbnailErrorHandler,
-} from "./setThumbnailHandler";
-import { SCAN_MISSING_THUMBNAILS } from "../../actions/scanMissingThumbnails";
-import { scanMissingThumbnailHandler } from "./scanMissingThumbnailHandler";
+} from './setThumbnailHandler'
+import { SCAN_MISSING_THUMBNAILS } from '../../actions/scanMissingThumbnails'
+import { scanMissingThumbnailHandler } from './scanMissingThumbnailHandler'
 import {
   DOWNLOAD_THUMBNAIL_START,
   DOWNLOAD_THUMBNAIL_SUCCESS,
   DOWNLOAD_THUMBNAIL_ERROR,
-} from "../../actions/downloadThumbnail";
+} from '../../actions/downloadThumbnail'
 import {
   downloadThumbnailStartHandler,
   downloadThumbnailSuccessHandler,
   downloadThumbnailErrorHandler,
-} from "./downloadThumbnailHandler";
-import { REMOVE_THUMBNAIL } from "../../actions/removeThumbnail";
-import { removeThumbnailHandler } from "./removeThumbnailHandler";
-import { SCAN_ROMS_SUCCESS } from "../../actions/scanRoms";
-import { scanRomsSuccessHandler } from "./scanRomsHandler";
+} from './downloadThumbnailHandler'
+import { REMOVE_THUMBNAIL } from '../../actions/removeThumbnail'
+import { removeThumbnailHandler } from './removeThumbnailHandler'
+import { SCAN_ROMS_SUCCESS } from '../../actions/scanRoms'
+import { scanRomsSuccessHandler } from './scanRomsHandler'
 import {
   EXPORT_TO_EMULATION_STATION_START,
   EXPORT_TO_EMULATION_STATION_SUCCESS,
   EXPORT_TO_EMULATION_STATION_ERROR,
   EXPORT_TO_EMULATION_STATION_RESET,
-} from "../../actions/exportToEmulationStation";
+} from '../../actions/exportToEmulationStation'
 import {
   exportToEmulationStationStartHandler,
   exportToEmulationStationSuccessHandler,
   exportToEmulationStationErrorHandler,
   exportToEmulationStationResetHandler,
-} from "./exportToEmulationStationHandler";
-import { FETCH_UI_CONFIG } from "../../actions/fetchUI";
-import { uiConfigHandler } from "./uiConfigHandler";
+} from './exportToEmulationStationHandler'
 
-import { ADD_TO_BOOKMARK, REMOVE_FROM_BOOKMARK, CLEAR_ALL_BOOKMARK } from "../../actions/bookmark";
-import { bookmarkHandler } from "./bookmarkHandler"
+import {
+  EXPORT_TO_DIG_START,
+  EXPORT_TO_DIG_SUCCESS,
+  EXPORT_TO_DIG_ERROR,
+  EXPORT_TO_DIG_RESET,
+} from '../../actions/exportToDig'
+import {
+  exportToDigStartHandler,
+  exportToDigSuccessHandler,
+  exportToDigErrorHandler,
+  exportToDigResetHandler,
+} from './exportToDigHandler'
+
+import { FETCH_UI_CONFIG } from '../../actions/fetchUI'
+import { uiConfigHandler } from './uiConfigHandler'
+
+import {
+  ADD_TO_BOOKMARK,
+  REMOVE_FROM_BOOKMARK,
+  CLEAR_ALL_BOOKMARK,
+} from '../../actions/bookmark'
+import { bookmarkHandler } from './bookmarkHandler'
 
 const gameItemReducer = (
   state: GameItemState = createGameItemState(),
-  action: AnyAction
+  action: AnyAction,
 ): GameItemState => {
   switch (action.type) {
     case FETCH_ALL_ITEMS:
-      return fetchAllItemsHandler(state, action);
+      return fetchAllItemsHandler(state, action)
     case SEARCH:
-      return searchHandler(state, action);
+      return searchHandler(state, action)
 
     case SCAN_MISSING_THUMBNAILS:
-      return scanMissingThumbnailHandler(state, action);
+      return scanMissingThumbnailHandler(state, action)
 
     case DOWNLOAD_THUMBNAIL_START:
-      return downloadThumbnailStartHandler(state, action);
+      return downloadThumbnailStartHandler(state, action)
 
     case DOWNLOAD_THUMBNAIL_SUCCESS:
-      return downloadThumbnailSuccessHandler(state, action);
+      return downloadThumbnailSuccessHandler(state, action)
 
     case DOWNLOAD_THUMBNAIL_ERROR:
-      return downloadThumbnailErrorHandler(state, action);
+      return downloadThumbnailErrorHandler(state, action)
 
     case SET_THUMBNAIL_START:
-      return setThumbnailStartHandler(state, action);
+      return setThumbnailStartHandler(state, action)
 
     case SET_THUMBNAIL_SUCCESS:
-      return setThumbnailSuccessHandler(state, action);
+      return setThumbnailSuccessHandler(state, action)
 
     case SET_THUMBNAIL_ERROR:
-      return setThumbnailErrorHandler(state, action);
+      return setThumbnailErrorHandler(state, action)
 
     case REMOVE_THUMBNAIL:
-      return removeThumbnailHandler(state, action);
+      return removeThumbnailHandler(state, action)
 
     case SCAN_ROMS_SUCCESS:
-      return scanRomsSuccessHandler(state, action);
+      return scanRomsSuccessHandler(state, action)
 
     case EXPORT_TO_EMULATION_STATION_START:
-      return exportToEmulationStationStartHandler(state, action);
+      return exportToEmulationStationStartHandler(state, action)
 
     case EXPORT_TO_EMULATION_STATION_SUCCESS:
-      return exportToEmulationStationSuccessHandler(state, action);
+      return exportToEmulationStationSuccessHandler(state, action)
 
     case EXPORT_TO_EMULATION_STATION_ERROR:
-      return exportToEmulationStationErrorHandler(state, action);
+      return exportToEmulationStationErrorHandler(state, action)
 
     case EXPORT_TO_EMULATION_STATION_RESET:
-      return exportToEmulationStationResetHandler(state, action);
+      return exportToEmulationStationResetHandler(state, action)
+
+    case EXPORT_TO_DIG_START:
+      return exportToDigStartHandler(state, action)
+
+    case EXPORT_TO_DIG_SUCCESS:
+      return exportToDigSuccessHandler(state, action)
+
+    case EXPORT_TO_DIG_ERROR:
+      return exportToDigErrorHandler(state, action)
+
+    case EXPORT_TO_DIG_RESET:
+      return exportToDigResetHandler(state, action)
 
     case FETCH_UI_CONFIG:
-      return uiConfigHandler(state, action);
+      return uiConfigHandler(state, action)
 
     case ADD_TO_BOOKMARK:
     case CLEAR_ALL_BOOKMARK:
     case REMOVE_FROM_BOOKMARK:
-      return bookmarkHandler(state, action);
+      return bookmarkHandler(state, action)
 
     default:
-      return state;
+      return state
   }
-};
-export default gameItemReducer;
+}
+export default gameItemReducer

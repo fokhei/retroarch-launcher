@@ -7,7 +7,7 @@ import {
   exportToEmulationStation,
   exportToEmulationStationReset,
 } from "../actions/exportToEmulationStation";
-import { showESExporer } from "../actions/showESExporter";
+import { showESExporter } from "../actions/showESExporter";
 import { ThumbnailType } from "../interfaces/ThumbnailType";
 import { AppConfigState } from "../states/appConfigState";
 import { GameItemState } from "../states/gameItemState";
@@ -74,7 +74,7 @@ const _ESExporter = (props: ESExporterProps) => {
   };
 
   const onClose = () => {
-    dispatch(showESExporer(false));
+    dispatch(showESExporter(false));
   };
 
   const renderThumbnailType = () => {

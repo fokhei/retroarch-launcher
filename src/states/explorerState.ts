@@ -14,6 +14,7 @@ export interface ExplorerState {
   explorerConfig: ExplorerConfig;
   showPlayerPicker: boolean;
   showESExporter: boolean;
+  showDigExporter: boolean;
   fetched: boolean;
 }
 
@@ -34,6 +35,7 @@ export const createExplorerState = (): ExplorerState => {
     explorerConfig: createExplorerConfig(),
     showPlayerPicker: false,
     showESExporter: false,
+    showDigExporter: false,
     fetched: false,
   };
 };

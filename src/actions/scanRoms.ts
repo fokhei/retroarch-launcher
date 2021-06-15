@@ -2,7 +2,7 @@ import * as path from "path";
 import { getFiles } from "../libs/getFiles";
 import { createDatIndexes } from "../libs/createDatIndexes";
 import { createGameItems } from "../libs/createGameItems";
-import { exportGeneralPlaylist } from "../exporters/exportGeneralPlaylist";
+import { exportGeneralPlaylist } from "../libs/exportGeneralPlaylist";
 import { AppConfigState } from "../states/appConfigState";
 import { getCategory } from "../libs/getCategory";
 import { DatIndexes } from "../interfaces/DatIndexes";

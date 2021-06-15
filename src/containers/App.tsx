@@ -32,6 +32,7 @@ import { fetchExternalApps } from "../actions/fetchExternalApps";
 import SettingContextMenu from "../contextMenus/SettingContextMenu";
 import { MappingState } from "../states/mappingState";
 import { fetchMapping } from "../actions/fetchMapping";
+import DigExporter from "./DigExporter";
 
 enum WaitingFor {
   NONE,
@@ -55,7 +56,7 @@ const _App = (props: AppProps) => {
   } = props;
   const [waiting, setWaiting] = useState<WaitingFor>(WaitingFor.FETCH_DIR);
 
-  const { explorerConfig, showPlayerPicker, showESExporter } = explorer;
+  const { explorerConfig, showPlayerPicker, showESExporter, showDigExporter } = explorer;
   const { selectedItemId } = explorerConfig;
 
   const renderExplorer = () => {
@@ -110,6 +111,18 @@ const _App = (props: AppProps) => {
     }
     return null;
   };
+
+  const renderDigExporter = () => {
+    if (showDigExporter) {
+      return (
+        <Modal>
+          <DigExporter />
+        </Modal>
+      );
+    }
+    return null;
+  };
+
 
   const renderContextMenus = () => {
     return (
@@ -216,6 +229,7 @@ const _App = (props: AppProps) => {
       {renderScanner()}
       {renderPlayerPicker()}
       {renderESExporter()}
+      {renderDigExporter()}
       {renderContextMenus()}
       <NotificationContainer />
     </div>

@@ -13,6 +13,9 @@ import { searchHandler } from "./searchHandler";
 import { SHOW_ES_EXPORTER } from "../../actions/showESExporter";
 import { esExporterHandler } from "./esExporterHandler";
 
+import { SHOW_DIG_EXPORTER } from "../../actions/showDigExporter";
+import { digExporterHandler } from "./digExporterHandler";
+
 import { FETCH_UI_CONFIG } from "../../actions/fetchUI";
 import { uiConfigHandler } from "./uiConfigHandler";
 
@@ -32,6 +35,9 @@ const explorerReducer = (
 
     case SHOW_ES_EXPORTER:
       return esExporterHandler(state, action);
+
+    case SHOW_DIG_EXPORTER:
+      return digExporterHandler(state, action);
 
     case FETCH_UI_CONFIG:
       return uiConfigHandler(state, action);

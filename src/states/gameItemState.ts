@@ -34,6 +34,10 @@ export interface GameItemState {
     success: boolean;
     error: any;
   };
+  exportToDig: {
+    success: boolean;
+    error: any;
+  };
 }
 
 export const createGameItemState = (): GameItemState => {
@@ -60,6 +64,10 @@ export const createGameItemState = (): GameItemState => {
       error: null,
     },
     exportToES: {
+      success: false,
+      error: null,
+    },
+    exportToDig: {
       success: false,
       error: null,
     },

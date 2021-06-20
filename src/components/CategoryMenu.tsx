@@ -1,33 +1,36 @@
-import React, { RefObject, createRef, useEffect, useState } from "react";
-import styled from "styled-components";
-import debounce from "debounce";
+import React, { RefObject, createRef, useEffect, useState } from 'react'
+import styled from 'styled-components'
+import debounce from 'debounce'
 import {
   AutoSizer,
   List,
   ListRowProps,
   CellMeasurerCache,
   CellMeasurer,
-} from "react-virtualized";
-import { ContextMenuId } from "../contextMenus/ContextMenuId";
-import { ContextMenuTrigger } from "react-contextmenu";
-import { CategoryTriggerProps } from "../contextMenus/CategoryContextMenu";
-import { GameItemState } from "../states/gameItemState";
-import { ItemFilter, OrderBy } from "../interfaces/itemFilter";
-import lazy from "lazy.js";
-import { AppConfigState } from "../states/appConfigState";
-import { getCategory } from "../libs/getCategory";
-import { CategoryAll, CategoryBookmark } from "../libs/constants";
+} from 'react-virtualized'
+import { ContextMenuId } from '../contextMenus/ContextMenuId'
+import { ContextMenuTrigger } from 'react-contextmenu'
+import { CategoryTriggerProps } from '../contextMenus/CategoryContextMenu'
+import { GameItemState } from '../states/gameItemState'
+import { ItemFilter, OrderBy } from '../interfaces/itemFilter'
+import lazy from 'lazy.js'
+import { AppConfigState } from '../states/appConfigState'
+import { getCategory } from '../libs/getCategory'
+import { CategoryAll, CategoryBookmark } from '../libs/constants'
+import { SystemIntegration } from '../interfaces/SystemInteration'
+import { favourMameGroups } from '../libs/mameGroups'
+import { getSystemIntegrations } from '../libs/getSystemIntegrations'
 
-let _keywordHandler: any;
+let _keywordHandler: any
 
 const _CategoryMenu = (props: CategoryMenuProps) => {
-  const { className, appConfig, gameItem, searchHandler } = props;
+  const { className, appConfig, gameItem, searchHandler } = props
 
-  const { subCategories, itemFilter } = gameItem;
+  const { subCategories, itemFilter } = gameItem
   const categoryNames = lazy(appConfig.categories)
     .sort()
-    .pluck("name")
-    .toArray();
+    .pluck('name')
+    .toArray()
 
   const {
     categoryName,
@@ -35,68 +38,72 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
     keyword,
     favourOnly,
     orderBy,
-  } = itemFilter;
+  } = itemFilter
 
-  const [rowIndex, setRowIndex] = useState(0);
+  const [rowIndex, setRowIndex] = useState(0)
 
-  const listRef: RefObject<any> = createRef();
-  _keywordHandler = debounce(searchHandler, 300, false);
+  const listRef: RefObject<any> = createRef()
+  _keywordHandler = debounce(searchHandler, 300, false)
 
-  const labels: Array<string> = [CategoryAll, CategoryBookmark, ...categoryNames.sort()];
+  const labels: Array<string> = [
+    CategoryAll,
+    CategoryBookmark,
+    ...categoryNames.sort(),
+  ]
 
   const cellMeasurerCache = new CellMeasurerCache({
     fixedWidth: true,
     defaultHeight: 22,
     minHeight: 22,
-  });
+  })
 
   const onCategoryClick = (evt: any) => {
-    const categoryName = evt.currentTarget.getAttribute("data-category");
-    const subCategoryName = evt.target.getAttribute("data-subcategory");
+    const categoryName = evt.currentTarget.getAttribute('data-category')
+    const subCategoryName = evt.target.getAttribute('data-subcategory')
 
     const filter: ItemFilter = {
       ...itemFilter,
       categoryName,
       subCategoryName,
-    };
-    searchHandler(filter);
-  };
+    }
+    searchHandler(filter)
+  }
 
   const onRightClick = (evt: any) => {
-    const categoryName = evt.currentTarget.getAttribute("data-category");
+    const categoryName = evt.currentTarget.getAttribute('data-category')
     const filter: ItemFilter = {
       ...itemFilter,
       categoryName,
-    };
-    searchHandler(filter);
-  };
+    }
+    searchHandler(filter)
+  }
 
   const onKeywordChange = (evt: any) => {
-    const keyword = evt.currentTarget.value;
+    const keyword = evt.currentTarget.value
     const filter: ItemFilter = {
       ...itemFilter,
       keyword,
-    };
-    _keywordHandler(filter);
-  };
+    }
+    _keywordHandler(filter)
+  }
 
   const onFavourOnlyChange = (evt: any) => {
-    const favourOnly = evt.target.value == 1;
+    const favourOnly = evt.target.value == 1
     const filter: ItemFilter = {
       ...itemFilter,
       favourOnly,
-    };
-    searchHandler(filter);
-  };
+    }
+    searchHandler(filter)
+  }
 
   const onOrderByChange = (evt: any) => {
-    const orderBy = evt.target.value as OrderBy;
+    const orderBy = evt.target.value as OrderBy
     const filter: ItemFilter = {
       ...itemFilter,
       orderBy,
-    };
-    searchHandler(filter);
-  };
+    }
+    searchHandler(filter)
+  }
 
   const rednerKeyWord = () => {
     return (
@@ -108,11 +115,11 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
           onChange={onKeywordChange}
         />
       </div>
-    );
-  };
+    )
+  }
 
   const renderFavourOptions = () => {
-    const value = favourOnly ? 1 : 0;
+    const value = favourOnly ? 1 : 0
     return (
       <div className="favourOnly">
         <select value={value} onChange={onFavourOnlyChange}>
@@ -120,8 +127,8 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
           <option value={1}>Favour Only</option>
         </select>
       </div>
-    );
-  };
+    )
+  }
 
   const renderOrderOptions = () => {
     return (
@@ -131,11 +138,11 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
           <option value={OrderBy.RANDOM}>Random</option>
         </select>
       </div>
-    );
-  };
+    )
+  }
 
   const renderRow = (props: ListRowProps) => {
-    const { index, parent, style } = props;
+    const { index, parent, style } = props
     return (
       <CellMeasurer
         key={index}
@@ -146,23 +153,23 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
       >
         {renderItem(style, index)}
       </CellMeasurer>
-    );
-  };
+    )
+  }
 
   const renderItem = (style: any, index: number) => {
-    let child: any;
+    let child: any
     if (index < labels.length) {
-      const label = labels[index];
-      let className = "category";
+      const label = labels[index]
+      let className = 'category'
       if (categoryName == label) {
-        className += " actived";
+        className += ' actived'
       }
 
       const collect = (): CategoryTriggerProps => {
         return {
           categoryName: label,
-        };
-      };
+        }
+      }
       child = (
         <ContextMenuTrigger id={ContextMenuId.CATEGORY} collect={collect}>
           <div
@@ -175,63 +182,72 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
             {renderSubCategories(label)}
           </div>
         </ContextMenuTrigger>
-      );
+      )
     }
     return (
       <div className="item" style={style}>
         {child}
       </div>
-    );
-  };
+    )
+  }
 
-  const renderSubCategories = (mainLabel: string) => {
-    if (mainLabel == categoryName) {
-      let childs: Array<any> = [];
+  const renderSubCategories = (mainCategoryName: string) => {
+    if (mainCategoryName == categoryName) {
+      let childs: Array<any> = []
 
-      if (subCategories.hasOwnProperty(mainLabel)) {
-        const subCategory = subCategories[mainLabel];
+      if (subCategories.hasOwnProperty(mainCategoryName)) {
+        const subCategory = subCategories[mainCategoryName]
 
         subCategory.map((subLabel) => {
-          const key = subLabel;
-          let className = "subCategory";
-          const category = getCategory(appConfig, mainLabel);
-          const subCat = category.subCategoriesMap[subLabel];
-          if (subCat && subCat.hasOwnProperty("isFavour")) {
+          const key = subLabel
+          let className = 'subCategory'
+          const category = getCategory(appConfig, mainCategoryName)
+          const subCat = category.subCategoriesMap[subLabel]
+          const integrations = getSystemIntegrations(category)
+
+          if (subCat && subCat.hasOwnProperty('isFavour')) {
             if (subCat.isFavour) {
-              className += " favour";
+              className += ' favour'
+            }
+          } else if (
+            integrations.includes(SystemIntegration.FBA) ||
+            integrations.includes(SystemIntegration.MAME)
+          ) {
+            if (favourMameGroups.includes(subLabel)) {
+              className += ' favour'
             }
           }
 
-          if (mainLabel == categoryName && subLabel == subCategoryName) {
-            className += " actived";
+          if (mainCategoryName == categoryName && subLabel == subCategoryName) {
+            className += ' actived'
           }
           childs.push(
             <div className={className} key={key} data-subcategory={subLabel}>
               {key}
-            </div>
-          );
-        });
+            </div>,
+          )
+        })
       }
 
       if (childs.length) {
-        return <div className="subCategories">{childs}</div>;
+        return <div className="subCategories">{childs}</div>
       }
     }
 
-    return null;
-  };
+    return null
+  }
 
   const categoryNameChangeEffect = () => {
-    let rowIndex = 0;
+    let rowIndex = 0
     if (categoryName) {
-      const cat = getCategory(appConfig, categoryName);
+      const cat = getCategory(appConfig, categoryName)
       if (cat) {
-        rowIndex = cat.rowIndex;
+        rowIndex = cat.rowIndex
       }
     }
-    setRowIndex(rowIndex);
-  };
-  useEffect(categoryNameChangeEffect, [categoryName]);
+    setRowIndex(rowIndex)
+  }
+  useEffect(categoryNameChangeEffect, [categoryName])
 
   return (
     <div className={className}>
@@ -261,8 +277,8 @@ const _CategoryMenu = (props: CategoryMenuProps) => {
         </AutoSizer>
       </div>
     </div>
-  );
-};
+  )
+}
 
 const CategoryMenu = styled(_CategoryMenu)`
   width: 260px;
@@ -333,7 +349,7 @@ const CategoryMenu = styled(_CategoryMenu)`
               border-top: 1px solid rgba(100, 100, 100, 0.1);
               &.favour {
                 &:before {
-                  content: "⭐";
+                  content: '⭐';
                 }
               }
               &:hover {
@@ -348,13 +364,13 @@ const CategoryMenu = styled(_CategoryMenu)`
       }
     }
   }
-`;
+`
 
 interface CategoryMenuProps {
-  className?: string;
-  appConfig: AppConfigState;
-  gameItem: GameItemState;
-  searchHandler: (itemFilter: ItemFilter) => void;
+  className?: string
+  appConfig: AppConfigState
+  gameItem: GameItemState
+  searchHandler: (itemFilter: ItemFilter) => void
 }
 
-export default CategoryMenu;
+export default CategoryMenu

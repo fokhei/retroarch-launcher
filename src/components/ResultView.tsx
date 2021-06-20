@@ -1,91 +1,103 @@
-import React from "react";
-import styled from "styled-components";
-import { ContextMenuTrigger } from "react-contextmenu";
-import { ResultLayout } from "../interfaces/ResultLayout";
-import { ContextMenuId } from "../contextMenus/ContextMenuId";
-import { ExplorerState } from "../states/explorerState";
-import { GameItemState } from "../states/gameItemState";
-import { Dispatch } from "redux";
-import { setExplorerConfig } from "../actions/setExplorerConfig";
-import { getComputedItem } from "../libs/getComputedItem";
-import ResultList from "./ResultList";
-import ResultGrid from "./ResultGrid";
-import ThumbnailDownloader from "./ThumbnailDownloader";
-import { clipboard } from "electron";
-import { getCategory } from "../libs/getCategory";
-import { AppConfigState } from "../states/appConfigState";
-import { play } from "../externalApps/play";
-import { SearchResultTriggerProps } from "../contextMenus/SearchResultContextMenu";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars, faCog, faImage } from "@fortawesome/free-solid-svg-icons";
-import { MappingState } from '../states/mappingState';
-import { getPlayers } from '../libs/getPlayers';
-import { GameNameTriggerProps } from '../contextMenus/GameNameContextMenu';
-
-
+import React from 'react'
+import styled from 'styled-components'
+import { ContextMenuTrigger } from 'react-contextmenu'
+import { ResultLayout } from '../interfaces/ResultLayout'
+import { ContextMenuId } from '../contextMenus/ContextMenuId'
+import { ExplorerState } from '../states/explorerState'
+import { GameItemState } from '../states/gameItemState'
+import { Dispatch } from 'redux'
+import { setExplorerConfig } from '../actions/setExplorerConfig'
+import { getComputedItem } from '../libs/getComputedItem'
+import ResultList from './ResultList'
+import ResultGrid from './ResultGrid'
+import ThumbnailDownloader from './ThumbnailDownloader'
+import { clipboard } from 'electron'
+import { getCategory } from '../libs/getCategory'
+import { AppConfigState } from '../states/appConfigState'
+import { play } from '../externalApps/play'
+import { SearchResultTriggerProps } from '../contextMenus/SearchResultContextMenu'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faBars, faImage } from '@fortawesome/free-solid-svg-icons'
+import { MappingState } from '../states/mappingState'
+import { getPlayers } from '../libs/getPlayers'
+import { GameNameTriggerProps } from '../contextMenus/GameNameContextMenu'
 
 const _ResultView = (props: ResultViewProps) => {
-  const { className, dispatch, explorer, gameItem, appConfig, mapping } = props;
-  const { explorerConfig } = explorer;
-  const { layout, gridSize, selectedItemId } = explorerConfig;
+  const { className, dispatch, explorer, gameItem, appConfig, mapping } = props
+  const { explorerConfig } = explorer
+  const {
+    layout,
+    gridSize,
+    selectedItemId,
+    gridBackgroundSize,
+  } = explorerConfig
 
-  const { itemsMap, itemFilter, searchResults } = gameItem;
-  const { categoryName } = itemFilter;
-  const item = getComputedItem(itemsMap, selectedItemId);
+  const { itemsMap, itemFilter, searchResults } = gameItem
+  const { categoryName } = itemFilter
+  const item = getComputedItem(itemsMap, selectedItemId)
 
   const toggleCategory = () => {
-    const next = !explorerConfig.showCategory;
+    const next = !explorerConfig.showCategory
     const config = {
       ...explorerConfig,
       showCategory: next,
-    };
-    dispatch(setExplorerConfig(config));
-  };
+    }
+    dispatch(setExplorerConfig(config))
+  }
 
   const toggleImageZone = () => {
-    const next = !explorerConfig.showImageZone;
+    const next = !explorerConfig.showImageZone
     const config = {
       ...explorerConfig,
       showImageZone: next,
-    };
-    dispatch(setExplorerConfig(config));
-  };
+    }
+    dispatch(setExplorerConfig(config))
+  }
 
   const onLayoutChange = (evt: any) => {
-    const layout = evt.target.value as ResultLayout;
+    const layout = evt.target.value as ResultLayout
     const config = {
       ...explorerConfig,
       layout,
-    };
-    dispatch(setExplorerConfig(config));
-  };
+    }
+    dispatch(setExplorerConfig(config))
+  }
+
+  const onBackgroundSizeChange = (evt: any) => {
+    const gridBackgroundSize = evt.target.value
+    const config = {
+      ...explorerConfig,
+      gridBackgroundSize,
+    }
+    dispatch(setExplorerConfig(config))
+  }
 
   const onSliderChange = (evt: any) => {
-    const gridSize = Number(evt.target.value);
+    const gridSize = Number(evt.target.value)
     const config = {
       ...explorerConfig,
       gridSize,
-    };
-    dispatch(setExplorerConfig(config));
-  };
+    }
+    dispatch(setExplorerConfig(config))
+  }
 
   const onItemIdChange = (selectedItemId: number) => {
     const config = {
       ...explorerConfig,
       selectedItemId,
-    };
-    dispatch(setExplorerConfig(config));
-  };
+    }
+    dispatch(setExplorerConfig(config))
+  }
 
   const onPlay = () => {
-    const category = getCategory(appConfig, item.categoryName);
-    const players = getPlayers(category, item);
-    play(appConfig, mapping, item, players[0]);
-  };
+    const category = getCategory(appConfig, item.categoryName)
+    const players = getPlayers(category, item)
+    play(appConfig, mapping, item, players[0])
+  }
 
   const onGameNameClick = () => {
-    clipboard.writeText(item.gameName, "selection");
-  };
+    clipboard.writeText(item.gameName, 'selection')
+  }
 
   const renderCategoryToggler = () => {
     return (
@@ -94,17 +106,17 @@ const _ResultView = (props: ResultViewProps) => {
           <FontAwesomeIcon icon={faBars} />
         </a>
       </div>
-    );
-  };
+    )
+  }
 
   const renderResultLength = () => {
-    const { length } = searchResults;
+    const { length } = searchResults
     const collect = (): SearchResultTriggerProps => {
       return {
         categoryName,
         searchResults,
-      };
-    };
+      }
+    }
     return (
       <ContextMenuTrigger id={ContextMenuId.SEARCH_RESULT} collect={collect}>
         <div className="length">
@@ -112,10 +124,10 @@ const _ResultView = (props: ResultViewProps) => {
           <span> item(s)</span>
         </div>
       </ContextMenuTrigger>
-    );
-  };
+    )
+  }
 
-  const renderLayoutSwitch = () => {
+  const renderLayoutOption = () => {
     return (
       <div className="options">
         <select value={layout} onChange={onLayoutChange}>
@@ -126,8 +138,28 @@ const _ResultView = (props: ResultViewProps) => {
           <option value={ResultLayout.FILE_NAME}>File Name</option>
         </select>
       </div>
-    );
-  };
+    )
+  }
+
+  const renderBackgroundSizeOption = () => {
+    if (
+      [
+        ResultLayout.BOXART,
+        ResultLayout.TITLE_SCREEN,
+        ResultLayout.SNAPSHOT,
+      ].includes(layout)
+    ) {
+      return (
+        <div className="options">
+          <select value={gridBackgroundSize} onChange={onBackgroundSizeChange}>
+            <option value="contain">Contain</option>
+            <option value="cover">Cover</option>
+          </select>
+        </div>
+      )
+    }
+    return null
+  }
 
   const renderSlider = () => {
     if (
@@ -148,10 +180,10 @@ const _ResultView = (props: ResultViewProps) => {
             onChange={onSliderChange}
           />
         </div>
-      );
+      )
     }
-    return null;
-  };
+    return null
+  }
 
   const renderImageToggler = () => {
     return (
@@ -160,19 +192,19 @@ const _ResultView = (props: ResultViewProps) => {
           <FontAwesomeIcon icon={faImage} />
         </a>
       </div>
-    );
-  };
+    )
+  }
 
   const renderThumbnailDownloader = () => {
-    return <ThumbnailDownloader dispatch={dispatch} gameItem={gameItem} />;
-  };
+    return <ThumbnailDownloader dispatch={dispatch} gameItem={gameItem} />
+  }
 
   const renderCatName = () => {
     if (item) {
       const category = getCategory(appConfig, item.categoryName)
       return <div className="catName">{category.shortName}</div>
     }
-    return null;
+    return null
   }
 
   const renderGameName = () => {
@@ -180,28 +212,18 @@ const _ResultView = (props: ResultViewProps) => {
       const collect = (): GameNameTriggerProps => {
         return {
           gameName: item.gameName,
-        };
-      };
+        }
+      }
       return (
         <ContextMenuTrigger id={ContextMenuId.GAME_NAME} collect={collect}>
           <div className="gameName" onClick={onGameNameClick}>
             {item.gameName}
           </div>
         </ContextMenuTrigger>
-      );
+      )
     }
-    return null;
-  };
-
-  const renderSettingIcon = () => {
-    return (
-      <ContextMenuTrigger id={ContextMenuId.SETTING}>
-        <div className="settingIcon">
-          <FontAwesomeIcon icon={faCog} />
-        </div>
-      </ContextMenuTrigger>
-    );
-  };
+    return null
+  }
 
   const renderContent = () => {
     if ([ResultLayout.GAME_TITLE, ResultLayout.FILE_NAME].includes(layout)) {
@@ -214,7 +236,7 @@ const _ResultView = (props: ResultViewProps) => {
           playHandler={onPlay}
           layout={layout}
         />
-      );
+      )
     } else if (
       [
         ResultLayout.BOXART,
@@ -233,12 +255,10 @@ const _ResultView = (props: ResultViewProps) => {
           layout={layout}
           explorerConfig={explorer.explorerConfig}
         />
-      );
+      )
     }
-    return null;
-  };
-
-
+    return null
+  }
 
   return (
     <div className={className}>
@@ -249,8 +269,9 @@ const _ResultView = (props: ResultViewProps) => {
         </div>
         <div className="mid">{renderThumbnailDownloader()}</div>
         <div className="right">
+          {renderLayoutOption()}
+          {renderBackgroundSizeOption()}
           {renderSlider()}
-          {renderLayoutSwitch()}
           {renderImageToggler()}
         </div>
       </div>
@@ -259,12 +280,11 @@ const _ResultView = (props: ResultViewProps) => {
           {renderCatName()}
           {renderGameName()}
         </div>
-        {renderSettingIcon()}
       </div>
       <div className="body">{renderContent()}</div>
     </div>
-  );
-};
+  )
+}
 
 const ResultView = styled(_ResultView)`
   flex: 1;
@@ -300,8 +320,8 @@ const ResultView = styled(_ResultView)`
       }
       .length {
         user-select: none;
+        color: #17bbaf;
       }
-      
     }
     > .mid {
       flex: 1;
@@ -319,19 +339,19 @@ const ResultView = styled(_ResultView)`
       .slider {
         appearance: none;
         outline: none;
-        width: 80px;
-        height: 8px;
+        width: 100px;
+        height: 18px;
         background: rgba(150, 150, 150, 0.2);
-        margin-top: 8px;
+        margin-top: 4px;
         &::-webkit-slider-thumb {
           appearance: none;
           appearance: none;
           width: 25px;
-          height: 8px;
+          height: 18px;
           background: rgba(150, 150, 150, 0.3);
           cursor: pointer;
           &:hover {
-            background-color: #17bbaf;
+            background-color: orange;
           }
         }
       }
@@ -362,19 +382,19 @@ const ResultView = styled(_ResultView)`
     align-items: center;
     padding-left: 20px;
     .names {
-      flex :1;
+      flex: 1;
       display: flex;
       justify-content: flex-start;
       align-items: center;
       .catName {
         color: #666;
-        &:after{
-          content: " >"
+        &:after {
+          content: ' >';
         }
       }
-      
+
       .gameName {
-        flex:1;
+        flex: 1;
         line-height: 32px;
         padding: 0 10px;
         color: #17bbaf;
@@ -410,18 +430,17 @@ const ResultView = styled(_ResultView)`
     background-color: transparent;
     color: #555;
     padding: 5px;
-   // font-size: 12px;
     cursor: pointer;
   }
-`;
+`
 
 interface ResultViewProps {
-  className?: string;
-  dispatch: Dispatch<any>;
-  explorer: ExplorerState;
-  gameItem: GameItemState;
-  appConfig: AppConfigState;
-  mapping: MappingState;
+  className?: string
+  dispatch: Dispatch<any>
+  explorer: ExplorerState
+  gameItem: GameItemState
+  appConfig: AppConfigState
+  mapping: MappingState
 }
 
-export default ResultView;
+export default ResultView

@@ -3,13 +3,12 @@ import styled from "styled-components";
 import { ExplorerState } from "../states/explorerState";
 import { Dispatch } from "redux";
 
-const _SlideBar = (props: SlideBarProps) => {
+const _LeftBar = (props: LeftBarProps) => {
   const { className } = props;
   return <div className={className}></div>;
 };
 
-const SlideBar = styled(_SlideBar)`
-  /* display: flex; */
+const LeftBar = styled(_LeftBar)`
   display: none;
   border-right: 1px solid rgba(0, 0, 0, 0.5);
   width: 48px;
@@ -20,10 +19,10 @@ const SlideBar = styled(_SlideBar)`
 
 `;
 
-interface SlideBarProps {
+interface LeftBarProps {
   className?: string;
   dispatch: Dispatch<any>;
   explorer: ExplorerState;
 }
 
-export default SlideBar;
+export default LeftBar;

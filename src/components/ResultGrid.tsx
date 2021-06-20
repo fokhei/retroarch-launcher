@@ -1,15 +1,15 @@
-import fs from "fs";
-import React, { RefObject, createRef, useState, useEffect } from "react";
-import styled from "styled-components";
-import { AutoSizer, Grid, GridCellProps } from "react-virtualized";
-import { ComputedGameItem } from "../interfaces/ComputedGameItem";
-import { ContextMenuId } from "../contextMenus/ContextMenuId";
-import { ContextMenuTrigger } from "react-contextmenu";
-import { toBackgroundUrl } from "../libs/toBackgroundUrl";
-import { GameItemTriggerProps } from "../contextMenus/GameItemContextMenu";
-import { ResultLayout } from "../interfaces/ResultLayout";
-import { ThumbnailType } from "../interfaces/ThumbnailType";
-import { ExplorerConfig } from "../states/explorerState";
+import fs from 'fs'
+import React, { RefObject, createRef, useState, useEffect } from 'react'
+import styled from 'styled-components'
+import { AutoSizer, Grid, GridCellProps } from 'react-virtualized'
+import { ComputedGameItem } from '../interfaces/ComputedGameItem'
+import { ContextMenuId } from '../contextMenus/ContextMenuId'
+import { ContextMenuTrigger } from 'react-contextmenu'
+import { toBackgroundUrl } from '../libs/toBackgroundUrl'
+import { GameItemTriggerProps } from '../contextMenus/GameItemContextMenu'
+import { ResultLayout } from '../interfaces/ResultLayout'
+import { ThumbnailType } from '../interfaces/ThumbnailType'
+import { ExplorerConfig } from '../states/explorerState'
 
 const _ResultGrid = (props: ResultGridProps) => {
   const {
@@ -22,59 +22,59 @@ const _ResultGrid = (props: ResultGridProps) => {
     gridSize,
     layout,
     explorerConfig,
-  } = props;
-  const gridRef: RefObject<any> = createRef();
-  const [columnCount, setColumnCount] = useState(1);
-  let thumbnailType = ThumbnailType.SNAP;
+  } = props
+  const gridRef: RefObject<any> = createRef()
+  const [columnCount, setColumnCount] = useState(1)
+  let thumbnailType = ThumbnailType.SNAP
   if (layout == ResultLayout.BOXART) {
-    thumbnailType = ThumbnailType.BOX;
+    thumbnailType = ThumbnailType.BOX
   } else if (layout == ResultLayout.TITLE_SCREEN) {
-    thumbnailType = ThumbnailType.TITLE;
+    thumbnailType = ThumbnailType.TITLE
   }
 
   const onItemClick = (evt: any) => {
-    const itemId = Number(evt.currentTarget.getAttribute("data-item-id"));
-    setItemId(itemId);
-  };
+    const itemId = Number(evt.currentTarget.getAttribute('data-item-id'))
+    setItemId(itemId)
+  }
 
   const onDoubleClick = (evt: any) => {
-    const itemId = Number(evt.currentTarget.getAttribute("data-item-id"));
-    setItemId(itemId);
-    playHandler();
-  };
+    const itemId = Number(evt.currentTarget.getAttribute('data-item-id'))
+    setItemId(itemId)
+    playHandler()
+  }
 
   const onRightClick = (evt: any) => {
-    const itemId = Number(evt.currentTarget.getAttribute("data-item-id"));
-    setItemId(itemId);
-  };
+    const itemId = Number(evt.currentTarget.getAttribute('data-item-id'))
+    setItemId(itemId)
+  }
 
   const renderCell = (props: GridCellProps) => {
-    const { columnIndex, key, rowIndex, style } = props;
-    let dataIndex = columnIndex + rowIndex * columnCount;
-    let data: ComputedGameItem | null = null;
-    let item: any;
+    const { columnIndex, key, rowIndex, style } = props
+    let dataIndex = columnIndex + rowIndex * columnCount
+    let data: ComputedGameItem | null = null
+    let item: any
     if (dataIndex >= 0 && dataIndex <= results.length - 1) {
-      data = results[dataIndex];
+      data = results[dataIndex]
       if (data) {
-        const { thumbnails } = data;
-        const filePath = thumbnails[thumbnailType];
-        const fileExists = fs.existsSync(filePath);
+        const { thumbnails } = data
+        const filePath = thumbnails[thumbnailType]
+        const fileExists = fs.existsSync(filePath)
 
-        let style: any = {};
+        let style: any = {}
         if (fileExists) {
-          style.backgroundImage = toBackgroundUrl(filePath, data.updateAt);
+          style.backgroundImage = toBackgroundUrl(filePath, data.updateAt)
         }
 
-        let className = "item";
+        let className = 'item'
         if (itemId == data.id) {
-          className += " actived";
+          className += ' actived'
         }
 
         const collect = (): GameItemTriggerProps => {
           return {
             item: data,
-          };
-        };
+          }
+        }
 
         item = (
           <ContextMenuTrigger id={ContextMenuId.GAME_ITEM} collect={collect}>
@@ -89,15 +89,15 @@ const _ResultGrid = (props: ResultGridProps) => {
               {renderLabel(data)}
             </div>
           </ContextMenuTrigger>
-        );
+        )
       }
     }
     return (
       <div key={key} className="cell" style={style}>
         {item}
       </div>
-    );
-  };
+    )
+  }
 
   const renderLabel = (data: ComputedGameItem) => {
     if (explorerConfig.showGridLabel) {
@@ -106,30 +106,30 @@ const _ResultGrid = (props: ResultGridProps) => {
           {renderFavour(data)}
           {data.gameName}
         </div>
-      );
+      )
     }
-    return null;
-  };
+    return null
+  }
 
   const renderFavour = (data: ComputedGameItem) => {
     if (data.isFavour) {
-      return <span className="favour">⭐</span>;
+      return <span className="favour">⭐</span>
     }
-    return null;
-  };
+    return null
+  }
 
   const resultsChangeEffect = () => {
-    gridRef.current.scrollToPosition({ scrollLeft: 0, scrollTop: 0 });
-  };
-  useEffect(resultsChangeEffect, [results]);
+    gridRef.current.scrollToPosition({ scrollLeft: 0, scrollTop: 0 })
+  }
+  useEffect(resultsChangeEffect, [results])
 
   return (
     <div className={className}>
       <AutoSizer>
         {({ width, height }: any) => {
-          const _columnCount = Math.max(1, Math.floor((width - 20) / gridSize));
-          const rowCount = Math.ceil(results.length / _columnCount);
-          setColumnCount(_columnCount);
+          const _columnCount = Math.max(1, Math.floor((width - 20) / gridSize))
+          const rowCount = Math.ceil(results.length / _columnCount)
+          setColumnCount(_columnCount)
           return (
             <Grid
               ref={gridRef}
@@ -144,12 +144,12 @@ const _ResultGrid = (props: ResultGridProps) => {
               rowHeight={gridSize}
               overscanRowCount={1}
             />
-          );
+          )
         }}
       </AutoSizer>
     </div>
-  );
-};
+  )
+}
 
 const ResultGrid = styled(_ResultGrid)`
   width: 100%;
@@ -172,11 +172,11 @@ const ResultGrid = styled(_ResultGrid)`
           .thumbnail {
             width: 100%;
             height: 100%;
+            border: 1px solid transparent;
             background-position: center center;
             background-repeat: no-repeat;
             background-size: ${(props: ResultGridProps) =>
-              props.explorerConfig.gridBackgroundSize}
-            border: 1px solid transparent;
+              props.explorerConfig.gridBackgroundSize};
           }
 
           .label {
@@ -190,7 +190,6 @@ const ResultGrid = styled(_ResultGrid)`
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-           
             font-weight: bold;
             text-align: center;
             padding: 2px 5px;
@@ -213,18 +212,18 @@ const ResultGrid = styled(_ResultGrid)`
       }
     }
   }
-`;
+`
 
 interface ResultGridProps {
-  className?: string;
-  categoryName: string;
-  results: Array<ComputedGameItem>;
-  itemId: number;
-  setItemId: (itemId: number) => void;
-  playHandler: () => void;
-  gridSize: number;
-  layout: ResultLayout;
-  explorerConfig: ExplorerConfig;
+  className?: string
+  categoryName: string
+  results: Array<ComputedGameItem>
+  itemId: number
+  setItemId: (itemId: number) => void
+  playHandler: () => void
+  gridSize: number
+  layout: ResultLayout
+  explorerConfig: ExplorerConfig
 }
 
-export default ResultGrid;
+export default ResultGrid

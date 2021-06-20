@@ -14,6 +14,7 @@ export interface SubCategory {
   nameFilter?: NameFilter;
   isArchive?: boolean;
   isFavour?: boolean;
+  teknoParrotIntegration?: boolean;
 }
 
 export interface Category extends SubCategory {

@@ -19,7 +19,7 @@ const ThumbnailContextMenu = (props: ThumbnailContextMenuProps) => {
     remote.shell.openItem(thumbnail);
   };
 
-  const onShow = () => {
+  const onExplore = () => {
     const thumbnail = trigger.item.thumbnails[trigger.thumbnailType];
     remote.shell.showItemInFolder(thumbnail);
   };
@@ -31,8 +31,8 @@ const ThumbnailContextMenu = (props: ThumbnailContextMenuProps) => {
   return (
     <ContextMenu id={id}>
       {createMenuItem("Open Image", onOpen, enabled)}
-      {createMenuItem("Show thumbnail directory", onShow, enabled)}
-      {createMenuItem("Remove thumbnail", onRemove, enabled)}
+      {createMenuItem("Expore Image", onExplore, enabled)}
+      {createMenuItem("Remove Image", onRemove, enabled)}
     </ContextMenu>
   );
 };

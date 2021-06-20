@@ -13,6 +13,8 @@ import { CategoryAll, CategoryBookmark } from '../libs/constants'
 import { scanTeknoParrotProfiles } from '../actions/scanTeknoParrotProfiles'
 import { MappingState } from '../states/mappingState'
 import { getCategory } from '../libs/getCategory'
+import { getSystemIntegrations } from '../libs/getSystemIntegrations'
+import { SystemIntegration } from '../interfaces/SystemInteration'
 
 const id = ContextMenuId.CATEGORY
 
@@ -44,8 +46,9 @@ const CategoryContextMenu = (props: CategoryContextMenuProps) => {
   const createMenuItemForParrotProiles = () => {
     if (enabled) {
       const category = getCategory(appConfig, trigger.categoryName)
-
-      if (category.teknoParrotIntegration) {
+      if (
+        getSystemIntegrations(category).includes(SystemIntegration.TEKNOPARROT)
+      ) {
         return createMenuItem(
           'Fetch TeknoParrot Game Profiles',
           onFetchTeknoParrotProiles,

@@ -77,12 +77,10 @@ export const exportToDig = (
                   fs.mkdirSync(coverDir)
                 }
                 let imgName = path.basename(thumbnailInfo.local)
-                if (dig.exportImageAsRomName) {
-                  imgName = romBasename.replace(
-                    path.extname(romBasename),
-                    '.png',
-                  )
-                }
+                imgName = romBasename.replace(
+                  path.extname(romBasename),
+                  '.png',
+                )
 
                 const coverDist = path.resolve(coverDir, imgName)
                 if (!fs.existsSync(coverDist)) {
@@ -103,12 +101,10 @@ export const exportToDig = (
                   fs.mkdirSync(snapDir)
                 }
                 let imgName = path.basename(thumbnailInfo.local)
-                if (dig.exportImageAsRomName) {
-                  imgName = romBasename.replace(
-                    path.extname(romBasename),
-                    '.png',
-                  )
-                }
+                imgName = romBasename.replace(
+                  path.extname(romBasename),
+                  '.png',
+                )
                 const snapDist = path.resolve(snapDir, imgName)
                 if (!fs.existsSync(snapDist)) {
                   fsExtra.copySync(thumbnailInfo.local, snapDist)

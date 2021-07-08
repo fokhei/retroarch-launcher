@@ -21,10 +21,13 @@ enum WaitingFor {
 const _DigExporter = (props: DigExporterProps) => {
   const { className, dispatch, appConfig, gameItem } = props
   const [distination, setDistination] = useState(EMPTY_PATH)
-  const [exportFiles, setExportFiles] = useState(false)
-  const [exportCovers, setExportCovers] = useState(false)
-  const [exportSnapshots, setExportSnapshots] = useState(false)
+  const [exportFiles, setExportFiles] = useState(true)
+  const [exportCovers, setExportCovers] = useState(true)
+  const [exportSnapshots, setExportSnapshots] = useState(true)
+  const [useTitleScreenAsCover, setTitleScreenAsCover] = useState(true);
   const [waiting, setWaiting] = useState<WaitingFor>(WaitingFor.NONE)
+  
+  const titleScreenAsCoverDisabled = !exportCovers;
 
   const selectDistination = () => {
     const options: any = {
@@ -43,13 +46,21 @@ const _DigExporter = (props: DigExporterProps) => {
     setExportFiles(evt.target.checked)
   }
 
+  const onExportSnapshotsChange = (evt: any) => {
+    setExportSnapshots(evt.target.checked)
+  }
+
   const onExportCoversChange = (evt: any) => {
     setExportCovers(evt.target.checked)
   }
 
-  const onExportSnapshotsChange = (evt: any) => {
-    setExportSnapshots(evt.target.checked)
+  const onTitleScreenAsCoverChange = (evt: any) => {
+    setTitleScreenAsCover(evt.target.checked)
   }
+
+  
+
+
 
   const onExport = () => {
     setWaiting(WaitingFor.EXPORT)
@@ -58,8 +69,9 @@ const _DigExporter = (props: DigExporterProps) => {
       exportToDig(
         distination,
         exportFiles,
-        exportCovers,
         exportSnapshots,
+        exportCovers,
+        useTitleScreenAsCover,
         appConfig,
         gameItem,
       ),
@@ -130,6 +142,17 @@ const _DigExporter = (props: DigExporterProps) => {
         </div>
 
         <div className="item">
+          <div className="key">Export snapshots</div>
+          <div className="value">
+            <input
+              type="checkbox"
+              checked={exportSnapshots}
+              onChange={onExportSnapshotsChange}
+            />
+          </div>
+        </div>
+
+        <div className="item">
           <div className="key">Export covers</div>
           <div className="value">
             <input
@@ -141,15 +164,18 @@ const _DigExporter = (props: DigExporterProps) => {
         </div>
 
         <div className="item">
-          <div className="key">Export snapshots</div>
+          <div className="key">Use title screen as cover</div>
           <div className="value">
             <input
               type="checkbox"
-              checked={exportSnapshots}
-              onChange={onExportSnapshotsChange}
+              checked={useTitleScreenAsCover}
+              onChange={onTitleScreenAsCoverChange}
+              disabled={titleScreenAsCoverDisabled}
             />
           </div>
         </div>
+
+        
       </div>
 
       {renderActions()}
@@ -179,7 +205,7 @@ const DigExporter = styled(_DigExporter)`
       flex-wrap: nowrap;
 
       > .key {
-        width: 150px;
+        width: 180px;
       }
 
       > .value {

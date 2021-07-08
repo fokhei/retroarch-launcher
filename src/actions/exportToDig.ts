@@ -15,8 +15,9 @@ export const EXPORT_TO_DIG_RESET = 'EXPORT_TO_DIG_RESET'
 export const exportToDig = (
   distination: string,
   exportFiles: boolean,
-  exportCovers: boolean,
   exportSnapshots: boolean,
+  exportCovers: boolean,
+  useTitleScreenAsCover: boolean,
   appConfig: AppConfigState,
   gameItem: GameItemState,
 ) => {
@@ -65,30 +66,6 @@ export const exportToDig = (
               }
             }
 
-            if (exportCovers) {
-              const thumbnailInfo = getThumbnailInfo(
-                gameItem,
-                ThumbnailType.BOX,
-                appConfig,
-              )
-              if (fs.existsSync(thumbnailInfo.local)) {
-                const coverDir = path.resolve(coverPath, dig.dir)
-                if (!fs.existsSync(coverDir)) {
-                  fs.mkdirSync(coverDir)
-                }
-                let imgName = path.basename(thumbnailInfo.local)
-                imgName = romBasename.replace(
-                  path.extname(romBasename),
-                  '.png',
-                )
-
-                const coverDist = path.resolve(coverDir, imgName)
-                if (!fs.existsSync(coverDist)) {
-                  fsExtra.copySync(thumbnailInfo.local, coverDist)
-                }
-              }
-            }
-
             if (exportSnapshots) {
               const thumbnailInfo = getThumbnailInfo(
                 gameItem,
@@ -111,6 +88,34 @@ export const exportToDig = (
                 }
               }
             }
+
+
+            if (exportCovers) {
+              const thumbnailType = useTitleScreenAsCover ? ThumbnailType.TITLE : ThumbnailType.BOX;
+              const thumbnailInfo = getThumbnailInfo(
+                gameItem,
+                thumbnailType,
+                appConfig,
+              )
+              if (fs.existsSync(thumbnailInfo.local)) {
+                const coverDir = path.resolve(coverPath, dig.dir)
+                if (!fs.existsSync(coverDir)) {
+                  fs.mkdirSync(coverDir)
+                }
+                let imgName = path.basename(thumbnailInfo.local)
+                imgName = romBasename.replace(
+                  path.extname(romBasename),
+                  '.png',
+                )
+
+                const coverDist = path.resolve(coverDir, imgName)
+                if (!fs.existsSync(coverDist)) {
+                  fsExtra.copySync(thumbnailInfo.local, coverDist)
+                }
+              }
+            }
+
+            
           }
         })
 

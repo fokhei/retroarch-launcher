@@ -45,16 +45,20 @@ const CategoryContextMenu = (props: CategoryContextMenuProps) => {
 
   const createMenuItemForParrotProiles = () => {
     if (enabled) {
+      
       const category = getCategory(appConfig, trigger.categoryName)
-      if (
-        getSystemIntegrations(category).includes(SystemIntegration.TEKNOPARROT)
-      ) {
-        return createMenuItem(
-          'Fetch TeknoParrot Game Profiles',
-          onFetchTeknoParrotProiles,
-          enabled,
-        )
+      if (category) {
+        if (
+          getSystemIntegrations(category).includes(SystemIntegration.TEKNOPARROT)
+        ) {
+          return createMenuItem(
+            'Fetch TeknoParrot Game Profiles',
+            onFetchTeknoParrotProiles,
+            enabled,
+          )
+        }
       }
+      
     }
     return null
   }
